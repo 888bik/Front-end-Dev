@@ -102,9 +102,9 @@ const fs = require('fs');
 //     }
 //     console.log('创建成功');
 // });
-fs.rename('rename', 'after rename test', err => {
-    if (err) {
-        console.log(err);
-    }
-    console.log('文件重命名成功');
-});
+// fs.rename('rename', 'after rename test', err => {
+//     if (err) {
+//         console.log(err);
+//     }
+//     console.log('文件重命名成功');
+// });

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 简单选择器:类选择器,ID选择器,元素选择器*/
+    /* 类选择器 */
+    .one {
+      /* 中间穿过一条线 */
+      /* text-decoration: line-through;
+      /* 首字母大写 */
+      /* text-transform: capitalize; */
+      /* 首行缩进 */
+      /* text-indent: 20px; */
+      /* 居中显示,只能让*/
+      /* text-align: center; */
+      letter-spacing: 1em;
+    }
+
+    /* id选择器 */
+    #two {
+      /* text-decoration: underline; */
+      letter-spacing: normal;
+    }
+
+    /* 元素选择器 */
+    /* div {
+      /* letter-spacing: 10px; */
+    /* text-decoration: overline; */
+    *
+
+    /* 后代选择器:分为直接后代选择器和全后代选择器 */
+    /* 全后代选择器 */
+    .three>span {
+      background-color: aqua;
+    }
+
+
+    /* 属性选择器 */
+    [title] {
+      color: aqua;
+      height: 100px;
+    }
+
+    /* 兄弟选择器 */
+    /* .bigSon~div { */
+    /* background-color: burlywood; */
+
+    /* } */
+
+    /* 选择器组:交集选择器,并集选择器*/
+    /* 交集选择器:选择的那个元素不仅要满足元素是span,而且class还要是content */
+    span.content {
+      background-color: brown;
+    }
+
+    div.home {
+      background-color: aliceblue;
+    }
+
+    /* 并集选择器 */
+    .content1,.content2 {
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="one">I am is div1
+    <span>我是span</span>
+  </div>
+  <div id="two">我是div2</div>
+
+  <!-- <div class="three">
+    <div>
+      我是div3
+    </div>
+    <span>
+      我是span3
+    </span>
+    <div>
+      <span>我是span3.2</span>
+    </div>
+    <div>
+      <span>我是span3.3</span>
+      <div>
+        <span>我是span3.1</span>
+      </div>
+    </div>
+  </div> -->
+
+  <div title="four">我是div4</div>
+
+  <div class="five">
+    我是div5
+    <div class="bigSon">我是div5的大儿子</div>
+    <div>我是div5的二儿子</div>
+    <div>我是div5的三儿子</div>
+    <div>我是div5的四儿子</div>
+    <div>我是div5的五儿子</div>
+    <div>我是div5的六儿子</div>
+    <div class="home">
+      <span class="content">
+        交集选择器演示1
+      </span>
+      <span>
+        交集选择器演示2
+      </span>
+    </div>
+  </div>
+
+  <div class="six">
+    <span class="content1">并集选择器演示1</span>
+
+    <span class="content2">并集选择器演示2</span>
+  </div>
+</body>
+
+</html>

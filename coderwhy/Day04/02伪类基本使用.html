@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- 动态伪类 -->
+  <style>
+    /* 注意以下是有顺序要求的:一般为LV F HA */
+    /* 未访问的链接 */
+    a:link {
+      /* 000表示00 00 00 也表示rgb(0,0,0) */
+      color: #000;
+    }
+
+    /* 已访问的链接 */
+    a:visited {
+      color: aqua;
+    }
+
+    /*按tab到百度一下会变色 */
+    a:focus {
+      color: rebeccapurple;
+    }
+
+    /* 鼠标挪到链接上(重要) */
+    a:hover {
+      color: green;
+    }
+
+    /* 激活的链接 */
+    a:active {
+      color: burlywood;
+    }
+    /* 直接给a的所有动态伪类都设置了 */
+    a {
+      color: aquamarine;
+    }
+
+    /* 输入框的光标变了 */
+    input:focus {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="https://baidu.com">百度一下</a>
+  <input type="text">
+  <input type="text">
+  <input type="text">
+</body>
+
+</html>
