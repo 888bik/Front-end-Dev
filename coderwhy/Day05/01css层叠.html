@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 层叠一般先看权重,权重大的优先展示 */
+    /* 如果权重一样大,那么看先后顺序,后选择的先展示 */
+    /* ID选择器 :100*/
+    #box3 {
+      color: indigo;
+    }
+
+    /* 类/伪类/属性选择器权重:10 */
+    .content1 {
+      color: aqua;
+    }
+
+    .content2 {
+      color: red;
+    }
+
+    /* .content3 {
+      color: rgb(38, 73, 226);
+    } */
+
+    .box2 {
+      color: indianred;
+    }
+
+    /* 元素选择器 :1*/
+    div {
+      color: brown;
+    }
+
+    /* 统配选择器:0 */
+    * {
+      color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <!-- 内联:1000-->
+    <span class="content1 content2 content3">我是span元素</span>
+  </div>
+  <div class="box2" style="color: green;" id="box3">
+    我是div
+  </div>
+</body>
+
+</html>

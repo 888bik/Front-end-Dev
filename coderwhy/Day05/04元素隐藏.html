@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- 方法一:display设置为none -->
+  <!-- 特点:不占据位置,跟不存在一样 -->
+  <style>
+    .box {
+      background-color: green;
+      display: none;
+    }
+
+    /* 方法二:visible设置为hidden */
+    /* 特点:会占据元素应该占据的空间 */
+    .one {
+      background-color: red;
+      visibility: hidden;
+    }
+
+    /* 方法三:rbga设置颜色,将a的值设置为0 */
+    /* 最后一个参数的值的取值范围为0-1 */
+    .two {
+      /* background-color: rgba(255, 0, 0, 0); */
+      color: rgba(255, 0, 0, 0);
+    }
+
+    /* 方法四:opacity设置透明度,设置为0,会影响子元素 */
+    .three {
+      color: burlywood;
+      opacity: 0;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="box">我是div元素</div>
+  <div class="one">我也是div元素</div>
+  <div class="two">我也是div元素</div>
+  <div class="three">我是div
+    <span>我是span</span>
+  </div>
+</body>
+
+</html>

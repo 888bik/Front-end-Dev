@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 需要注意的是, 块级元素可以设置宽度和高度, 而行内级元素即使设置了也不生效*/
+    p,
+    h1 {
+      background: pink;
+      color: green;
+      /* display: inline; */
+      width: 800px;
+      height: 100px;
+    }
+
+    span {
+      background-color: yellow;
+      /* display: block; */
+      /* 给行内级元素设置宽度和高度不生效,除了行内级可替换元素,如img,video等 */
+      width: 800px;
+      height: 1000px;
+    }
+
+    /* 行内块级元素既可以设置宽度和高度,也能独占父元素的一整行 */
+    .box {
+      background-color: green;
+      display: inline-block;
+      color: white;
+      /* 默认宽度和高度是由内容决定 */
+      /* width: 100px; */
+      /* height: 200px; */
+    }
+
+    h2 {
+      background-color: tomato;
+      /* 隐藏属性 */
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- div,p,h1等元素都是块级元素,独占一行 -->
+  <!-- 它们是块级元素只不过是浏览器给它们设置了一个block属性而言 -->
+  <div>
+    我是div元素
+  </div>
+  <p>我是p元素</p>
+  <h1>我是h1元素</h1>
+
+  <!-- span本来是行内级元素,我们可以给它设置一个block属性,让它变为块级元素 -->
+  <!-- <span>我是span元素</span> -->
+  <!-- 给以下元素设置为行内块级元素 -->
+  <div class="box">我是div2</div>
+  <h2>我是h2元素</h2>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 如果给某个元素设置了某个CSS属性,而且这个属性具有继承性,那么该元素的所有子元素会默认继承属性 */
+    /* 一般和文字或者字体相关的很多属性都具备继承 */
+    .box {
+      background: pink;
+      color: green;
+      width: 200px;
+      height: 100px;
+      font-size: large;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <span>我是span</span>
+    <div class="one">
+      我是div的儿子
+    </div>
+  </div>
+</body>
+
+</html>
