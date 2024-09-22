@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 块级元素居中 */
+    .box1 {
+      background-color: green;
+      margin: 0 auto;
+      height: 300px;
+      width: 300px;
+    }
+
+    /* 行内级元素居中:包括行内块级元素 */
+    .box2 {
+      text-align: center;
+    }
+
+    .content {
+      margin: 0 auto;
+      background-color: red;
+      height: 300px;
+      font-size: 10px;
+      width: 300px;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box1">我是div1</div>
+
+  <div class="box2">
+    <span class="content">我是span1</span>
+  </div>
+</body>
+
+</html>

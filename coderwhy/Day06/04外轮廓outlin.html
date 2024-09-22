@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      display: inline-block;
+      height: 200px;
+      width: 200px;
+      background-color: pink;
+      /* 外轮廓不占位置,和border设置一样 */
+      outline: 20px, solid rgba(111, 59, 59, 0.8);
+    }
+
+    a,
+    input {
+      /* 给a和input去掉外轮廓 */
+      outline: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">我是div</div>
+  <span>我是span</span>
+  <a href="http://www.baidu.com">百度一下</a>
+  <input type="text">
+</body>
+
+</html>

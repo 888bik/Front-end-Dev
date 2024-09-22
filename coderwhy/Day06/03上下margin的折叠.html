@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 给以下每个元素设置margin,按理来说,bottom和top加起来为200px,但是实际中只有100px,这是因为margin具有折叠性,它会取最大的那个值作为真正的margin的值*/
+    /* 需要注意的是margin只有上下才会出现折叠,左右并不会出现折叠,100px+100px=200px */
+    .box1 {
+      background-color: red;
+      margin-bottom: 100px;
+      /* margin-bottom: 200px; */
+    }
+
+    .box2 {
+      background-color: green;
+      margin-top: 100px;
+    }
+
+    .box3 {
+      background-color: orange;
+      display: inline-block;
+      margin-right: 100px;
+    }
+
+    .box4 {
+      background-color: blue;
+      color: white;
+      display: inline-block;
+      margin-left: 100px;
+
+    }
+
+    .box5 {
+      background-color: greenyellow;
+      color: white;
+
+      /* margin-bottom: 100px; */
+
+    }
+
+    /* margin-top: 100px; */
+    .box6 {
+      background-color: tomato;
+      color: white;
+      margin-top: 100px;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box1">我是box1</div>
+
+  <div class="box2">我是box2</div>
+
+  <div class="box3">我是box3</div>
+
+  <div class="box4">我是box4</div>
+
+  <div class="box5">我是div5
+    <div class="box6">我是div6</div>
+  </div>
+</body>
+
+</html>

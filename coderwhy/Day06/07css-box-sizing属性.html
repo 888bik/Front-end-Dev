@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- box-sizing用来设置盒子模型中宽高的行为 -->
+  <!-- content-box:padding,border都布置在width,height外边 -->
+  <!-- 宽度和高度仅包括内容区域,不包括内边距和边框 -->
+  <style>
+    .box1 {
+      box-sizing: content-box;
+      margin: 20px;
+      padding: 20px;
+      height: 20px;
+      background-color: green;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    /* border-box:padding,border都布置在width,height里边 */
+    /* 宽度和高度包括内容,内边距和外边距,给margin或者padding*/
+    .box2 {
+      box-sizing: border-box;
+      margin: 20px;
+      padding: 20px;
+      background-color: red;
+      text-align: center;
+      height: 20px;
+      font-size: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box1">我是div1</div>
+  <div class="box2">我是div2</div>
+</body>
+
+</html>

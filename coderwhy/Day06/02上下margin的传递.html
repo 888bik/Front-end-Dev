@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 给父元素设置margin */
+    .box {
+      background-color: tomato;
+      width: auto;
+      height: auto;
+      /* margin: 100px; */
+      /* padding-bottom: 100px; */
+    }
+
+    /* 给子元素设置margin */
+    .content {
+
+      /* 如果块级元素的顶部线和父元素的顶部线重叠,那么这个块级元素的margin-top值会传递给父元素 */
+      margin-top: 100px;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="content">
+      我是content
+    </div>
+  </div>
+</body>
+
+</html>
