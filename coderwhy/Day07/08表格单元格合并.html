@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    td {
+      border: 3px solid gold;
+    }
+
+    table {
+      border-collapse: collapse;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 跨列合并在最左边的单元格写上colspan属性 -->
+  <!-- 跨行合并在最左边的单元格写上rowspan属性 -->
+  <table>
+    <thead>
+      <tr>
+        <td>编号 </td>
+        <td>水果</td>
+        <td>价格</td>
+        <td>数量</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="2">1</td>
+        <td>桃子</td>
+        <td>21</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>桃子</td>
+        <td>21</td>
+        <td>01</td>
+      </tr>
+      <tr>
+        <td rowspan="2">1</td>
+        <td>桃子</td>
+        <td>21</td>
+        <td>01</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>香蕉</td>
+        <td>11</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

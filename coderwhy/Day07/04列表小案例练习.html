@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    ul,
+    li {
+      margin: 15px;
+      padding: 0px;
+      list-style-type: none;
+    }
+
+    /* li::after { */
+    /* content: url(image/hotboard_hot.428fe145\ \(1\).svg); */
+    /* } */
+
+    a {
+
+      text-decoration: none;
+      color: #333;
+    }
+
+    a:hover {
+      color: red;
+    }
+
+    span {
+      margin: 0px;
+      padding: 0px;
+
+    }
+
+    .hot::after {
+      display: inline-block;
+      position: relative;
+      top: 3px;
+      left: 4px;
+      content: url(image/hotboard_hot.428fe145\ \(1\).svg);
+
+    }
+
+    /* .icon {
+      display: inline-block;
+      position: relative;
+      top: 2px;
+      left: 4px;
+      width: 20px;
+      height: 20px;
+      background-image: url(image/hotboard_hot.428fe145\ \(1\).svg);
+    } */
+    .one {
+      color: aqua;
+    }
+
+    .two {
+      color: green;
+    }
+
+    .three {
+      color: gold;
+    }
+  </style>
+</head>
+
+<body>
+  <ul>
+    <div class="item">
+      <a href="#">
+        <li class="content hot">
+          <span class="ranking one">1</span>
+          苹果香还是闯进游戏圈了
+        </li>
+        <i class="icon"></i>
+      </a>
+    </div>
+    <div class="item">
+      <a href="#">
+        <li class="content">
+          <span class="ranking two">2</span>
+          王楚钦曾差点放弃乒乓球
+        </li>
+        <i class="icon"></i>
+      </a>
+    </div>
+    <div class="item">
+      <a href="">
+        <li class="content hot">
+          <span class="ranking three">3</span>
+          全社会用电
+        </li>
+        <i class="icon"></i>
+      </a>
+    </div>
+    <div class="item">
+      <a href="#">
+        <li class="content">
+          <span class="ranking">4</span>
+          天冷了该吃顿火锅了
+        </li>
+        <i class="icon"></i>
+      </a>
+    </div>
+    <div class="item">
+      <a href="">
+        <li class="content hot">
+          <span class="ranking">5</span>
+          男朋友自己打扮vs被我打扮
+        </li>
+        <i class="icon"></i>
+      </a>
+    </div>
+  </ul>
+</body>
+
+</html>
