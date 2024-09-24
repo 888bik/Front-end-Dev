@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 这种写法相当于nth-child(1) */
+    .box div:first-child {
+      color: green;
+    }
+
+    /* :last-child同理 */
+
+    /* 这种写法相当于nth-of-type(1) last-of-type同理 */
+    .box div:first-of-type {
+      color: orange;
+    }
+
+    /* 父元素中唯一的子元素 ,如果出现两个div或者不同的元素则都不生效*/
+    .box2 div:only-child {
+      color: red;
+    }
+
+    /* 父元素唯一的这种类型的子元素 */
+    .box2 div:only-of-type {
+      color: rebeccapurple;
+    }
+    /* root/empty */
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <span>我是span</span>
+    <h1>我是h1</h1>
+    <div>我是div1</div>
+    <span>我是span</span>
+    <div>我是div2</div>
+    <div>我是div3</div>
+    <div>我是div4</div>
+    <div>我是div5</div>
+    <div>我是div6</div>
+    <div>我是div7</div>
+  </div>
+  <div class="box2">
+    <div>我是div1</div>
+    <div>我是div2</div>
+    <!-- <span>我是span1</span> -->
+  </div>
+</body>
+
+</html>

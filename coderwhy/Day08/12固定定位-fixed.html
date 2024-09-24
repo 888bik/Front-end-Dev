@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box div:nth-child(1) {
+      /* 下面属性值为fixed,移动的时候,参考的是浏览器的视口 */
+      position: fixed;
+      right: -1px;
+      /* left: 1200px; */
+      bottom: 9px;
+    }
+
+    .content {
+      position: fixed;
+      bottom: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div>底部</div>
+    <div>我是div2</div>
+    <div>我是div3</div>
+    <div>我是div4</div>
+    <div>我是div5</div>
+    <div>我是div6</div>
+  </div>
+
+  <div class="content">
+    帮助
+  </div>
+</body>
+
+</html>

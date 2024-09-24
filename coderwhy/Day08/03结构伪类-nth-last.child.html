@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 顾名思义,选择倒数第一个元素 */
+    .box div:nth-last-child(1) {
+      color: red;
+    }
+
+    /* 同理,选择倒数最后三个元素 */
+    .box div:nth-last-child(-n+3) {
+      color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div>我是div1</div>
+    <div>我是div2</div>
+    <div>我是div3</div>
+    <div>我是div4</div>
+    <div>我是div5</div>
+    <div>我是div6</div>
+  </div>
+</body>
+
+</html>

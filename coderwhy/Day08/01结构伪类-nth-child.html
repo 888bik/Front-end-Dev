@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 这种写法是错的 */
+    /* .box:nth-child(1){
+  color: red;
+ } */
+
+    .box div:nth-child(3) {
+      color: red;
+    }
+
+    /* n代表正整数和0 */
+    .box div:nth-child(n) {
+      color: aqua;
+    }
+
+    /* 代表偶数 */
+    .box div:nth-child(2n) {
+      color: green;
+    }
+
+    /* 代表奇数 */
+    .box div:nth-child(2n+1) {
+      color: orange;
+    }
+
+    /* 代表前三个元素 */
+    .box div:nth-child(-n+3) {
+      color: burlywood;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <div>我是div1</div>
+    <div>我是div2</div>
+    <div>我是div3</div>
+    <div>我是div4</div>
+    <div>我是div5</div>
+  </div>
+</body>
+
+</html>

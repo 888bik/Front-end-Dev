@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 在这种情况下,本来想选第二个div元素的,但是由于中间出现了一个span和一个h1,所以很难控制 */
+    /* 针对上述情况,我们可以使用下面的结构伪类 */
+    /* :nth-of-type()会根据前面的元素,列出相同的元素再根据参数选择 */
+    .box div:nth-of-type(2){
+      color: green;
+    }
+    .box div:nth-child(2) {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div>我是div1</div>
+    <h1>我是h1</h1>
+    <span>我是span1</span>
+    <div>我是div2</div>
+    <div>我是div3</div>
+    <div>我是div4</div>
+    <span>我是span2</span>
+    <div>我是div5</div>
+    <div>我是div6</div>
+    <span>我是span3</span>
+    <div>我是div7</div>
+  </div>
+</body>
+
+</html>

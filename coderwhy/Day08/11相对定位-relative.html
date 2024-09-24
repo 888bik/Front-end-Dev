@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      /* 所有元素默认为静态元素,给元素设置下面的值之后就变为定位元素了 */
+      /* 移动时候参考自身的位置 */
+      position: relative;
+
+      /* 以下属性只有position设置为relative之后才生效; */
+      top: 45px;
+      left: 40px;
+      /* bottom: 10px; */
+      /* right: 50px; */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">我是div</div>
+  <div>我是div1</div>
+  <div>我是div2</div>
+  <div>我是div3</div>
+  <div>我是div4</div>
+  <div>我是div5</div>
+</body>
+
+</html>

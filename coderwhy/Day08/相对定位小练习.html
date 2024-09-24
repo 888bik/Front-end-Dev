@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box span:nth-child(1):after {
+      content: "3";
+      position: relative;
+      bottom: 7px;
+      font-size: x-small;
+    }
+
+    .box span:nth-child(2)::after {
+      content: "2";
+      position: relative;
+      bottom: 7px;
+      font-size: x-small;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <span>3</span>+<span>2</span>=31
+  </div>
+</body>
+
+</html>
