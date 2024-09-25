@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 将父元素设置为定位元素,此时absolute的参考对象变为父元素box*/
+    .box {
+      background-color: aqua;
+      width: 200px;
+      height: 200px;
+      position: relative;
+    }
+
+    /* 定位参照对象是最邻近的定位祖先元素,如果找不到这样的祖先元素,参照对象是视口 */
+    .box>div {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div>我是div元素1</div>
+    <div>我是div元素2</div>
+    <div>我是div元素3</div>
+    <div>我是div元素4</div>
+    <div>我是div元素5</div>
+  </div>
+</body>
+
+</html>

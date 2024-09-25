@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* div是块级元素,本来是独占一行,而float能够让元素紧挨在一起 */
+    /* float规则一:只能向左向右移动,而且还不能超出本行的高度*/
+    /* 规则二:浮动元素不能层叠,会从左向右排布 */
+    /* 规则三:会将行内级元素推出去 */
+
+    .box {
+      background-color: red;
+      width: 100px;
+      height: 100px;
+      float: left;
+    }
+
+    .content {
+      background-color: orange;
+      width: 100px;
+      height: 100px;
+      float: left;
+    }
+  </style>
+</head>
+
+<body>
+  <span>我是span元素</span>
+  <div class="box">我是box</div>
+  <div class="content">我是content</div>
+</body>
+
+</html>

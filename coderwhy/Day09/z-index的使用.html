@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      background-color: green;
+      position: fixed;
+      width: 400px;
+      height: 400px;
+    }
+
+    .box .content1 {
+      position: fixed;
+      width: 250px;
+      height: 250px;
+      top: 30px;
+      left: 30px;
+      background-color: red;
+      /* 默认值为0 */
+      z-index: 1;
+    }
+
+    .box .content2 {
+      position: fixed;
+      width: 250px;
+      height: 250px;
+      top: 50px;
+      left: 50px;
+      background-color: orange;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">我是div父亲
+    <div class="content1">我是div1</div>
+    <div class="content2">我是div2</div>
+  </div>
+</body>
+
+</html>
