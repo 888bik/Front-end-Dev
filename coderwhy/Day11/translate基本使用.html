@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      background-color: aqua;
+      width: 300px;
+      height: 300px;
+      /* translate(x,y)如果只有一个值时,为x */
+      /* transform: translate(100px,100px); */
+
+      /* translate的百分比是相对于自身的
+      如果设置的x位移,那么参考的是自身的宽度
+      如果设置的y位移,那么参考的是自身的高度 */
+      transform: translate(100%,100%);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">我是div</div>
+</body>
+
+</html>
