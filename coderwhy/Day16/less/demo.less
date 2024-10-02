@@ -1,0 +1,26 @@
+@themeColor:#f3c258;
+@mainFontSize:12px;
+.box{
+  background-color: @themeColor;
+  width: 100px;
+  height: 100px;
+  font-size: @mainFontSize;
+ .container{
+    span{
+      font-size: 20px;
+    }
+    background-color: chartreuse;
+    width: 100px;
+    height: 100px;
+  }
+  p{
+    font-size: @mainFontSize;
+    background-color: aqua;
+  }
+  a{
+    color: red;
+    &:hover{
+      color: slateblue;
+    }
+  }
+}
