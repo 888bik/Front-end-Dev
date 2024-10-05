@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //全局环境下面,this指向Windows
+    console.log(this);
+    var person = {
+      age: 18,
+      nickName: "bik",
+      printing: function () {
+        console.log(this.age);
+        console.log(this.nickName);
+      }
+    }
+    //通过对象调用,this指向调用的对象
+    person.printing();
+  </script>
+</body>
+
+</html>

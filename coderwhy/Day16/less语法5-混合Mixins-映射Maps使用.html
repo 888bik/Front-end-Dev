@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,22 @@
   <link rel="stylesheet/less" href="./less/demo5.less">
   <script src="./less/less.js"></script>
 </head>
+
 <body>
   <div class="box">
     <div class="container">
 
     </div>
   </div>
+  <script>
+    var num1 = 10;
+    var num2 = 20;
+    console.log(num1,num2);
+    num1 = num1 ^ num2;
+    num2 = num1 ^ num2;
+    num1 = num1 ^ num2;
+    console.log(num1,num2);
+  </script>
 </body>
+
 </html>

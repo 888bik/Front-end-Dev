@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //定义对象
+    var person = {
+      //创建对象的属性
+      nickname: "bik",
+      age: 18,
+      //创建对象的方法
+      eating: function () {
+        console.log("eating");
+      }
+    }
+
+    //访问对象的属性
+    console.log(person.age);
+    console.log(person.nickname);
+
+    //调用对象的方法
+    person.eating();
+
+    //修改对象的属性
+    person.age = 20;
+    console.log(person.age);
+
+    //添加对象的属性
+    person.height = 1.88;
+    person.address = "广东";
+    console.log(person.height);
+    console.log(person.address);
+
+    //添加对象的方法
+    person.studying = function () {
+      console.log("studying");
+    }
+    person.studying();
+    
+    //删除对象的属性
+    delete person.address;
+    console.log(person);
+  </script>
+</body>
+
+</html>

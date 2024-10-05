@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // //正常写法
+    // function foo() {
+    //   console.log("hello");
+    // }
+    // foo();
+    // //将函数作为一个值赋值给一个变量
+    // var fn = function () {
+    //   console.log("hi");
+    // }
+    // fn();
+    // function foo1(){
+    //   console.log("hello");
+    // }
+    // foo1();
+    // var foo2 = foo1;
+    // foo2();
+    // function foo() {
+    //   function bar() {
+    //     console.log("hi");
+    //   }
+    //   return bar;
+    // }
+    // var fn = foo();
+    // console.log(fn);
+    var obj = {
+      name: "bik",
+      age: 18,
+      studying: function () {
+        console.log("studying");
+      }
+    }
+    function foo1() {
+      console.log("hello");
+    }
+    function foo2() {
+      console.log("hello");
+    }
+    function foo3() {
+      console.log("hello");
+    }
+    var arrFn = [foo1, foo2, foo3];
+    for (var i = 0; i < arrFn.length; i++) {
+      var fn = arrFn[i];
+      fn();
+    }
+
+  </script>
+</body>
+
+</html>

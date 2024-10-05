@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var name = "bik";
+    function foo() {
+      var name = "cik"
+      console.log("hello " + name);
+
+      function bar() {
+        var nickname = "dik";
+        console.log("hi " + nickname);
+      }
+      bar();
+    }
+    foo();
+    console.log(window);
+  </script>
+</body>
+
+</html>
