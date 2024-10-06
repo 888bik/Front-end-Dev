@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //字面量创建
+    // var stu = { name: "bik", age: 18 };
+    // console.log(stu);
+    // console.log(typeof stu);
+
+    // //工厂模式创建对象
+    // function createPerson(name, age, height) {
+    //   var stu = {};
+    //   stu.name = name;
+    //   stu.age = age;
+    //   stu.height = height;
+    //   stu.running = function () {
+    //     console.log("running");
+    //   }
+    //   return stu;
+    // }
+    // var stu1 = createPerson("bik", 18, 1.88);
+    // var stu2 = createPerson("cik", 19, 1.88);
+    // var stu3 = createPerson("dik", 20, 1.88);
+    // 构造函数创建
+    function Person(name, age) {
+      this.name = name;
+      this.age = age;
+      this.eating = function () {
+        console.log("eating");
+      }
+      this.running = function () {
+        console.log("running");
+      }
+    }
+
+    var stu1 = new Person("bik", 18);
+    var stu2 = new Person("cik", 19);
+    stu1.eating();
+    console.log(stu1);
+    console.log(stu2);
+  </script>
+</body>
+
+</html>
