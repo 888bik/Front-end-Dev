@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 我是注解 -->
+  <div>
+      我是div元素
+    <div class="container">
+      我也是div元素
+    </div>
+  </div>
+  <span>我是span元素</span>
+  哈哈哈哈哈
+  <script>
+    var bodyEl = document.body;
+    // console.log(bodyEl.firstElementChild.nodeName);
+    // console.log(bodyEl.firstElementChild.tagName);
+    // console.log(bodyEl.childNodes[1].nodeName);
+    // console.log(bodyEl.childNodes[1].tagName);
+
+    var divEl = bodyEl.firstElementChild;
+    var divNode = bodyEl.childNodes[3];
+    // console.log(divEl);
+    // console.log(divNode);
+
+
+    // console.log(divNode.innerHTML);
+    // console.log(divEl.textContent);
+
+
+    // divEl.innerHTML = "<p>我是新增的文本<p>";
+    // divEl.textContent = "我是新增的文本";
+
+    // console.log(bodyEl.childNodes[1].data);
+    // console.log(bodyEl.childNodes[1].nodeValue);
+    console.log(divEl.innerHTML);
+    console.log(divEl.outerHTML);
+    console.log(divEl.textContent);
+
+
+  </script>
+  <!-- // console.log(bodyEl.firstElementChild);
+  // console.log(bodyEl.nodeType);
+  // console.log(bodyEl.firstChild.nodeType);
+  // console.log(bodyEl.childNodes[1].nodeType);
+  // console.log(document.doctype.nodeType); -->
+
+</body>
+
+</html>

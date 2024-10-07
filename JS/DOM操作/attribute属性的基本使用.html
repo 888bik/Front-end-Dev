@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <!-- <div class="box" id="main" data-name="bik" data-abc="abc" data-age="20" data-height="1.88">
+    我是div元素
+  </div> -->
+  <div class="box" id="main" name="bik" abc="abc" age="20">我是div元素</div>
+
+  <script>
+    var boxEl = document.querySelector(".box");
+    console.log(boxEl.id);
+    boxEl.setAttribute("id","hello")
+    console.log(boxEl.id);
+    
+    
+    // console.log(boxEl.dataset);
+    // console.log(boxEl.className, boxEl.id);//输出box,main
+    // console.log(boxEl.name, boxEl.abc, boxEl.age);//输出undefined...
+    
+    
+    // console.log(typeof boxEl.id);
+
+
+    // console.log(boxEl.hasAttribute("name"));//返回true或者false,注意填写属性名,而不是值
+    // console.log(boxEl.getAttribute("class"));//返回属性值
+
+    // boxEl.setAttribute("id", "hello");
+    // console.log(boxEl.getAttribute("id"));
+    // boxEl.setAttribute("abc", "cbd");
+    // console.log(boxEl.getAttribute("abc"));
+
+    // console.log(boxEl.getAttribute("height"));
+    // boxEl.removeAttribute("height")
+    // console.log(boxEl.getAttribute("height"));
+
+    // for (var attr of boxEl.attributes) {
+    //   console.log(attr.name,attr.value);
+    // }
+  </script>
+</body>
+
+</html>

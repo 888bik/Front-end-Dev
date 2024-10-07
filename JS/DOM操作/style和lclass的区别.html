@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      color: chartreuse;
+      font-size: large;
+      background-color: chocolate;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    我是div元素
+  </div>
+  <script>
+    var boxEl = document.querySelector(".box");
+    // boxEl.onclick = function(){
+    //   //动态的添加某个class
+    //   boxEl.className = "active";
+    // }
+    // console.log(boxEl.style.backgroundColor);
+    console.log(getComputedStyle(boxEl).color);
+    console.log(getComputedStyle(boxEl).backgroundColor);
+    console.log(getComputedStyle(boxEl).fontSize);
+    
+    //直接修改style
+    // boxEl.style.color = "red";
+    // boxEl.style.fontSize = "24px";
+    // boxEl.style.backgroundColor = "orange"
+  </script>
+</body>
+
+</html>

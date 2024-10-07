@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 我是注解 -->
+  <div class="box">
+    我是div
+  </div>
+  哈哈哈哈哈
+  <span>我是span元素</span>
+  <h1>我是h1元素</h1>
+  <p>我是p元素</p>
+  <script>
+    var bodyEl = document.body;
+    //由于注解和body之间产生空行,所以打印#text
+
+    var commentEl = bodyEl.firstChild;
+    console.log(commentEl);
+    //获取body中所有的子节点,包括注解,空行,普通文本
+    //返回一个列表
+    var childEl = bodyEl.childNodes;
+    console.log(childEl);
+    console.log(childEl[3]);
+
+    var textEl = childEl[3].nextSibling;
+    console.log(textEl);
+    
+
+
+  </script>
+</body>
+
+</html>
