@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      background-color: chartreuse;
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    我是div元素
+    <span>我是span元素</span>
+  </div>
+  <script>
+    var divEl = document.querySelector(".box");
+    // var spanEl = divEl.querySelector("span");
+    divEl.onclick = function (event) {
+      console.log(event.type);
+    }
+    // var bar = function () {
+    // console.log("点击div");
+    // }
+    // divEl.onclick = bar;//无法移除
+
+    setTimeout(function () {
+      divEl.onclick = null;
+    }, 5000)
+    // divEl.addEventListener("click",bar)//可以移除
+    // divEl.addEventListener("click", function (event) {
+    //   console.log("事件对象:", event.target);
+    // })
+    // 五秒后移除点击事件
+    // setTimeout(function () {
+    // divEl.removeEventListener("click", bar)
+    // }, 5000)
+    // dispatchEvent的使用
+    // window.addEventListener("bik", function () {
+    //   console.log("监听到bik的呼唤");
+    // });
+
+    // setTimeout(function () {
+    //   window.dispatchEvent(new Event("bik"))
+    // }, 5000)
+
+
+    // spanEl.addEventListener("click", function (event) {
+    // console.log("事件对象:", event.target);
+    // })
+  </script>
+</body>
+
+</html>

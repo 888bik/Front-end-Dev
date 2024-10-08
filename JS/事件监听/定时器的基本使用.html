@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<button>停止定时器</button>
+
+<body>
+  <script>
+    var btnEl = document.querySelector("BUTTON");
+    //定时器
+    var timerID1 = setTimeout(function (name) {
+      console.log("定时器3秒后执行", `I am ${name}`);
+    }, 3000, "bik")
+    var timerID2 = setInterval(function () {
+      console.log("每隔2秒重复执行此代码");
+    }, 2000)
+   
+    // clearTimeout(timerID1);
+    //点击按钮取消
+    // btnEl.onclick = function () {
+    // clearInterval(timerID2);
+    // }
+  </script>
+</body>
+
+</html>

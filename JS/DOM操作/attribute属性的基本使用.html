@@ -9,16 +9,18 @@
 
 <body>
 
-  <!-- <div class="box" id="main" data-name="bik" data-abc="abc" data-age="20" data-height="1.88">
+  <div class="box" id="main" data-name="bik" data-abc="abc" data-age="20" data-height="1.88">
     我是div元素
-  </div> -->
-  <div class="box" id="main" name="bik" abc="abc" age="20">我是div元素</div>
+  </div>
+  <!-- <div class="box" id="main" name="bik" abc="abc" age="20">我是div元素</div> -->
 
   <script>
     var boxEl = document.querySelector(".box");
-    console.log(boxEl.id);
-    boxEl.setAttribute("id","hello")
-    console.log(boxEl.id);
+    console.log(boxEl.dataset.abc);
+       
+    // console.log(boxEl.id);
+    // boxEl.setAttribute("id","hello")
+    // console.log(boxEl.id);
     
     
     // console.log(boxEl.dataset);

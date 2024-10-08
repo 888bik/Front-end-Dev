@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      background-color: chartreuse;
+      width: 100px;
+      height: 100px;
+
+    }
+  </style>
+</head>
+<div class="box">
+  <span>我是span元素</span>
+</div>
+
+<body>
+  <script>
+    var bodyEl = document.querySelector("body");
+    var boxEl = document.querySelector(".box");
+    var spanEl = boxEl.querySelector("span");
+    boxEl.addEventListener("click", function () {
+      console.log("点击div");
+    }, true)
+    bodyEl.addEventListener("click", function () {
+      console.log("点击body");
+    }, true)
+    spanEl.addEventListener("click", function () {
+      console.log("点击span");
+    }, true)
+
+    boxEl.addEventListener("click", function () {
+      console.log("点击div");
+    })
+    bodyEl.addEventListener("click", function () {
+      console.log("点击body");
+    })
+    spanEl.addEventListener("click", function () {
+      console.log("点击span");
+    })
+
+  </script>
+</body>
+
+</html>
