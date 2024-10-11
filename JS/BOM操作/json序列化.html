@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var obj = {
+      name: "bik",
+      age: 18,
+      height: 1.88,
+      friend: {
+        name: "zkz",
+        age: 19,
+        height: 1.66
+      },
+      // toJSON: function(){
+      //   return "hello I am toJSON function"
+      // }
+    }
+
+    //将JavaScrip中的复杂对象转化为JSON格式的字符串
+    var objString = JSON.stringify(obj);
+    localStorage.setItem("abc", objString);
+    //获取JSON字符串转换回对象
+    var jsonString = localStorage.getItem("abc");
+    var info = JSON.parse(jsonString, function (key, value) {
+      if (value === 18) {
+        return value += 2;
+      }
+      return value;
+    })
+
+    console.log(info);
+
+    //replace参数是一个数组,只输出数组中的kv
+    // var objString2 = JSON.stringify(obj, ["name", "age"]);
+    // console.log(objString2);
+
+    // //replace参数是一个函数,函数参数中kv是对象所有的属性和值
+    // var objString3 = JSON.stringify(obj, function (key, value) {
+    //   console.log(key, value);
+    //   if (key === "name") {
+    //     return "zsd";
+    //   }
+    //   return value;
+    // });
+    // console.log(objString3);
+
+  </script>
+</body>
+
+</html>

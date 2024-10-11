@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var urlSearch = new URLSearchParams("name=bik&age=18&height=1.88")
+    console.log(urlSearch.get("name"));
+    console.log(urlSearch.toString());
+    urlSearch.set("address", "广东");
+    console.log(urlSearch.get("address"));//广东
+    console.log(urlSearch.has("age"));//true
+    console.log(urlSearch.toString());
+    urlSearch.append("email", "123@qq.com");
+    console.log(urlSearch.toString());
+
+  </script>
+</body>
+
+</html>
