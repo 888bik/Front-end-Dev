@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //默认绑定,独立函数调用,this指向window
+    // var foo = function () {
+    //   console.log("foo函数执行");
+    //   console.log(this);
+    // }
+    // foo();
+    //隐式绑定,通过某个对象调用
+    // var obj = {
+    //   name: "bik",
+    //   bar: function () {
+    //     console.log("bar函数执行");
+    //     console.log(this);//this指向obj
+    //   }
+    // }
+    // obj.bar();
+
+    // function foo() {
+    //   console.log(this);
+    // }
+    // var obj1 = {
+    //   name: "obj1",
+    //   foo: foo,
+    // }
+    // var obj2 = {
+    //   name: "obj2",
+    //   obj1: obj1,
+    // }
+    // obj2.obj1.foo();//this指向obj1
+
+    // function foo() {
+    //   console.log(this);
+    // }
+    // var obj1 = {
+    //   nam: "obj1",
+    //   foo: foo
+    // }
+    // var bar = obj1.foo;
+    // bar();//this指向window
+    //显示绑定
+    // var obj = {
+    //   name: "obj",
+    // }
+    // function foo(name, age) {
+    //   console.log(this);
+    //   console.log(name, age);
+    // }
+    // foo.apply();//默认为window
+    // foo.apply("aaa");//传入参数后,this指向这个传入的对象
+    // foo.apply(obj, ["bik", 18]);
+    // foo.call(obj, "bik", 18)
+    // var bar = foo.bind(obj,"bik",18);
+    // bar();
+    //内置函数中的this指向
+    // setTimeout(() => {
+    //   console.log(this);//this指向window
+    // }, 3000);
+    // function Person(name) {
+    //   console.log(this);
+    //   this.name = name
+    // }
+    // var p = new Person("bik");
+    // console.log(p);
+
+    //this规则之外-忽略显示绑定
+    // function foo(){
+    //   console.log(this);
+    // }
+    // foo.apply("bik");
+    // foo.apply(null);
+    // foo.call(undefined);
+    function foo() {
+      console.log(this);
+    };
+    var obj1 = {
+      name: "obj1",
+      foo: foo
+    };
+    var obj2 = {
+      name: "obj2",
+    };
+    (obj2.foo = obj1.foo)();
+  </script>
+</body>
+
+</html>

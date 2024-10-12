@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //基础写法
+    // var foo = (name) => {
+    //   console.log("箭头函数执行", name);
+    // }
+    // foo("bik");
+    ////优化一:参数只有一个可以将()省略
+    // var foo = name => {
+    //   console.log("箭头函数执行",name);
+    // }
+    // foo("bik");
+    //优化二:如果函数执行体只有一行代码,可以省略大括号(不能带return)
+    //原先写法
+    // var foo = name => {
+    //   console.log(name);
+    // }
+    // foo("bik");
+    // //优化后
+    // var foo = name => console.log(name);
+    // foo("bik");
+    //优化三
+    //原先写法
+    // var foo = (num1, num2) => {
+    //   return num1 > num2 ? true : false;
+    // }
+    // var result = foo(20, 18);
+    // //优化后
+    // var foo = (num1, num2) => num1 > num2 ? true : false;
+    // var result = foo(20, 18);
+
+    // console.log(result);
+    //优化四
+    //原先写法
+    var foo = () => {
+      return { name: "bik" }
+    }
+    var result1 = foo();
+    console.log(result1);//bik
+    //错误写法,浏览器无法解析{}是代码块还是对象
+    var bar = () => { name: "bik" }
+    var result2 = bar()
+    console.log(result2);//undefined
+    // 优化后
+    var baz = () => ({ name: "bik" })
+    var result3 = baz();
+    console.log(result3);
+  </script>
+</body>
+
+</html>

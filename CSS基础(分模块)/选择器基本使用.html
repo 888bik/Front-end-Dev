@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 通用选择器 */
+    * {
+      font-size: 20px;
+    }
+
+    /* 类选择器 */
+    .box {
+      background-color: chocolate;
+    }
+
+    /* id选择器 */
+    #H {
+      font-style: italic;
+    }
+
+    /* 属性选择器 */
+    [att=S] {
+      font-style: oblique;
+      background-color: rebeccapurple;
+    }
+
+    /* 全后代选择器 */
+    .box span {
+      font-style: italic;
+      background-color: red;
+    }
+
+    /* 直接子代选择器 */
+    .box>h1 {
+      background-color: rebeccapurple;
+    }
+
+    /* 兄弟选择器 */
+    /* 相邻兄弟选择器 */
+    .box>h1+.content {
+      background-color: rebeccapurple;
+    }
+
+    /* 普遍兄弟选择器 */
+    .box>h1~span {
+      background-color: red;
+    }
+
+    /* 选择器组-交集选择器 */
+    div.content {
+      background-color: salmon;
+    }
+
+    /* 选择器组-并集选择器 */
+    #H,
+    .content {
+      background-color: seagreen;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h1 id="H">我是h1元素</h1>
+    <div class="content">
+      我是content
+      <h2>
+        我是h2元素
+      </h2>
+    </div>
+    <span att="S">我是span元素</span>
+  </div>
+</body>
+
+</html>

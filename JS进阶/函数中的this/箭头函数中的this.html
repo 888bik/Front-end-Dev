@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+
+    //验证箭头函数中没有this
+    //普通函数中是有this的
+    // var bar = function () {
+    //   console.log(this);
+    // }
+    // bar();
+    // bar.apply("bik");//this指向bik字符串
+    // //箭头函数中就没有this
+    // var foo = () => {
+    //   console.log(this);
+    // }
+    // foo();//之所以是window是因为它会向上层作用域寻找
+    // foo.apply("bik");
+
+    //this的查找规则
+    var obj = {
+      name: "obj",
+      foo: () => {
+        var bar = () => {
+          console.log("bar:", this);
+        }
+        return bar;
+      }
+    }
+    var fn = obj.foo();
+    fn.apply("bbb");
+  </script>
+</body>
+
+</html>
