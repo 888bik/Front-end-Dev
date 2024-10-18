@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //1.定义父类构造函数
+    function Person() {
+      this.name = "bik";
+    }
+    //2.父类原型上添加内容
+    Person.prototype.running = () => {
+      console.log(this.name + "running");
+    }
+    //3.定义子类构造函数
+    function Student(name, address, id) {
+      Person.call(this, name, address);
+      this.id = id;
+    }
+    //4.创建父类对象,并且作为子类的原型对象
+    var p = new Person();
+    Student.prototype = Person.prototype;
+    //5.在子类原型上添加内容
+    Student.prototype.studying = () => {
+      console.log(this.name + "studying");
+    }
+  </script>
+</body>
+
+</html>

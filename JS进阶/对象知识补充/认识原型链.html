@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var obj = {
+      name: "bik",
+      age: 18,
+    }
+    obj.__proto__ = {
+      height: 1.88
+    }
+    obj.__proto__.__proto__ = {
+      address: "清远"
+    }
+    obj.__proto__.__proto__.__proto__ = {
+      email: "123@qq.com",
+    }
+    // console.log(obj.__proto__.__proto__.__proto__.__proto__.__proto__);
+    // console.log(obj.address);
+    // console.log(obj.height);
+    // console.log(obj.email);
+    var p1  = new Object();
+    console.log(p1.__proto__.__proto__);
+    
+    
+    
+    
+  </script>
+</body>
+
+</html>

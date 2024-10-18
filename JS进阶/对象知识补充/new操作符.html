@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Person() {
+      
+    }
+    var p1 = new Person();
+
+    //上面的操作相当于以下操作
+    // p1 = {};
+    // p1.__proto__ = Person.prototype;
+
+    // var p2 = new Person();
+    // var p3 = new Person();
+    // console.log(p2.__proto__ === p1.__proto__);//true
+    // console.log(p2.prototype === p3.prototype);//true
+    // console.log(Person.prototype === p2.__proto__);//true
+    //prototype添加属性   
+
+    //可以通过对象直接添加属性
+    p1.name = "bik";
+    p1.age = 18;
+    console.log(p1.name,p1.age);
+    //也可以以下这种方式添加属性,原理是利用原型链的查找规则:如果操作的属性在自己对象内找不到的话会找__proto__
+    //而__proto__指向Person的原型对象,即Person.prototype,所以在prototype这个对象添加属性也会被p1,p2访问到
+    Person.prototype.height = 1.88;
+    Person.prototype.address = "清远";
+    console.log(p1.height);
+    console.log(p1.address);
+    
+
+    
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Person() {
+
+    }
+    Person.prototype = {
+      constructor:Person,
+      name: "bik",
+      age: 18,
+      eating: function () {
+        console.log(this.name + "在吃东西");
+      }
+    }
+    Object.defineProperty(Person.prototype,"constructor",{
+      enumerable:false,
+      value:Person
+    })
+  </script>
+</body>
+
+</html>
