@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Person {
+      constructor(name, age, sex) {
+        this.name = name
+        this.age = age
+        this.sex = sex
+      }
+      eating() {
+        console.log(this);
+        console.log(this.name + "正在干饭");
+      }
+      running() {
+        console.log(this.name + "正在跑步");
+      }
+    }
+
+    class Student extends Person {
+      constructor(name, age, sex) {
+        super(name, age, sex)
+      }
+      eating() {
+        console.log(this);
+        super.eating()
+      }
+      studying() {
+        console.log(this.name + "在学习");
+      }
+    }
+    const stu1 = new Student("bik", 18, "男");
+    console.log(stu1.age);
+    stu1.eating();
+    // stu1.running();
+    // stu1.studying();
+
+  </script>
+</body>
+
+</html>

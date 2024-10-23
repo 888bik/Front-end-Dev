@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Person {
+      constructor(name, age) {
+        this._name = name//使用下划线表示私有属性
+        this._age = age
+      }
+      set name(newName) {
+        console.log("调用了name的setter方法");
+        this._name = newName
+      }
+      get name() {
+        console.log("调用了name的getter方法");
+        return this._name
+      }
+    }
+    const p = new Person("bik", 18)
+    
+    console.log(p.name);//通过getter方法访问
+    console.log(p._name);//直接通过对象访问
+
+    p.name = "hello"
+    console.log(p._name);
+    p._name =  "world"
+    console.log(p._name);
+    
+    
+    
+    // p.name = "dik"
+  </script>
+</body>
+
+</html>

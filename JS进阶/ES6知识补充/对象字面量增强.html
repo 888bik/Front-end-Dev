@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //1.属性增强:如果属性的值与变量名相同,可以省略属性值
+    // const name = "bik"
+    // const age = 18
+    // const obj = {
+    //   name,//等价于{name:name,age:age}
+    //   age,
+    // }
+    // console.log(obj.age);
+    // console.log(obj.name);
+
+    //2.方法增强:定义对象的方法时,可以省略function关键字
+    // const obj = {
+    //   sayHello() {
+    //     console.log("hello");
+    //   },
+    //   sayGoodbye() {
+    //     console.log("bye");
+    //   }
+    // }
+    //3.计算属性名:使用中括号[]可以动态的设置属性名
+    // const key = "name";
+    // const obj = {
+    //   [key]: "bik"
+    // }
+    // console.log(obj[key]);
+    //4.对象嵌套
+    // const person = {
+    //   name: "bik",
+    //   address: {
+    //     province: "广东省",
+    //     city: "清远市"
+    //   }
+    // }
+    // console.log(person.name);
+    // console.log(person.address.province + person.address.city);
+
+    //5.使用展开运算符
+    // const obj1 = {
+    //   a: 1,
+    //   b: 2,
+    //   c: 3
+    // }
+    // const obj2 = {
+    //   ...obj1,//a,b,c
+    //   d: 4
+    // }
+    // console.log(obj2);
+
+
+
+
+  </script>
+</body>
+
+</html>

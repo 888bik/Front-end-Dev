@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Person {
+      constructor(name, height) {
+        this.name = name
+        this.height = height
+      }
+      eating() {
+        console.log(this.name + "在吃饭");
+      }
+      running(age, name) {
+        console.log(`${age}岁的${name}在跑步`);
+      }
+    }
+    class MyArray extends Array{
+
+    }
+    const arr = new MyArray(5);
+    console.log(arr.length);
+    
+    console.log(Array.prototype);
+    
+    class Student extends Person {
+      constructor(name, age, height) {
+        super(name, height)
+        console.log(this);
+        this.age = age
+      }
+    }
+    const stu = new Student("bik", 18, 1.88);
+    // console.log(stu.age);
+    // console.log(stu.height);
+    // console.log(stu.name);
+    // stu.running(18, "bik");
+    // stu.eating();
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Person {
+      //普通方法,需要通过实例对象调用
+      eating() {
+        console.log("干饭");
+      }
+      //静态方法,直接通过类调用
+      static running() {
+        console.log("跑步");
+      }
+    }
+    const p = new Person();
+    p.eating()
+    Person.running()
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+
+<body>
+  <script>
+    class Person {
+      constructor(name, age) {
+        this.name = name
+        this.age = age
+      }
+      eating() {
+        console.log(this.name + "正在吃饭");
+      }
+      running() {
+        console.log(this);
+        console.log(this.name + "在跑步");
+      }
+    }
+    const p1 = new Person("bik", 18);
+    console.log(Person);
+    console.log(Person.prototype);//eating,running
+    console.log(p1.__proto__ === Person.prototype);//true
+    console.log(typeof Person);//function
+
+
+
+    // p1.eating();
+    p1.running();
+    // console.log(p1.age);
+    // console.log(p1.name);
+
+    var Student = class {
+
+    }
+  </script>
+</body>
+
+</html>
