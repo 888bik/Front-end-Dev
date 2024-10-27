@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function foo() {
+      console.log("foo函数被调用了", this, arguments);
+    }
+    const fooProxy = new Proxy(foo, {
+      apply: function (target, thisArg, otherArgs) {
+        console.log("函数的apply侦听");
+        return target.apply(thisArg,otherArgs);
+      },
+      construct: function (target, arrArray, newTarget) {
+        console.log(target, arrArray, newTarget);
+        return new target();
+      }
+    });
+    fooProxy();
+  </script>
+</body>
+
+</html>

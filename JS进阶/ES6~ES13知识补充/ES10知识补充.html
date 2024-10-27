@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const nums = [12, 32, [23, 35], [[45, 98], [12, 65]], 100];
+    // const newNums1 = nums.flat(1);
+    // const newNums2 = nums.flat(2);
+
+    // console.log(newNums1);
+    // console.log(newNums2);
+
+    //map基本用法
+    // const nums = [1, 2, 3, 4, 5]
+    // const newNums = nums.map((x) => {
+    //   return x * x;
+    // })
+    // console.log(newNums);
+    // //提取对象属性
+    // const people = [
+    //   {
+    //     name: "bik",
+    //     age: 20,
+    //   },
+    //   {
+    //     name: "Alice",
+    //     age: 29,
+    //   },
+    //   {
+    //     name: "Bob",
+    //     age: 43,
+    //   }
+    // ];
+    // const names = people.map((person) => {
+    //   return person.name;//相当于for循环调用people[i].name并返回
+    // })
+    // console.log(names);
+    //使用索引
+    // const num = [10, 20, 30];
+    // const result = num.map((value,index) => {
+    //   return value = value + index;
+    // })
+    // console.log(result);
+    // const obj = {
+    //   name: "bik",
+    //   age: 18,
+    //   height: 1.88,
+    //   address: "广州"
+    // }
+    // const keys = Object.entries(obj);
+    // const newObject = Object.fromEntries(keys);
+    // console.log(newObject);
+    // console.log(typeof newObject);
+
+
+    // const message = "   Hello World   ";
+    // console.log(message.trim());
+    // console.log(message.trimStart());
+    // console.log(message.trimEnd());
+
+    // const foo = "";
+    // const result1 = foo || "默认值";
+    // const result2 = foo ?? "默认值";
+    // console.log(result1);//打印默认值
+    // console.log(result2);//啥也没打印
+
+    const obj = {
+      friend: {
+        girlFriend: {
+          name: "lucy"
+        }
+      }
+    }
+    //原先写法
+    if (obj.friend && obj.friend.girlFriend) {
+      console.log(obj.friend.girlFriend.name);
+    }
+    //可选链的方法
+    console.log(obj.friend?.girlFriend?.name);
+
+
+
+
+
+
+  </script>
+
+</body>
+
+</html>

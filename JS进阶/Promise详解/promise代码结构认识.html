@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const promise = new Promise((resolve, reject) => {
+    //   //调用resolve,那么then传入的回调会被执行
+    //   resolve("哈哈哈哈");
+    //   //调用reject,那么catch传入的回调会被执行
+    //   // reject("错误信息");
+    // });
+    // promise.then(msg => {
+    //   console.log(msg);
+    // }).catch(err => {
+    //   console.log(err);
+    // });
+    // function requestData(url, successCallback, failureCallback) {
+    //   setTimeout(() => {
+    //     if (url === "http://baidu.com") {
+    //       //发送成功
+    //       successCallback();
+    //     } else {
+    //       //发送失败
+    //       failureCallback();
+    //     }
+    //   }, 1000);
+    // }
+    // new Promise((resolve, reject) => {
+    //   console.log("executor代码");
+    //   resolve("hello promise")
+    // }).then(msg => {
+    //   console.log("resolve的回调" + msg);
+    // })
+    //情况二:
+    // new Promise((resolve, reject) => {
+    //   resolve(new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //       resolve("第二个promise的resolve")//等待10秒
+    //     }, 10000);
+    //   }))
+    // }).then(msg => {
+    //   console.log("msg:", msg);//msg: 第二个promise的resolve
+    // }).catch(err => {
+    //   console.log("err:", err);
+    // })
+    //情况三:
+    new Promise((resolve, reject) => {
+      resolve({
+        then: function (resolve, reject) {
+          resolve("thenable value");
+        }
+      })
+    }).then(msg => {
+      console.log("msg:" + msg);//msg:thenable value
+    })
+
+
+  </script>
+</body>
+
+</html>

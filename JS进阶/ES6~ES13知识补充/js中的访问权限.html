@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Person {
+      address = "中国"
+      static totalCount = "14亿"
+
+      //只能类内部访问
+      #sex = "male"
+      static #maleCount = "5亿"
+
+      constructor(name, age) {
+        this.name = name
+        this.age = age
+      }
+      //静态代码块,在类加载的时候被立即执行,主要作用是进行类级别的初始化，或设置一些静态属性和执行其他一次性的逻辑
+      static {
+        console.log("static block execution");
+      }
+      printInfo() {
+        console.log(this.address, this.#sex, Person.#maleCount);
+      }
+    }
+    console.log(Person.totalCount);//直接通过类访问,类属性
+    // console.log(Person.#maleCount);//不能访问到
+    const p = new Person("bik", 18);
+    p.printInfo();
+
+  </script>
+</body>
+
+</html>

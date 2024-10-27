@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //then方法接收两个参数
+    // const promise = new Promise((resolve, reject) => {
+    //   // resolve("hello")
+    //   reject("hello")
+    // });
+    // promise.then(msg => {
+    //   console.log("msg:", msg);
+    // }).catch(err => {
+    //   console.log("err:", err);
+    // })
+    // //等价于下面这种写法
+    // promise.then(msg => {
+    //   console.log("msg:", msg);
+    // }, err => {
+    //   console.log("err:", err);
+    // })
+    //then方法多次调用
+    // const promise = new Promise((resolve, reject) => {
+    //   resolve("hello");
+    // });
+    // promise.then(msg => {
+    //   console.log("msg1:", msg);
+    // });
+    // promise.then(msg => {
+    //   console.log("msg2:", msg);
+    // });
+    // promise.then(msg => {
+    //   console.log("msg3:", msg);
+    // });
+
+    //then方法的返回值
+    //将then回调函数的返回值
+    // const promise = new Promise((resolve, reject) => {
+    //   resolve("then1");
+    // });
+    // promise.then(msg => {
+    //   console.log("msg1", msg);
+    //   return "then2"
+    // }).then(msg => {
+    //   console.log("msg2:", msg);
+    //   return "then3"
+    // }).then(msg => {
+    //   console.log("msg3", msg);
+    // })
+
+    const promise = new Promise((resolve, reject) => {
+      resolve("hello");
+    }).then(msg => {
+      console.log("msg", msg);
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve("world");
+        }, 1000);
+      })
+    }).then(msg => {
+      console.log("msg2", msg);
+    })
+  </script>
+</body>
+
+</html>

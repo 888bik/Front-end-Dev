@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const names = ["abc", "cbd", "efg", "kfc"]
+    //1.数组的解构
+    //1.1基本使用
+    // var [name1, name2, name3, name4] = names;
+    // console.log(name1, name2, name3, name4);
+    // //1.2顺序问题:严格的顺序
+    // var [name1, , , name4] = names
+    // console.log(name1, name4);
+
+    // //1.3解构出数组,剩余参数接收多余的参数
+    // // const [name1, name2, ...otherNames] = names
+    // // console.log(name1, name2, otherNames);
+
+    // //1.4解构的默认值,如果names数组中没有定义第四个参数,这里也可以定义并赋值,优先使用数组定义的值
+    // var [name1, name2, name3, name4 = "hello"] = names;
+    // console.log(name1, name2, name3, name4);//abc,cbd,efg,kfc
+
+    //2.对象的解构
+    var obj = {
+      name: "bik",
+      age: 18,
+      height: 1.88
+    }
+    //原先取值
+    var name = obj.name;
+    var age = obj.age;
+    var height = obj.height;
+    //2.1基本使用
+    var { name, age, height } = obj
+    console.log(name, age, height);//bik,18,1.88
+
+    //2.2顺序问题:对象的解构是没有顺序的,根据key解构
+    var { height, age, name } = obj
+    console.log(age, height, name);//18,1.88,bik
+
+    //2.3对变量进行命名
+    var { height: Mheight, name: Mname, age: Mage } = obj
+    console.log(Mheight, Mname, Mage);
+
+    //2.4默认值
+    var {
+      height: Mheight,
+      name: Mname,
+      age: Mage,
+      address: Maddress = "中国"
+    } = obj
+    console.log(Mheight, Mage, Mheight, Maddress);
+
+
+
+  </script>
+</body>
+
+</html>
