@@ -10,16 +10,31 @@
 <body>
   <script>
     //创建正则
+    // const re1 = /abc/ig
+    // const message = "abck24 adebdfa132324 as3452iacabca4322sabc";
+    // //使用字符串的方式,传入一个正则表达式
+    // //需求:将abc换成iii,忽略大小写
+    // const newMessage1 = message.replace(re1, "iii");
+    // console.log(newMessage1);
+    // //需求:将字符串的数字全部删除掉
+    // const re2 = /\d/ig
+    // const newMessage2 = message.replace(re2, "");
+    // console.log(newMessage2);
+
     const re1 = /abc/ig
-    const message = "abck24 adebdfa132324 as3452iacabca4322sabc";
-    //使用字符串的方式,传入一个正则表达式
-    //需求:将abc换成iii,忽略大小写
-    const newMessage1 = message.replace(re1, "iii");
-    console.log(newMessage1);
-    //需求:将字符串的数字全部删除掉
-    const re2 = /\d/ig
-    const newMessage2 = message.replace(re2, "");
-    console.log(newMessage2);
+    const message = "abc adebdfa132324 as3452iaCba4322sabc";
+
+    //使用正则对象上的实例方法
+    //test:匹配一个字符串是否含有符合正则规则的
+    if (re1.test(message)) {
+      console.log("message符合规则");
+    } else {
+      console.log("message不符合规则");
+    }
+    //exec:使用正则执行一个字符串
+    const result = re1.exec(message);
+    console.log(result);
+
   </script>
 </body>
 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const promise = new Promise((resolve, reject) => {
+      reject("发生错误")
+    });
+    promise.catch(err => {
+      console.log("err1", err);
+      throw new Error("抛出一个异常");
+    }).then(msg => {
+      console.log("msg", msg);
+    }).catch(err => {
+      console.log("err2", err);
+    })
+    // promise.catch(err => {
+    //   throw new Error("抛出一个异常");
+    // }).catch(err => {
+    //   console.log("err2", err);
+    // }).then(msg => {
+    //   console.log("msg", msg);
+    // })
+
+    // promise.catch(err => {
+    //   console.log("err1:", err);
+    //   return "hello" //将返回值传给后面的then方法（返回的Promise对象默认状态是fulfilled）
+    // }).catch(err => {
+    //   console.log("err2", err);
+    // }).then(msg => {
+    //   console.log("msg", msg);
+    // })
+    // promise.catch(err => {
+    //   console.log("err2:", err);
+    // })
+    // promise.catch(err => {
+    //   console.log("err3:", err);
+    // })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //any方法
+    // const p1 = new Promise((resolve, reject) => {
+    //   // resolve("hello1")//只要有一个为fulfilled状态,那么新Promise的结果为fulfilled
+    //   reject("错误❌")
+    // })
+    // const p2 = new Promise((resolve, reject) => {
+    //   resolve("hello2")
+    //   // reject("错误❌")
+    // })
+    // const p3 = new Promise((resolve, reject) => {
+    //   // resolve("hello3")
+    //   reject("错误❌")
+    // })
+    // Promise.any([p1, p2, p3]).then(res => {
+    //   console.log(res);
+    // }).catch(err => {
+    //   console.log("err", err);
+    // })
+
+
+    //race方法
+    // const p1 = new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve("hello1")
+    //   }, 3000);
+    // })
+    // const p2 = new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve("hello2")
+    //   }, 2000);
+    // })
+    // const p3 = new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     reject("错误")
+    //   }, 4000);
+    // })
+    // Promise.race([p1, p2, p3]).then(msg => {
+    //   console.log("msg", msg);
+    // }).catch(err => {
+    //   console.log("err", err);
+    // })
+
+    //allSettled方法
+    const p1 = new Promise((resolve, reject) => {
+      reject("错误")
+    })
+    const p2 = new Promise((resolve, reject) => {
+      resolve("hello")
+    })
+    const p3 = new Promise((resolve, reject) => {
+      resolve("hello")
+    })
+    // Promise.allSettled([p1, p2, p3]).catch(err => {
+    //   console.log("err", err);
+    // })
+    Promise.allSettled([p1, p2, p3]).then(msg => {
+      console.log("msg", msg);
+    }).catch(err => {
+      console.log("err", err);
+    })
+
+    //all方法
+    // const p1 = new Promise((resolve, reject) => {
+    //   // resolve("hello");//所有Promise的状态都为fulfilled,新的Promise状态也为fulfilled
+    //   reject("错误");//但是所有Promise的状态中只要有一个为rejected,新的Promise状态就为rejected
+    // })
+    // const p2 = new Promise((resolve, reject) => {
+    //   resolve("hello")
+    // })
+    // const p3 = new Promise((resolve, reject) => {
+    //   resolve("hello")
+    // })
+    // Promise.all([p1, p2, p3]).then(msg => {
+    //   console.log("msg:", msg);
+    // }).catch(err => {
+    //   console.log("err:", err);
+    // })
+
+    // Promise.reject(new Promise((resolve, reject) => {
+    //   resolve("hello")
+    // })).catch(err => {
+    //   console.log("err:", err);
+    // }).then(msg => {
+    //   console.log("msg", msg);
+    // })
+    // //相当于
+    // new Promise((resolve, reject) => {
+    //   reject("错误")
+    // })
+    //情况二:参数本身是Promise对象
+    // Promise.resolve(new Promise((resolve, reject) => {
+    //   reject("err")
+    // })).then(msg => {
+    //   console.log("msg:", msg);
+    // }).catch(err => {
+    //   console.log("err:", err);
+    // })
+    // Promise.resolve("hello").then(msg => {
+    //   console.log("msg:", msg);
+    // })
+    //等价于
+    // new Promise((resolve, reject) => {
+    //   resolve("hello")
+    // }).then(msg => {
+    //   console.log("msg", msg);
+    // })
+  </script>
+</body>
+
+</html>

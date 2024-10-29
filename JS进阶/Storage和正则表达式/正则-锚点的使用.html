@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const message = "My name is zsd,I am coder"
+    const re1 = /^My/g
+    const re2 = /coder$/g
+    if (re1.test(message)) {
+      console.log("以My开头");
+    } else {
+      console.log("不是以My开头");
+    }
+    if (re2.test(message)) {
+      console.log("以coder结尾");
+    } else {
+      console.log("不是以coder结尾");
+    }
+  </script>
+</body>
+
+</html>

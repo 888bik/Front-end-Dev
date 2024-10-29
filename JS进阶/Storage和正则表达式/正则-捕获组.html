@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //将捕获组作为整体
+    const info = "dafj;lajslfdjabcAbcldfasdeabCabca;gasdgabcasde"
+    const abcRe = /(abc){2,}/ig//将()中的字符串作为一个整体，后面紧跟{}表示要找多少个
+    console.log(info.match(abcRe));
+  </script>
+</body>
+
+</html>

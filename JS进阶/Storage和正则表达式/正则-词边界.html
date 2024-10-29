@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //匹配时间
+    const message = "now time 19:25,number is 123.456";
+    const pattern = /\b\d\d:\d\d\b/g;
+    const time = message.match(pattern);
+    console.log(time);
+  </script>
+</body>
+
+</html>
