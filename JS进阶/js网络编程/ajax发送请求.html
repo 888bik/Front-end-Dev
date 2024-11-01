@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //1.创建XMLHttpRequest对象
+    const xhr = new XMLHttpRequest();
+    //2.监听对象状态的改变
+    xhr.onreadystatechange = function () {
+      console.log("状态发生了改变");
+    }
+    //3.配置请求的方式/URL
+    xhr.open("GET", "")
+
+    //4.发送请求
+    xhr.send();
+
+  </script>
+</body>
+
+</html>

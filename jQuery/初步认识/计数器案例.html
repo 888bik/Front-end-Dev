@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<button class="add">+</button>
+<span class="count">0</span>
+<button class="sub">-</button>
+
+<body>
+  <script src="../libs/jQuery源码.js"></script>
+  <script>
+    //原生计数器写法
+    // var count = 0;
+    // const addEl = document.querySelector(".add");
+    // const subEl = document.querySelector(".sub");
+    // const counter = document.querySelector(".count");
+    // addEl.addEventListener("click", function () {
+    //   counter.textContent = ++count;
+    // })
+    // subEl.addEventListener("click", function () {
+    //   counter.textContent = --count;
+    // })
+    //使用jQuery
+    //$ === jQuery()
+    //监听DOM解析完毕
+    // $(function () {
+    //   let $count = $(".count")
+    //   let count = 0;
+    //   $(".sub").click(function () {
+    //     $count.text(--count);
+    //   })
+    //   $(".add").click(function () {
+    //     $count.text(++count);
+    //   })
+    // })
+    //监听所有资源加载完毕
+    $(window).on("load", function () {
+      console.log("所有资源加载完毕");
+    })
+
+  </script>
+</body>
+
+</html>

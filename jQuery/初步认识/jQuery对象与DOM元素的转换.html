@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>我是按钮</button>
+  <span>我是span元素</span>
+  <li>li-1</li>
+  <li>li-2</li>
+  <li>li-3</li>
+  <li>li-4</li>
+  <script src="../libs/jQuery源码.js"></script>
+  <script>
+
+    //DOM元素转换为jQuery对象
+    const liObj = $("li");
+
+    console.log(liObj);
+
+    //jQuery对象转换为DOM元素
+    const liEl = liObj.get();
+    console.log(liEl);
+
+
+  </script>
+</body>
+
+
+</html>

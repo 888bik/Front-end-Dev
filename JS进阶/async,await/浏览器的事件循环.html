@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function sum(num1, num2) {
+      return num1 + num2;
+    }
+
+    function bar() {
+      return sum(20, 30);
+    }
+
+    setTimeout(() => {
+      console.log("setTimeout");
+    }, 1000);
+
+    const result = bar();
+    console.log(result);
+  </script>
+</body>
+
+</html>

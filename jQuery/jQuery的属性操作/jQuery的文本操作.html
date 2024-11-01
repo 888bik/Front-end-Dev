@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul id="list" class="panel">
+    <li class="li-1">li-1</li>
+    <li class="li-2">li-2</li>
+    <li class="li-3">li-3</li>
+    <li class="li-4">li-4</li>
+    <li class="li-5">li-5</li>
+  </ul>
+  <input class="user" type="text" placeholder="请输入用户名">
+  <input class="password" type="text" placeholder="请输入密码">
+
+  <button class="login">登录</button>
+  <button class="setUserInfo">设置用户信息</button>
+
+  <script src="../libs/jQuery源码.js"></script>
+  <script>
+    $(function () {
+      //text的使用
+      $("ul li").text("I am li");//默认修改全部
+      //可以搭配过滤器,链式调用
+      $("ul li").last().text("I am latest li")
+
+      //html的使用
+      const liHtml = $("ul li").html()
+      console.log(liHtml);
+
+      //val的使用
+      //获取文本框的值
+      $(".login").click(function () {
+        console.log($(".user").val());
+        console.log($(".password").val());
+      })
+      //设置文本框的值
+      $(".setUserInfo").click(function () {
+        $(".user").val("bik");
+        $(".password").val("bik");
+      })
+    })
+  </script>
+</body>
+
+</html>

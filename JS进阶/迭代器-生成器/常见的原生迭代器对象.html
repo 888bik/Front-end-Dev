@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //字符串
+    const str = "Hello World";
+    for (const element of str) {
+      console.log(element);
+    }
+    console.log(str[Symbol.iterator]);
+    const iterator = str[Symbol.iterator]();
+    console.log(iterator.next());
+    console.log(iterator.next());
+    console.log(iterator.next());
+    console.log(iterator.next());
+    //数组
+    const arr = ["abc", "cbd", "efa", "kfc"]
+    for (const element of arr) {
+      console.log(arr);
+    }
+    //arguments
+    function foo(x, y, z) {
+      for (const element of arguments) {
+        console.log(element);
+      }
+    }
+    foo(19, 29, 39);
+
+
+  </script>
+</body>
+
+</html>

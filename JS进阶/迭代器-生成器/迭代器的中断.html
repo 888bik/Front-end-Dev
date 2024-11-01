@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const info = {
+      friends: ["zkz", "zsd", "zzx", "zxb"],
+      [Symbol.iterator]: function () {
+        let index = 0;
+        return {
+          next: function () {
+            if (index < this.friends.length) {
+              return { done: false, value: friends[index++] }
+            } else {
+              return { done: true, value: undefined }
+            }
+          },
+          return: function () {
+            console.log("迭代器中断");
+            return { done: true }
+          }
+        }
+      }
+    }
+    for (const element of info.friends) {
+      console.log(element);
+      if (element === "zsd") {
+        break;
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>

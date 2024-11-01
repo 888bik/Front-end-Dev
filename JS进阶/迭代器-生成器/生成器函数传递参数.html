@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function* foo(initial) {
+      console.log("函数开始执行");
+      const value1 = yield initial + "aaa"
+      const value2 = yield value1 + "bbb"
+      const value3 = yield value2 + "ccc"
+    }
+    //返回一个生成器
+    const generator = foo("bik");
+    const result1 = generator.next();
+    console.log("result1", result1);
+
+    const result2 = generator.next();
+    console.log("result2", result2);
+
+    const result3 = generator.next();
+    console.log("result3", result3);
+  </script>
+</body>
+
+</html>

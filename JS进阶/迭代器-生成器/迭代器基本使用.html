@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const info = ["bik", "广州", "1.88"]
+    // let index = 0;
+    // const infoIterator = {
+    //   next: function () {
+    //     if (index < info.length) {
+    //       return { done: false, value: info[index++] }
+    //     } else {
+    //       return { done: true, value: undefined }
+    //     }
+    //   }
+    // }
+    // console.log(infoIterator.next());
+    // console.log(infoIterator.next());
+    // console.log(infoIterator.next());
+
+    const info = ["bik", "清远", "1.88"]
+    //对上面的功能进行封装
+    function createArrayIterator(arr) {
+      let index = 0;
+      //返回一个迭代器对象,对象里面包括next函数
+      return {
+        next: function () {
+          if (index < arr.length) {
+            return { done: false, value: arr[index++] }
+          } else {
+            return { done: true, value: undefined }
+          }
+        }
+      }
+    }
+    const infoIterator = createArrayIterator(info)
+    console.log(infoIterator.next());
+    console.log(infoIterator.next());
+    console.log(infoIterator.next());
+    console.log(infoIterator.next());
+  </script>
+</body>
+
+</html>
