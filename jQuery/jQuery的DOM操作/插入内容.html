@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul id="list" class="panel">
+    <li class="li-1">li-1</li>
+    <li class="li-2">li-2</li>
+    <li class="li-3">li-3</li>
+    <li class="li-4">li-4</li>
+    <li class="li-5">li-5</li>
+  </ul>
+  <script src="../libs/jQuery源码.js"></script>
+  <script>
+    $(function () {
+      //插入内容方式一:
+      //在ul后面插入内容
+      // $("ul").append('<li class="li-6">li-6</li>')
+      // $("ul").append("我是插入的内容")
+      // $("ul").before($(".li-5"))//是move,不是clone
+      // //在ul前面插入内容
+      // $("ul").prepend("我是插入的内容")
+
+      // //在ul这个元素之前插入内容
+      // $("ul").before("Hello")
+      // //在ul这个元素后面插入内容
+      // $("ul").after("World")
+
+      //插入内容方式二:
+      //将内容插入到ul后面
+      $("<li>")
+        .addClass("li6")
+        .text("我是li-6")
+        // .appendTo($("ul"))
+        .insertAfter($("ul"));
+    })
+  </script>
+</body>
+
+</html>

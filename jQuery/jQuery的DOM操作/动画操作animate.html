@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      height: 100px;
+      width: 100px;
+      background-color: pink;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+
+  </div>
+  <button class="show">show</button>
+  <button class="hide">hide</button>
+  <button class="toggle">toggle</button>
+  <script src="../libs/jQuery源码.js"></script>
+  <script>
+    $(function () {
+      // $(".box").animate({
+      //   height: 0,
+      //   width: 0,
+      //   opacity: 0,
+      // }, 2000, "linear", function () {
+      //   console.log("动画执行完成");
+      // })
+      $(".show").on("click", function () {
+        $(".box").show("fast", function () {
+          console.log("动画执行完成");
+        })
+        $(".hide").on("click", function () {
+          $(".box").hide("fast", function () {
+            console.log("动画执行完成");
+          })
+        })
+        $(".toggle").on("click", function () {
+          $(".box").toggle({
+            duration: 3000,
+            complete: function () {
+              console.log("动画执行完成");
+            }
+          })
+        })
+      })
+    })
+  </script>
+</body>
+
+</html>

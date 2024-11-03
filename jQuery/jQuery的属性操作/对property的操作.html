@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul id="list" class="panel" data-name="bik">
+    <li class="li-1">li-1</li>
+    <li class="li-2">li-2</li>
+    <li class="li-3">li-3</li>
+    <li class="li-4">li-4</li>
+    <li class="li-5">li-5</li>
+  </ul>
+  <script src="../libs/jQuery源码.js"></script>
+  <script>
+    $(function () {
+      console.log($("ul").prop("id"));//prop可以获取attribute属性
+      console.log($("ul").prop("class"));
+      console.log($("ul").prop("data-name"));//undefined ,prop没办法获取自定义属性.
+      $("ul").removeProp("id");
+    })
+  </script>
+</body>
+
+</html>

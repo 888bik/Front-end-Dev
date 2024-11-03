@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul id="list" class="panel">
+    <li class="li-1">li-1</li>
+    <li class="li-2">li-2</li>
+    <li class="li-3">li-3</li>
+    <li class="li-4">li-4</li>
+    <li class="li-5">li-5</li>
+  </ul>
+  <script src="../libs/jQuery源码.js"></script>
+  <script>
+    $(function () {
+      //删除操作
+      $("ul").empty();//ul不会被删除,它的子节点就会被删除
+      $("ul").remove();//都删除
+
+      //替换元素
+      //方式一:
+      $('<span>')
+        .addClass("content")
+        .text("我是span")
+        .css("color", "red")
+        .replaceAll("ul li")
+      //方式二:
+      let $span = $("<span>").text("我是span").css("color", "orange");
+      $("ul li").replaceWith($span);
+
+      //克隆元素
+      let newLi = $("ul li:eq(1)").clone().text("我是li-6")
+      $("ul").append(newLi);
+    })
+  </script>
+</body>
+
+</html>

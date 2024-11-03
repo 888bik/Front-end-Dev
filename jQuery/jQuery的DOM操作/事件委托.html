@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    ul li {
+      background-color: skyblue;
+    }
+  </style>
+</head>
+
+<body>
+  <ul id="list" class="panel">
+    <li class="li-1">li-1</li>
+    <li class="li-2">li-2</li>
+    <li class="li-3">li-3</li>
+    <li class="li-4">li-4</li>
+    <li class="li-5">li-5</li>
+  </ul>
+  <script src="../libs/jQuery源码.js"></script>
+  <script>
+    $(function () {
+      $("ul").on("click", function (event) {
+        console.log(event);
+        console.log(event.currentTarget);
+      })
+    })
+  </script>
+</body>
+
+</html>

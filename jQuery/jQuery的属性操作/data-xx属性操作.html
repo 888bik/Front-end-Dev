@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul id="list" class="panel" data-name="bik">
+    <li class="li-1">li-1</li>
+    <li class="li-2">li-2</li>
+    <li class="li-3">li-3</li>
+    <li class="li-4">li-4</li>
+    <li class="li-5">li-5</li>
+  </ul>
+  <script src="../libs/jQuery源码.js"></script>
+  <script>
+    $(function () {
+      //获取值,从缓存中获取
+      console.log($("ul").data());
+      console.log($("ul").data("name"));
+      //设置值
+      $("ul").data("address", "清远");//只能修改缓存中的数据,由于页面已经加载完了,所以在ul看不到添加的data属性
+      console.log($("ul").data("address"));//这里就可以从缓存中获得数据,
+      //删除data属性
+      $("ul").removeData(["name", "address"])//只能删除缓存中的数据
+    })
+  </script>
+</body>
+
+</html>
