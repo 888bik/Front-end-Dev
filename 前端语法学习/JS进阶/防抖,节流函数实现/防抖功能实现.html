@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text">
+  <button>取消</button>
+  <script src="libs/MyDebounce.js"></script>
+  <script>
+    let count = 0;
+    let inputEl = document.querySelector("input");
+    let btnEl = document.querySelector("button")
+
+    const MyDebounceFn = MyDebounce(function () {
+      console.log("发送网络请求:", count++);
+    }, 2000,true);
+
+    btnEl.addEventListener("click", function () {
+      MyDebounceFn.chanel();
+    })
+
+    inputEl.oninput = MyDebounceFn;
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text">
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.7/underscore-umd-min.js"></script>
+  <script>
+
+    let count = 0;
+    let inputEl = document.querySelector("input")
+    // inputEl.addEventListener("input", function () {
+    //   console.log(`发送网络请求:${count++}`);
+    // })
+    inputChange = function () {
+      console.log(`发送网络请求:${count++}`);
+    }
+    inputEl.oninput = _.debounce(inputChange,100);
+  </script>
+</body>
+
+</html>
