@@ -14,8 +14,7 @@ swift
 
 2. 把以下所有句子的第一个单词改为 Just Vim It
 
-Just Vim It is a simple easy vim tutorial
-Just Vim It is a simple easy vim tutorial
+
 Just Vim It is a simple easy vim tutorial
 Just Vim It is a simple easy vim tutorial
 Just Vim It is a simple easy vim tutorial
@@ -24,3 +23,5 @@ Just Vim It is a simple easy vim tutorial
 Just Vim It is a simple easy vim tutorial
 Just Vim It is a simple easy vim tutorial
 
+Just Vim It is a simple easy vim tutorial
+Just Vim It is a simple easy vim tutorial

@@ -1,0 +1,9 @@
+{
+  "name": "pnpm-tool",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "axios": "^1.7.7"
+  }
+}

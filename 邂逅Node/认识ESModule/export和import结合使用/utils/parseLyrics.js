@@ -1,3 +1,3 @@
-export function parseLyric() {
+export function parseLyrics() {
   return "歌词"
 }
