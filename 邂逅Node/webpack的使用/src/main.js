@@ -1,5 +1,7 @@
-const message = "hello webpack"
-console.log(message);
+import "./css/style.css"
+import "./css/demo.less"
+
+console.log(MESSAGE);
 
 function foo(x,y) {
   return x + y
@@ -8,7 +10,7 @@ const result = foo(100,392)
 console.log(result);
 
 
-bar = () => {
+const bar = () => {
   console.log("I am bar");
 }
 bar();
@@ -25,3 +27,8 @@ divEL.append(spanEl);
 const pEl = document.createElement("p");
 pEl.textContent = "I am p";
 bodyEl.append(pEl);
+
+const bgEl = document.createElement("div");
+bgEl.classList = "bg";
+bodyEl.append(bgEl);
+
