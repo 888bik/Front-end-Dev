@@ -9,11 +9,16 @@ function foo(x,y) {
 const result = foo(100,392)
 console.log(result);
 
-
+if (module.hot) {
+  module.hot.accept("./utils/demo.js", () => {
+    console.log("utils模块发生了更新");
+  })
+}
 const bar = () => {
   console.log("I am bar");
 }
 bar();
+console.log("hello");
 
 const divEL = document.createElement("div");
 divEL.textContent = "I am div";

@@ -20,6 +20,12 @@ module.exports = {
       MESSAGE: "'hello webpack'"
     })
   ],
+  devServer: {
+    compress: true,//启用gzip压缩
+    port: 9999,//服务器端口 
+    open:true,//自动打开浏览器
+    hot:true,//启动热更新
+  },
   module: {
     rules: [
       {
