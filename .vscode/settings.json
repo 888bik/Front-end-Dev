@@ -44,7 +44,7 @@
             "silent": true
         }
     ],
-    "vim.normalModeKeyBindings":[
+    "vim.normalModeKeyBindings": [
         {
             "before": [
                 "J"
@@ -63,5 +63,12 @@
                 "k"
             ]
         },
-    ]
+    ],
+    "docwriter.language": "English",
+    "docwriter.style": "JSDoc",
+    "docwriter.progress.trackFunctions": true,
+    "docwriter.progress.trackMethods": true,
+    "docwriter.progress.trackClasses": true,
+    "docwriter.progress.trackTypes": true,
+    "docwriter.hotkey.windows": "Alt + ."
 }

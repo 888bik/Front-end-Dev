@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>hello vue</h1>
+    <h2>{{title}}</h2>
+    <h3>{{name}}</h3>
+  </div>
+  <script src="../lib/vue.js"></script>
+  <script>
+    const app = Vue.createApp({
+      // template: `<h1>{{title}}</h1>`,//如果template有内容,优先展示template的
+      data: function () {
+        return {
+          title: "bik",
+          name:"zsd"
+        }
+      }
+    })
+
+    //挂载
+    app.mount("#app")
+  </script>
+</body>
+
+</html>
