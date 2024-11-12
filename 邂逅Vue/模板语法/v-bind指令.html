@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <img v-bind:src="showUrl" alt="">
+    <button @click="changeImg">改变图片</button>
+    <!-- 这种写法是错误的 -->
+    <!-- <a href="{{url}}">百度一下</a> -->
+    <!-- 这种写法才是正确的 -->
+    <a :href="url">百度一下</a>
+  </div>
+  <script src="../lib/vue.js"></script>
+  <script>
+    const app = Vue.createApp({
+      data: function () {
+        return {
+          url: "https://www.baidu.com",
+          imgUrl1: "https://pic35.photophoto.cn/20150511/0034034892281415_b.jpg",
+          imgUrl2: "https://th.bing.com/th/id/OIP.DOOxGtkUiW8QevWtAxsRtAHaEK?rs=1&pid=ImgDetMain",
+          showUrl: "https://pic35.photophoto.cn/20150511/0034034892281415_b.jpg"
+        }
+      },
+      methods: {
+        changeImg: function () {
+          this.showUrl = this.showUrl === this.imgUrl1 ? this.imgUrl2 : this.imgUrl1
+        }
+      }
+    })
+    //挂载app
+    app.mount("#app")
+  </script>
+</body>
+
+</html>

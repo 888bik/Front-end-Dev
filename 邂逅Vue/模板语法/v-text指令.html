@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <span v-text="msg"></span>
+      <!-- 上面这种写法相当于下面这种写法 -->
+    <span>{{msg}}</span>
+  </div>
+  <script src="../lib/vue.js"></script>
+  <script>
+    const app = Vue.createApp({
+      data: function () {
+        return {
+          msg: "hello vue"
+        }
+      }
+    })
+    app.mount("#app") 
+  </script>
+</body>
+
+</html>

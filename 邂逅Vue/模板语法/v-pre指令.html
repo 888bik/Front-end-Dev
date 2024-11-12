@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 会显示 -->
+    <div class="box">
+      {{msg}}
+    </div>
+    <!-- 不会显示 -->
+    <div class="box" v-pre>
+      {{msg}}
+    </div>
+  </div>
+  <script src="../lib/vue.js"></script>
+  <script>
+    const app = Vue.createApp({
+      data: function () {
+        return {
+          msg: "hello vue"
+        }
+      },
+      methods: {
+
+      }
+    })
+    //挂载app
+    app.mount("#app")
+  </script>
+</body>
+
+</html>
