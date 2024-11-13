@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <button @click.once="btnClick">我是按钮</button>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {};
+        },
+        methods: {
+          btnClick: function () {
+            console.log("用户点击");
+          },
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

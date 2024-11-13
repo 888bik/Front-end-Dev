@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 情况一:默认会将event对象传给回调 -->
+      <button @click="btnClick1">我是按钮</button>
+
+      <!-- 也可以传递自己定义的变量 -->
+      <button @click="btnClick2(message)">我也是按钮</button>
+
+      <!-- 情况二:如果需要同时传递某个参数,同时需要event时,可以通过$event传入事件 -->
+      <button @click="btnClick3($event,message)">我是按钮3</button>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            message: "hello vue",
+          };
+        },
+        methods: {
+          btnClick1: function (event) {
+            console.log(event);
+          },
+          btnClick2: function (event) {
+            console.log(event);
+          },
+          btnClick3: function (event, message) {
+            console.log(event, message);
+          },
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

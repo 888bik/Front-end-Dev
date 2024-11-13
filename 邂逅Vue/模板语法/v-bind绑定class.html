@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- 普通的绑定方式 -->
+      <!-- <div :class="className">{{message}}</div> -->
+
+      <!-- 动态的切换class是否加入:{类(变量):boolean(true/false)} -->
+      <!-- 动态class可以写对象语法 -->
+      <button :class="isActive ? 'active':' '" @click="btnClick">
+        我是按钮
+      </button>
+
+      <!-- 对象语法的基本使用 -->
+      <button :class="{active:isActive}" @click="btnClick">我还是按钮</button>
+
+      <!-- 对象语法的多个键值对 -->
+      <button :class="{active:isActive,bik:name,}" @click="btnClick">
+        我是按钮
+      </button>
+
+      <!-- 动态绑定的class是可以和普通的class同时的使用 -->
+      <button
+        class="abc def"
+        :class="{active:isActive,bik:true}"
+        @click="btnClick"
+      >
+        我是按钮
+      </button>
+
+      <!-- 动态class可以写数组语法 -->
+      <h2 :class="['abc','def']">hello Array</h2>
+      <h2 :class="['abc',{active:isActive}]">hello Array</h2>
+      <h2 :class="['abc',isActive? 'active':'']">hello Array</h2>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            isActive: true,
+            name: true,
+          };
+        },
+        methods: {
+          btnClick: function () {
+            this.isActive = !this.isActive;
+            this.name = !this.name;
+          },
+        },
+      });
+      //挂载app
+      app.mount("#app");
+    </script>
+  </body>
+</html>

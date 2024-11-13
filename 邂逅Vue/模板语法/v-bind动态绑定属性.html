@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 属性的名称是动态的  -->
+      <div :[name]="value">{{message}}</div>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            value:"zsd",
+            message:"hello vue",
+            name: "bik",
+          };
+        },
+        methods: {},
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

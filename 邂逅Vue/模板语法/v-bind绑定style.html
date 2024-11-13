@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 普通的写法html -->
+      <div style="color: rebeccapurple; font-size: large">I am div</div>
+
+      <!-- style的某些值来自data中 -->
+      <!-- 动态绑定style,在后面跟上对象类型 -->
+      <!-- 属性名用驼峰式 (camelCase) 或短横线分隔 -->
+      <div :style="{color: fontColor ,fontSize: fontSize}">{{message}}</div>
+
+      <!-- 动态的绑定属性,这个属性是一个对象 -->
+      <div :style="objStyle">hello vue</div>
+
+      <!-- style的数组语法 -->
+      <div :style="[objStyle,{fontWeight: '1000'}]">hello array</div>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            message: "hello vue",
+            fontColor: "red",
+            fontSize: "60px",
+            objStyle: {
+              fontSize: "90px",
+              color: "orange",
+              backgroundColor: "blue",
+            },
+          };
+        },
+        methods: {},
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>
