@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 数字遍历 -->
+      <ul>
+        <li v-for="item in 10">{{item}}</li>
+      </ul>
+      <!-- 对象遍历 -->
+      <ul>
+        <li v-for="value in info">{{value}}</li>
+      </ul>
+      <ul>
+        <li v-for="(value,key) in info">{{value}} - {{key}}</li>
+      </ul>
+      <ul>
+        <li v-for="(value,key,index) in info">
+          {{value}} - {{key}} - {{index}}
+        </li>
+      </ul>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            info: {
+              name: "bik",
+              age: 18,
+              address: "广东",
+              height: 1.88,
+            },
+          };
+        },
+        methods: {},
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

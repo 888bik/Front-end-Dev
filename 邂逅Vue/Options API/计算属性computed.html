@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 注意不用加括号 -->
+      <h2>{{fullName}}</h2>
+      <h2>{{result}}</h2>
+      <h2>{{reverseMessage}}</h2>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            firstName: "zhao",
+            lastName: "kaize",
+            x: 195,
+            y: 349,
+            message: "hello vue",
+          };
+        },
+        methods: {},
+        computed: {
+          //完整写法
+          fullName: {
+            get() {
+              return this.firstName + " " + this.lastName;
+            },
+            set(value) {
+              const names = value.split("");
+              this.firstName = names[0];
+              this.lastName = name[1];
+            },
+          },
+          result() {
+            return this.x + this.y;
+          },
+          reverseMessage() {
+            return this.message.split();
+          },
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

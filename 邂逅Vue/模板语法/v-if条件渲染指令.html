@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <template v-if="showHa">
+        <h2>哈哈哈</h2>
+        <h2>哈哈哈</h2>
+        <h2>哈哈哈</h2>
+      </template>
+      <!-- <template v-else>
+        <h2>呵呵呵</h2>
+        <h2>呵呵呵</h2>
+        <h2>呵呵呵</h2>
+      </template> -->
+
+      <button @click="toggle">切换</button>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            showHa: true,
+          };
+        },
+        methods: {
+          toggle: function () {
+            this.showHa = !this.showHa;
+          },
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

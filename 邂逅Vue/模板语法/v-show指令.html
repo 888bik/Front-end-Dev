@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- <template>
+        v-show不支持template
+        <h2 v-show="isShow">嘿嘿嘿</h2>
+      </template> -->
+      <div>
+        <h2 v-show="isShow">嘿嘿嘿</h2>
+      </div>
+      <button @click="btnClick">切换</button>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            isShow: true,
+          };
+        },
+        methods: {
+          btnClick: function () {
+            this.isShow = !this.isShow;
+          },
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

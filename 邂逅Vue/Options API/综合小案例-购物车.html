@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      th {
+        /* background-color: orange; */
+        border: 1px solid orange;
+        text-align: center;
+        padding: 8px;
+      }
+      .active {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <template v-if="books.length">
+        <table>
+          <thead>
+            <tr>
+              <th>序号</th>
+              <th>书籍名称</th>
+              <th>出版日期</th>
+              <th>价格</th>
+              <th>购买数量</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody
+            v-for="(book,index) in books"
+            :key="book.id"
+            @mouseMove="mouseMove($event,index)"
+            :class="{active:index===currentIndex}"
+          >
+            <tr>
+              <th>{{book.id}}</th>
+              <th>{{book.name}}</th>
+              <th>{{book.date}}</th>
+              <th>{{book.price}}</th>
+
+              <th>
+                <button @click="sub($event,index)" :disabled="book.count<1">
+                  -
+                </button>
+                {{book.count}}
+                <button @click="add($event,index)">+</button>
+              </th>
+
+              <th>
+                <button @click="remove(index)">移除</button>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </template>
+      <template v-else>
+        <h2>双十一,速来抢购</h2>
+      </template>
+
+      <h2>¥{{totalPrice}}</h2>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script src="js/data.js"></script>
+    <script>
+      console.log(books);
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            books: books,
+            currentIndex: 0,
+          };
+        },
+        computed: {
+          totalPrice() {
+            //遍历book计算出总价格
+            let totalPrice = 0;
+            for (const book of this.books) {
+              totalPrice += book.count * book.price;
+            }
+            return totalPrice;
+          },
+        },
+        methods: {
+          sub(event, index) {
+            this.books[index].count--;
+          },
+          add(event, index) {
+            this.books[index].count++;
+          },
+          remove(index) {
+            this.books.splice(index, 1);
+          },
+          mouseMove(event, index) {
+            this.currentIndex = index;
+          },
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

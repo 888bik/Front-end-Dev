@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>{{message}}</h2>
+      <button @click="changeMessage">changeMessage</button>
+      <h3>{{info}}</h3>
+      <button @click="changeInfo">changeInfo</button>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            message: "hello bik",
+            info: {
+              name: "bik",
+              age: 19,
+              address: "广东",
+            },
+          };
+        },
+        methods: {
+          changeMessage() {
+            this.message = "hello zsd";
+          },
+          changeInfo() {
+            //这种情况下修改原属性,是没有被监听到的,这时候可以在watch中设置deep为true即可监听到
+            this.info.age = 20;
+            this.info.address = "北京";
+          },
+        },
+        //监听message属性
+        watch: {
+          //默认有两个参数:newValue/oldValue
+          message(newValue, oldValue) {
+            console.log("原先的值:" + oldValue);
+            console.log("最先的值:" + newValue);
+          },
+          //监听对象类型
+          info: {
+            // 配置选项要换这种写法
+            handler(newValue, oldValue) {
+              //如果是对象类型,那么拿到的是代理对象
+              console.log("info数据发生变化:", newValue, oldValue);
+              //获取原生对象
+              // console.log(Vue.toRaw(newValue));
+            },
+            deep: true,
+            immediate: true,
+          },
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>
