@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 绑定textarea -->
+      <!-- <textarea name="" id="" cols="30" rows="10" v-model="article"></textarea> -->
+      <!-- <h2>{{article}}</h2> -->
+
+      <!-- 绑定复选框 -->
+      <!-- 单个复选框 -->
+      <div>
+        <label for="agreement">
+          <input type="checkbox" v-model="isAgree" id="agreement" />同意协议
+        </label>
+      </div>
+
+      <!-- 多个复选框 -->
+      <div class="hobby">
+        <label for="basketball">
+          <input
+            type="checkbox"
+            v-model="hobbies"
+            id="basketball"
+            value="basketball"
+          />篮球
+        </label>
+        <label for="sing">
+          <input type="checkbox" v-model="hobbies" id="sing" value="sing" />唱
+        </label>
+        <label for="jump">
+          <input type="checkbox" v-model="hobbies" id="jump" value="jump" />跳
+        </label>
+        <label for="rap">
+          <input type="checkbox" v-model="hobbies" id="rap" value="rap" />rap
+        </label>
+      </div>
+
+      <!-- 绑定radio -->
+      <div>
+        <label for="male">
+          <input type="radio" id="male" value="male" v-model="gender" />男
+        </label>
+        <label for="female">
+          <input type="radio" id="female" value="female" v-model="gender" />女
+        </label>
+      </div>
+
+      <!-- 绑定select -->
+      <!-- 单选 -->
+      <div>
+        <select v-model="fruit">
+          <option value="banana">香蕉</option>
+          <option value="apple">苹果</option>
+          <option value="orange">橙子</option>
+        </select>
+      </div>
+
+      <!-- 多选 -->
+      <div>
+        <select v-model="fruits" multiple size="2">
+          <option value="banana">香蕉</option>
+          <option value="apple">苹果</option>
+          <option value="orange">橙子</option>
+        </select>
+      </div>
+      <h5>水果列表:{{fruits}}</h5>
+      <h4>水果:{{fruit}}</h4>
+      <h3>性别:{{gender}}</h3>
+      <h2>isAgree当前的值是:{{isAgree}}</h2>
+      <h1>hobbies:{{hobbies}}</h1>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            isAgree: true,
+            hobbies: [],
+            gender: "male",
+            fruit: "",
+            fruits: [],
+          };
+        },
+        methods: {},
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

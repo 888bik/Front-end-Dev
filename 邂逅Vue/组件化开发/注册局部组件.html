@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <component-a></component-a>
+      <component-b></component-b>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <template id="component-a">
+      <!-- ComponentA的data和模板变量中title和content只对该组件有效 -->
+      <h2>{{title}}</h2>
+      <p>{{content}}</p>
+    </template>
+    <template id="component-b">
+      <h2>{{title}}</h2>
+      <p>{{content}}</p>
+    </template>
+    <script>
+      const ComponentA = {
+        template: "#component-a",
+        data() {
+          return {
+            title: "我是 component A标题",
+            content: "我是内容,哈哈哈哈",
+          };
+        },
+      };
+      const ComponentB = {
+        template: "#component-b",
+        data() {
+          return {
+            title: "我是 component B标题",
+            content: "我是内容,呵呵呵呵",
+          };
+        },
+      };
+      const app = Vue.createApp({
+        data: function () {
+          return {};
+        },
+        methods: {},
+        components: {
+          "component-a": ComponentA,
+          "component-b": ComponentB,
+        },
+      });
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>

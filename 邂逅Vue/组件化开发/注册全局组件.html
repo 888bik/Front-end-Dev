@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 使用组件 -->
+      <my-cpn></my-cpn>
+      <my-cpn></my-cpn>
+      <my-cpn></my-cpn>
+    </div>
+
+    <!-- 组件的模板 -->
+    <template id="my-cpn">
+      <h2>我是组件标题</h2>
+      <p>我是组件内容</p>
+    </template>
+    
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {};
+        },
+        methods: {},
+      });
+      //注册全局组件
+      app.component("my-cpn", {
+        template: "#my-cpn",
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

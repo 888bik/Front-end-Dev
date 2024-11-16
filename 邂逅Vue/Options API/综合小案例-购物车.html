@@ -8,6 +8,9 @@
       table {
         border-collapse: collapse;
       }
+      thead {
+        background-color: skyblue;
+      }
       th {
         /* background-color: orange; */
         border: 1px solid orange;
@@ -33,6 +36,7 @@
               <th>操作</th>
             </tr>
           </thead>
+          <!-- 动态添加class -->
           <tbody
             v-for="(book,index) in books"
             :key="book.id"
@@ -44,7 +48,6 @@
               <th>{{book.name}}</th>
               <th>{{book.date}}</th>
               <th>{{book.price}}</th>
-
               <th>
                 <button @click="sub($event,index)" :disabled="book.count<1">
                   -
@@ -52,7 +55,6 @@
                 {{book.count}}
                 <button @click="add($event,index)">+</button>
               </th>
-
               <th>
                 <button @click="remove(index)">移除</button>
               </th>
@@ -98,6 +100,7 @@
             this.books.splice(index, 1);
           },
           mouseMove(event, index) {
+            //更新索引
             this.currentIndex = index;
           },
         },
