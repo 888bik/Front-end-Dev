@@ -4,5 +4,6 @@ import { createApp } from "vue";
 // import App from "./父子组件通信-子传父/App.vue";
 // import App from "./组件间通信案例练习/App.vue";
 // import App from "./插槽的基本使用/App.vue";
-import App from './非父子组件间的通信/App.vue';
+// import App from './非父子组件间的通信/App.vue';
+import App from './组件化额外知识补充/App.vue';
 createApp(App).mount("#app");
