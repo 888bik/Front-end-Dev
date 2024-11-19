@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>{{message}}</div>
+      <button @click="changeMessage">按钮</button>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data: function () {
+          return {
+            message:"hello vue"
+          };
+        },
+        methods: {
+          changeMessage(){
+            this.message = "hello bik";
+          }
+        },
+        //生命周期回调函数:当前的组件被创建时自动执行
+        //一般在该函数中会进行网络请求
+        created() {
+          console.log("created");
+
+          this.$watch("message", (newValue, oldValue) => {
+            console.log("message数据发生变化:", newValue, oldValue);
+          },{deep:true,immediate:true});
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>
