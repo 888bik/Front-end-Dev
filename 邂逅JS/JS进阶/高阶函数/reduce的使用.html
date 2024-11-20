@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let books = [
+        {
+          bookName: "Redis高手心法",
+          price: 99,
+        },
+        {
+          bookName: "码农翻身",
+          price: 88,
+        },
+      ];
+      const result =books.reduce((acc, currentItem) => {
+        return acc.price + currentItem.price;
+      });
+      console.log(result);
+    </script>
+  </body>
+</html>
