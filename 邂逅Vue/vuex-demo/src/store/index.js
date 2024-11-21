@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import counterModule from '../modules/counter';
 
 const store = createStore({
   // state: function () {
@@ -11,7 +12,7 @@ const store = createStore({
   state: () => ({
     age: 19,
     name: "bik",
-    counter: 99,
+    // counter: 99,
     level: 999,
     books: [
       { id: 1, bookName: "Redis高手心法", price: 99 },
@@ -21,37 +22,53 @@ const store = createStore({
   }),
   getters: {
     //基本使用
-    doubleCounter(state) {
-      return state.counter * 2;
-    },
-    totalPrice(state) {
-      return state.books.reduce((preValue, item) => {
-        // console.log(preValue);
-        return preValue + item.price;
-      }, 0);
-    },
-    //在该getters属性中,获取其他的getters
-    message(state, getters) {
-      return `name:${state.books[1].bookName} totalPrice:${getters.totalPrice}`;
-    },
-    //getters是可以返回一个函数的,调用这个函数可以传入函数
-    getBookById(state) {
-      return function (id) {
-        return state.books.find((item) => item.id == id);
-      };
-    },
+    // doubleCounter(state) {
+    //   return state.counter * 2;
+    // },
+    // totalPrice(state) {
+    //   return state.books.reduce((preValue, item) => {
+    //     // console.log(preValue);
+    //     return preValue + item.price;
+    //   }, 0);
+    // },
+    // //在该getters属性中,获取其他的getters
+    // message(state, getters) {
+    //   return `name:${state.books[1].bookName} totalPrice:${getters.totalPrice}`;
+    // },
+    // //getters是可以返回一个函数的,调用这个函数可以传入函数
+    // getBookById(state) {
+    //   return function (id) {
+    //     return state.books.find((item) => item.id == id);
+    //   };
+    // },
   },
-  mutations: {
-    add(state) {
-      state.counter++;
-    },
-    sub(state) {
-      state.counter--;
-    },
-    changeInfo(state, playLoad) {
-      state.name = playLoad;
-    },
-  },
+  // mutations: {
+  //   add(state) {
+  //     state.counter++;
+  //   },
+  //   sub(state) {
+  //     state.counter--;
+  //   },
+  //   changeInfo(state, playLoad) {
+  //     state.name = playLoad;
+  //   },
+  // },
+  // actions: {
+  //   addAction(context) {
+  //     return new Promise((resolve, reject) => {
+  //       setTimeout(() => {
+  //         context.commit("add")
+  //         resolve("操作完成");
+  //       }, 1000);
+  //     })
+  //   },
+  //   changeInfoAction(context, playLoad) {
+  //     context.commit("changeInfo", playLoad);
+  //   },
+  // },
+  modules: {
+    counterM: counterModule
+  }
 });
 
 export default store;
