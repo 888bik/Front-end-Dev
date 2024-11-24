@@ -1,47 +1,60 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div class="app">
+    <router-view></router-view>
+    <div class="tab-bar">
+      <template v-for="(item, index) in tabbarData">
+        <div
+          class="tab-bar-item"
+          @click="tabbarClick(index, item)"
+          :class="{ active: currentIndex === index }"
+        >
+          <span class="text">{{ item.text }}</span>
+          <img v-if="currentIndex ===index":src="getAssetUrl(item.imageActive)" />
+          <img v-else :src="getAssetUrl(item.image)" />
+        </div>
+      </template>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<script setup>
+import tabbarData from "@/assets/data/tabbarData.js";
+import getAssetUrl from "@/utils/load_assets.js";
+import { toRef } from "vue";
+import { useRouter } from "vue-router";
+//索引是响应式的
+const router = useRouter();
+const currentIndex = toRef(0);
+function tabbarClick(index, item) {
+  currentIndex.value = index;
+  router.push(item.path);
 }
+</script>
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
+<style lang="less" scoped>
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  display: flex;
+  .tab-bar-item {
+    flex: 1;
     display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 36px;
+    }
+    .text {
+      font-size: 12px;
+      margin-top: 2px;
+    }
+    &.active {
+      color: var(--primary-color);
+    }
   }
 }
 </style>
