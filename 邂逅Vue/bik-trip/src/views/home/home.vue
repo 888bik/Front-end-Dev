@@ -1,9 +1,25 @@
 <template>
   <div class="home">
-    <h2>home页面</h2>
+    <home-nav-bar/>
+    <div class="banner">
+      <img src="@/assets/image/home/banner.webp" alt="" />
+    </div>
+    <home-search></home-search>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import HomeNavBar from './cpns/home-nav-bar.vue';
+import HomeSearch from './cpns/home-search.vue';
+</script>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped>
+.home {
+  padding-bottom: 100px;
+}
+.banner {
+  img {
+    width: 100%;
+  }
+}
+</style>

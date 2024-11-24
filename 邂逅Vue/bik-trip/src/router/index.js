@@ -23,6 +23,10 @@ const router = createRouter({
       path: "/order",
       component: () => import("@/views/order/order.vue"),
     },
+    {
+      path: "/city",
+      component: () => import("@/views/home/cpns/home-city.vue")
+    }
   ],
 });
 export default router;
