@@ -2,9 +2,10 @@
   <div class="search-box">
     <!-- 位置信息 -->
     <div class="location bottom-gray-line">
+      <!-- 位置选择 -->
       <div class="city" @click="cityClick">
-        {{ currentPosition[1] }}-{{ currentPosition[2] }}-{{
-          currentPosition[3]
+        {{ cityStore.currentCity[1] }}-{{ cityStore.currentCity[2] }}-{{
+          cityStore.currentCity[3]
         }}
       </div>
       <div class="position" @click="getPositionClick">
@@ -58,16 +59,25 @@
 
 <script setup>
 import router from "@/router";
+import UseCityStore from "@/stores/modules/cityStore";
 import { formatMonthWithDay, getDiffDays } from "@/utils/formatDate";
-import getPositionClick from "@/utils/getPosition";
-import { ref } from "vue";
+import getPosition from "@/utils/getPosition";
+import { ref, toRef } from "vue";
+const cityStore = UseCityStore();
 // 城市选择
 const cityClick = () => {
   router.push("/city");
 };
 
-//获取地理位置
-let currentPosition = getPositionClick();
+//点击按钮获取地理位置
+function getPositionClick() {
+  cityStore.currentCity = getPosition();
+}
+//执行文件先执行一次
+// cityStore.currentCity = toRef(getPositionClick());
+// cityStore.currentCity = getPositionClick()
+console.log(cityStore.currentCity);
+// let currentPosition = getPositionClick();
 //处理日期时间
 const nowDate = new Date();
 const newDate = new Date();

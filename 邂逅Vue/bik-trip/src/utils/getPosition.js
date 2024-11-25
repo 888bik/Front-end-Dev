@@ -2,7 +2,7 @@ import axios from "axios";
 import { ref } from "vue";
 let currentPosition = ref("");
 //获取经纬度
-function getPositionClick() {
+function getPosition() {
   navigator.geolocation.getCurrentPosition(
     (res) => {
       const latitude = res.coords.latitude;
@@ -37,4 +37,4 @@ function getLocationFromCoordinates(latitude, longitude) {
     });
   return currentPosition;
 }
-export default getPositionClick;
+export default getPosition;

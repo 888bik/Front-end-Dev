@@ -38,6 +38,8 @@ function tabbarClick(index, item) {
 
 <style lang="less" scoped>
 .tab-bar {
+  // z-index: 1;
+  // background-color: #ff9854;
   position: fixed;
   bottom: 0;
   left: 0;
