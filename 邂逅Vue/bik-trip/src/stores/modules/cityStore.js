@@ -4,7 +4,7 @@ const UseCityStore = defineStore("city", {
   state: () => {
     return {
       allCities: {},
-      hotCities: {},
+      hotSuggests: {},
       currentCity: [],
     };
   },

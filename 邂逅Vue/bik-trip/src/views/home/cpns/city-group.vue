@@ -1,7 +1,7 @@
 <template>
   <div class="city-group">
     <!-- 热门城市 -->
-    <van-index-bar :index-list="indexList">
+    <van-index-bar :index-list="indexList" highlight-color="#ff9854">
       <van-index-anchor index="热门" />
       <div class="list">
         <template v-for="(city, index) in groupData.hotCities">
@@ -25,6 +25,7 @@
 <script setup>
 import router from "@/router";
 import UseCityStore from "@/stores/modules/cityStore";
+import { getLocationFromCoordinates, getPosition } from "@/utils/getPosition";
 import { compile, computed, toRefs } from "vue";
 const cityStore = UseCityStore();
 //接收父组件传来的数据
@@ -44,9 +45,11 @@ const indexList = computed(() => {
 
 //监听城市的点击
 const cityClick = (city) => {
-  //选中当前城市
-  cityStore.currentCity = city;
-  console.log(cityStore.currentCity);
+  //选中当前城市的经纬度
+  let latitude = city.latitude;
+  let longitude = city.longitude;
+  //查询经纬度对应的城市
+  cityStore.currentCity = getLocationFromCoordinates(latitude, longitude);
   //返回上一级
   router.back();
 };

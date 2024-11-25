@@ -4,9 +4,7 @@
     <div class="location bottom-gray-line">
       <!-- 位置选择 -->
       <div class="city" @click="cityClick">
-        {{ cityStore.currentCity[1] }}-{{ cityStore.currentCity[2] }}-{{
-          cityStore.currentCity[3]
-        }}
+        {{ cityStore.currentCity[1] }}-{{ cityStore.currentCity[2] }}
       </div>
       <div class="position" @click="getPositionClick">
         <span class="text">我的位置</span>
@@ -52,7 +50,17 @@
 
     <!-- 热门建议 -->
     <div class="section hot-suggests">
-      <template></template>
+      <template v-for="(item, index) in hotSuggests">
+        <div
+          class="item"
+          :style="{
+            color: item.tagText.color,
+            background: item.tagText.background.color,
+          }"
+        >
+          {{ item.tagText.text }}
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -60,24 +68,43 @@
 <script setup>
 import router from "@/router";
 import UseCityStore from "@/stores/modules/cityStore";
+import useHomeStore from "@/stores/modules/homeStore";
 import { formatMonthWithDay, getDiffDays } from "@/utils/formatDate";
-import getPosition from "@/utils/getPosition";
-import { ref, toRef } from "vue";
+import { getPosition } from "@/utils/getPosition";
+import { storeToRefs } from "pinia";
+import { onBeforeUnmount, onMounted, ref, toRef } from "vue";
 const cityStore = UseCityStore();
 // 城市选择
 const cityClick = () => {
   router.push("/city");
 };
 
-//点击按钮获取地理位置
+// 获取热门建议数据
+const homeStore = useHomeStore();
+const { hotSuggests } = storeToRefs(homeStore);
+// 点击按钮获取地理位置
 function getPositionClick() {
   cityStore.currentCity = getPosition();
 }
-//执行文件先执行一次
-// cityStore.currentCity = toRef(getPositionClick());
-// cityStore.currentCity = getPositionClick()
-console.log(cityStore.currentCity);
-// let currentPosition = getPositionClick();
+// const hasExecuted = ref(false); // 用来标记函数是否已经执行过
+//组件加载时自动执行一次函数
+// onMounted(() => {
+//   if (!hasExecuted.value) {
+//     getPosition();
+//     hasExecuted.value = true; // 标记为已经执行过
+//   }
+// });
+// 点击按钮时执行函数
+// const getPositionClick = () => {
+//   if (!hasExecuted.value) {
+//     getPosition();
+//     hasExecuted.value = true; // 标记为已经执行过
+//   }
+// };
+// onBeforeUnmount(() => {
+//   hasExecuted.value = false; // 你可以选择是否清除状态
+// });
+
 //处理日期时间
 const nowDate = new Date();
 const newDate = new Date();
@@ -181,6 +208,17 @@ const onConfirm = (value) => {
     text-align: center;
     font-size: 12px;
     color: #666;
+  }
+}
+.hot-suggests {
+  margin: 10px 0;
+
+  .item {
+    padding: 4px 8px;
+    margin: 4px;
+    border-radius: 14px;
+    font-size: 12px;
+    line-height: 1;
   }
 }
 </style>

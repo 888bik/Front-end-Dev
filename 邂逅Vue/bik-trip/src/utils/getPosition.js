@@ -37,4 +37,5 @@ function getLocationFromCoordinates(latitude, longitude) {
     });
   return currentPosition;
 }
-export default getPosition;
+// export default getPosition;
+export { getLocationFromCoordinates, getPosition };

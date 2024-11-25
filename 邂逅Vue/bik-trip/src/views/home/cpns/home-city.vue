@@ -21,11 +21,13 @@
       </div>
     </div>
 
+    <!-- 城市内容展示 -->
     <div class="content">
       <template v-for="(value, key, index) in allCities">
         <city-group v-show="tabActive === key" :group-data="value"></city-group>
       </template>
     </div>
+
   </div>
 </template>
 
