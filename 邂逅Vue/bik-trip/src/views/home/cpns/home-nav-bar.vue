@@ -1,6 +1,6 @@
 <template>
   <div class="nav-bar">
-    <div class="title">凯泽旅途</div>
+    <div class="title">约炮旅途</div>
   </div>
 </template>
 
@@ -15,7 +15,6 @@
   border-bottom: 1px solid #f2f2f2;
 
   .title {
-    
     color: var(--primary-color);
     font-size: 16px;
     font-weight: 600;

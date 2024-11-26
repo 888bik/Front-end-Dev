@@ -50,7 +50,7 @@
 
     <!-- 热门建议 -->
     <div class="section hot-suggests">
-      <template v-for="(item, index) in hotSuggests">
+      <template v-for="(item, index) in hotSuggests" :key="index">
         <div
           class="item"
           :style="{

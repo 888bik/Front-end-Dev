@@ -1,1 +1,1 @@
-baz.js
+const message = "soft"

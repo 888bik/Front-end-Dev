@@ -19,7 +19,6 @@ import { storeToRefs } from "pinia";
 //获取热门建议请求
 const homeStore = useHomeStore();
 homeStore.fetchHotSuggestData();
-const { hotSuggests } = storeToRefs(homeStore);
 </script>
 
 <style lang="less" scoped>
