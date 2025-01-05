@@ -1,0 +1,6 @@
+.title{
+  background-color: red;
+}
+.btn1{
+  background-color: aqua;
+}

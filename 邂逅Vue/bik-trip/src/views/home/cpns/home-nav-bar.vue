@@ -1,6 +1,6 @@
 <template>
   <div class="nav-bar">
-    <div class="title">约炮旅途</div>
+    <div class="title">旅途</div>
   </div>
 </template>
 

@@ -1,0 +1,4 @@
+<!--pages/cart/cart.wxml-->
+<text class="" selectable="false" space="false" decode="false">
+  购物车界面
+</text>
