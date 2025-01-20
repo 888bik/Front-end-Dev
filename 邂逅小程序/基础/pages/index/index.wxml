@@ -3,12 +3,22 @@
   hello {{globalData.message}}
 </view>
 <!-- 相当于span -->
-<text class="title" selectable="false" space="false" decode="true">
+<text class="title" user-select="false" space="false" decode="true">
   &lt;哈哈哈哈&gt;
 </text>
-<button class="btn1" bindtap="onclickbtn" type="primary">我是按钮</button>
-
+<!-- 按钮 -->
+<button class="btn1" bindtap="onclickbtn" type="primary" size="mini">{{message}}</button>
+<button type="warn" plain="{{true}}" loading="{{true}}" disabled="{{true}}">哈哈哈哈哈哈</button>
+<button hover-class="button-hover" form-type="submit">提交</button>
+<button open-type="share">分享</button>
 <!-- 列表展示 -->
 <block wx:for="{{books}}" wx:key="*this">
-  <view style="background-color: {{color[2]}};">{{item}}</view>
+  <view style="background-color: {{color[index]}};">{{item}}</view>
 </block>
+<!-- 自定义item,index名称 -->
+<block wx:for="{{books}}" wx:key="*this" wx:for-item="book" wx:for-index="bookIndex">
+  <view style="background-color: {{color[bookIndex]}};">{{book}}</view>
+</block>
+
+<my-cpn info="info" bind:tap="onCpnClick">
+</my-cpn>

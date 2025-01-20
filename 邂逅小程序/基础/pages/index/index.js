@@ -3,12 +3,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    books:["码农翻身","Redis高手心法","漫画设计模式","图解http"],
-    color:["red","skyblue","orange","pink"]
+    books: ["码农翻身", "Redis高手心法", "漫画设计模式", "图解http"],
+    color: ["red", "skyblue", "orange", "pink"],
+    message: "zsd999",
   },
-  onclickbtn(){
-    console.log("发生点击");
-
+  onclickbtn() {
+    //获取App实例
+    const app = getApp();
+    this.setData({
+      message: app.globalData.message,
+    });
+  },
+  onCpnClick(){
+    console.log("收到组件的点击");
   },
   /**
    * 生命周期函数--监听页面加载
@@ -16,9 +23,6 @@ Page({
    */
   onLoad(options) {
     console.log("onLoad");
-    const app = getApp();
-    const message = app.globalData.message;
-    console.log(message);
   },
 
   /**

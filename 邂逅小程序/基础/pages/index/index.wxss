@@ -1,6 +1,12 @@
-.title{
+.title {
   background-color: red;
 }
-.btn1{
+.btn1 {
   background-color: aqua;
+}
+.button-hover {
+  background-color: rebeccapurple;
+}
+.info{
+  background-color: green;
 }

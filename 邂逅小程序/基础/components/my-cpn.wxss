@@ -1,0 +1,4 @@
+/* components/my-cpn.wxss */
+.content{
+  font-size: 40px;
+}
