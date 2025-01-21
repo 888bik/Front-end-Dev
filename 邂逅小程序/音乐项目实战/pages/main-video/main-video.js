@@ -51,8 +51,16 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {
+  async onPullDownRefresh() {
     //下拉刷新重新发起请求
+    // 1.先清除之前的数据
+    this.setData({ videoList: [] });
+    this.data.offset = 0;
+    this.data.hasMore = true;
+    // 2.发起请求,这里使用异步函数,避免阻塞后面执行
+    await this.fetchTopMv();
+    // 3.停止下拉刷新
+    wx.stopPullDownRefresh();
   },
 
   /**
