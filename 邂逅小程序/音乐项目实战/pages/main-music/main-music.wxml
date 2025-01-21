@@ -7,10 +7,10 @@
   placeholder="请输入搜索关键词"
 />
   <!-- 轮播图 -->
-  <swiper class="banner" circular="{{true}}" wx:if="{{banners.length}}" indicator-dots="{{true}}">
+  <swiper class="banner" circular="{{true}}" wx:if="{{banners.length}}" indicator-dots="{{true}}" style="height:{{bannerHeight}}px" autoplay="{{true}}">
     <block wx:for="{{banners}}" wx:key="*this">
       <swiper-item class="banner-item" item-id="targetId">
-        <image class="banner-image"src="{{item.imageUrl}}" mode="widthFix"/>
+        <image class="banner-image"src="{{item.imageUrl}}" mode="widthFix" bindload="onBannerImageLoad"/>
       </swiper-item>
     </block>
   </swiper>

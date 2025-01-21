@@ -1,10 +1,28 @@
 <!--pages/detail-video/detail-video.wxml-->
+<wxs src="/utils/format.wxs" module="fmt"></wxs>
 <video src="{{mvUrl}}" autoplay="{{true}}" referrer-policy="origin" 	show-mute-btn class="video"></video>
 
-<view class="content"> 
-  <view class="desc">
-    {{mvInfo.desc}}
+<scroll-view class="content" scroll-y="{{true}}">
+<view class="info"> 
+  <view class="title">
+    {{mvInfo.name}}
   </view>
-    
+
+  <view class="desc">
+    <text>歌手:{{mvInfo.artistName}}</text>
+    <text wx:if="{{mvInfo.alias}}">-{{mvInfo.alias[0]}}</text>
+  </view>
+
+  <view class="other">
+    <text class="paly-count">{{fmt.formatCount(mvInfo.playCount)}}次播放-</text>
+    <text class="publish-time">{{mvInfo.publishTime}}</text>
+  </view>
+
 </view>
   
+<view class="related-video">
+
+</view>
+  
+
+</scroll-view>

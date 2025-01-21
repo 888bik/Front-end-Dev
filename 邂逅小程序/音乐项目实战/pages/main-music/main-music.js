@@ -1,5 +1,7 @@
 import { getBannerData } from "../../services/music";
-
+import querySelect from "../../utils/query-select";
+import MyThrottle from "../../utils/throttle";
+const querySelectThrottle = MyThrottle(querySelect, 100);
 // pages/main-music/main-music.js
 Page({
   /**
@@ -7,6 +9,8 @@ Page({
    */
   data: {
     banners: [],
+    bannerHeight: 0,
+    searchValue: "",
   },
 
   /**
@@ -15,42 +19,24 @@ Page({
   onLoad(options) {
     this.fetchBanners();
   },
+  /**
+   * 获取轮播图
+   */
   async fetchBanners() {
     const res = await getBannerData();
     this.setData({ banners: res.banners });
   },
   /**
-   * 生命周期函数--监听页面初次渲染完成
+   * 监听图片加载完毕之后,获取图片的高度
    */
-  onReady() {},
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {},
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {},
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {},
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {},
+  onBannerImageLoad() {
+    querySelectThrottle(".banner-image")
+      .then((result) => {
+        console.log(result);
+        this.setData({ bannerHeight: result[0].height });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 });
