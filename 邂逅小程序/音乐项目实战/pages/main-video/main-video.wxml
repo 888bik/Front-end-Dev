@@ -1,0 +1,7 @@
+<!--pages/main-video/main-video.wxml-->
+<view class="video-list">
+  <block wx:for="{{videoList}}">
+    <video-item  class="item" itemData="{{item}}"></video-item>
+  </block>
+</view>
+  

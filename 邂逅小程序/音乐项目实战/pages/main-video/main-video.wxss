@@ -1,0 +1,17 @@
+/* pages/main-video/main-video.wxss */
+/* 注意这里不能给item设置flex布局,因为for循环会给每个item都设置flex布局,我们要的是整体设置flex布局 */
+/* .item{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 0 10rpx;
+} */
+.video-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 0 10rpx;
+}
+.video-list .item {
+  width: 48%;
+}
