@@ -1,0 +1,7 @@
+<!--pages/detail-video/detail-video.wxml-->
+<video src="{{mvUrl}}" autoplay="{{true}}" referrer-policy="origin" class="video"></video>
+
+<view class="content"> 
+  
+</view>
+  

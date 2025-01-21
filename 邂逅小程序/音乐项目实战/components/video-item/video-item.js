@@ -18,5 +18,17 @@ Component({
   /**
    * 组件的方法列表
    */
-  methods: {},
+  methods: {
+    onItemTap() {
+      const item = this.properties.itemData
+      wx.navigateTo({
+        url: `/pages/detail-video/detail-video?id=${item.id}`,
+        success: (result)=>{
+          
+        },
+        fail: ()=>{},
+        complete: ()=>{}
+      });
+    },
+  },
 });
