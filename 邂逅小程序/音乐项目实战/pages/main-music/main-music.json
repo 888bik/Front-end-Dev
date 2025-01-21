@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "van-search": "@vant/weapp/search/index"
+  },
   "navigationBarTitleText":"BikMusic"
+  
 }

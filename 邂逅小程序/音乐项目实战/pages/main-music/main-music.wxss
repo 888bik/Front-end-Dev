@@ -1,1 +1,4 @@
 /* pages/main-music/main-music.wxss */
+.banner-image{
+  width: 100%;
+}

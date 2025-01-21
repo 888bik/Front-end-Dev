@@ -1,7 +1,10 @@
 <!--pages/detail-video/detail-video.wxml-->
-<video src="{{mvUrl}}" autoplay="{{true}}" referrer-policy="origin" class="video"></video>
+<video src="{{mvUrl}}" autoplay="{{true}}" referrer-policy="origin" 	show-mute-btn class="video"></video>
 
 <view class="content"> 
-  
+  <view class="desc">
+    {{mvInfo.desc}}
+  </view>
+    
 </view>
   
