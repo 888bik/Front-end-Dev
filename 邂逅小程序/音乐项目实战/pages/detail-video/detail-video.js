@@ -25,7 +25,6 @@ Page({
   },
   async fetchMvInfo(id) {
     const res = await getMvInfo(id);
-    console.log(res);
     this.setData({mvInfo:res.data})
   },
 

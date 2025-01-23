@@ -1,17 +1,32 @@
-<!--pages/main-music/main-music.wxml-->
+<!-- pages/main-music/main-music.wxml -->
 <!-- 搜索框 -->
-<van-search
-  value="{{ value }}"
-  shape="round"
-  background="#4fc08d"
-  placeholder="请输入搜索关键词"
-/>
-  <!-- 轮播图 -->
-  <swiper class="banner" circular="{{true}}" wx:if="{{banners.length}}" indicator-dots="{{true}}" style="height:{{bannerHeight}}px" autoplay="{{true}}">
-    <block wx:for="{{banners}}" wx:key="*this">
-      <swiper-item class="banner-item" item-id="targetId">
-        <image class="banner-image"src="{{item.imageUrl}}" mode="widthFix" bindload="onBannerImageLoad"/>
-      </swiper-item>
+<van-search value="{{ searchValue }}" shape="round" background="#fafafa" placeholder="请输入搜索关键词" />
+<!-- 轮播图 -->
+<swiper class="banner" circular="{{true}}" wx:if="{{banners.length}}" indicator-dots="{{true}}" style="height:{{bannerHeight}}px" autoplay="{{true}}">
+  <block wx:for="{{banners}}" wx:key="*this">
+    <swiper-item class="banner-item" item-id="targetId">
+      <image class="banner-image" src="{{item.imageUrl}}" mode="widthFix" bindload="onBannerImageLoad" />
+    </swiper-item>
+  </block>
+</swiper>
+<!-- 推荐歌曲展示 -->
+<view class="recommend" wx:if="{{recommendSongs.length}}">
+  <!-- 头部 -->
+  <area-header title="推荐歌曲"></area-header>
+  <!-- 歌曲列表 -->
+  <view class="list">
+    <block wx:for="{{recommendSongs}}" wx:key="id">
+      <song-item-v1 itemData="{{item}}"></song-item-v1>
     </block>
-  </swiper>
-  
+  </view>
+</view>
+<!-- 热门歌曲展示 -->
+<view class="hot">
+  <!-- 头部 -->
+  <area-header title="热门歌单"></area-header>
+  <!-- 歌曲列表 -->
+</view>
+<!-- 巅峰榜展示 -->
+<view class="ranking">
+  <area-header title="巅峰榜" hasMore="{{false}}"></area-header>
+</view>
