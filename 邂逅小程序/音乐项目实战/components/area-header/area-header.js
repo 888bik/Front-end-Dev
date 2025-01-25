@@ -23,13 +23,14 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    onRecommendMoreTap() {
-      wx.navigateTo({
-        url: "/pages/more-music/more-music?type=recommend",
-        success: (result) => {},
-        fail: () => {},
-        complete: () => {},
-      });
+    onMoreTap() {
+      // wx.navigateTo({
+      //   url: "/pages/more-music/more-music?type=recommend",
+      //   success: (result) => {},
+      //   fail: () => {},
+      //   complete: () => {},
+      // });
+      this.triggerEvent("moreTap");
     },
   },
 });

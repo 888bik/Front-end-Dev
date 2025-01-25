@@ -15,6 +15,20 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "pages/more-menu/more-menu",
+          "pathName": "pages/more-menu/more-menu",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/main-music/main-music",
+          "pathName": "pages/main-music/main-music",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

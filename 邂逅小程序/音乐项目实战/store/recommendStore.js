@@ -1,5 +1,5 @@
 import { HYEventStore } from "hy-event-store";
-import { getRecommendData } from "../services/music";
+import { getRecommendData ,getRecommendOrRankingData} from "../services/music";
 
 const recommendStore = new HYEventStore({
   state: {
@@ -7,7 +7,7 @@ const recommendStore = new HYEventStore({
   },
   actions: {
     fetchRecommendDataAction(ctx) {
-      getRecommendData(3778678).then((res) => {
+      getRecommendOrRankingData(3778678).then((res) => {
         ctx.recommendInfos = res.playlist;
       });
     },

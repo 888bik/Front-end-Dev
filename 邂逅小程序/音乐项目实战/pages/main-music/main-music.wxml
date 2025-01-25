@@ -12,7 +12,7 @@
 <!-- 推荐歌曲展示 -->
 <view class="recommend" wx:if="{{recommendSongs.length}}">
   <!-- 头部 -->
-  <area-header title="推荐歌曲"></area-header>
+  <area-header title="推荐歌曲" bind:moreTap="onRecommendTap"></area-header>
   <!-- 歌曲列表 -->
   <view class="recommend-list">
     <block wx:for="{{recommendSongs}}" wx:key="id">
@@ -20,13 +20,16 @@
     </block>
   </view>
 </view>
-
 <!-- 热门歌单展示 -->
 <area-menu menuList="{{hotMenuList}}" title="热门歌单"></area-menu>
 <!-- 推荐歌单展示 -->
 <area-menu menuList="{{recMenuList}}" title="推荐歌单"></area-menu>
-
 <!-- 巅峰榜展示 -->
-<view class="ranking">
+<view class="ranking" wx:if="{{hasRankingData}}">
   <area-header title="巅峰榜" hasMore="{{false}}"></area-header>
+  <view class="ranking-list">
+    <block wx:for="{{rankingInfos}}" wx:key="id">
+      <ranking-item itemData="{{item}}" key="{{index}}"></ranking-item>
+    </block>
+  </view>
 </view>

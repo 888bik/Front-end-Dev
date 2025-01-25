@@ -1,8 +1,9 @@
 import {
   getBannerData,
-  getRecommendData,
+  getRecommendOrRankingData,
   getSongMenuList,
 } from "../../services/music";
+import rankingStore from "../../store/rankingStore";
 import recommendStore from "../../store/recommendStore";
 import querySelect from "../../utils/query-select";
 import MyThrottle from "../../utils/throttle";
@@ -22,6 +23,9 @@ Page({
     hotMenuList: [],
     // 推荐歌单
     recMenuList: [],
+    // 巅峰榜数据
+    rankingInfos: {},
+    hasRankingData: false,
   },
 
   /**
@@ -35,6 +39,11 @@ Page({
     recommendStore.onState("recommendInfos", this.handleRecommendSongs);
     // 发起action
     recommendStore.dispatch("fetchRecommendDataAction");
+
+    rankingStore.onState("newRanking", this.handleNewRanking);
+    rankingStore.onState("originRanking", this.handleOriginRanking);
+    rankingStore.onState("upRanking", this.handleUpRanking);
+    rankingStore.dispatch("fetchRankingDataAction");
   },
   /**
    * 获取轮播图
@@ -72,6 +81,39 @@ Page({
     this.setData({ recommendSongs: value.tracks.slice(0, 6) });
   },
   /**
+   *  rankingStore中的newRanking发生变化时,回调此函数将newRanking的数据添加到rankingInfos
+   * @param {*} value
+   * @returns
+   */
+  handleNewRanking(value) {
+    if (!value) return;
+    const newRankingInfo = { ...this.data.rankingInfos, newRanking: value };
+    this.setData({ rankingInfos: newRankingInfo });
+    this.setData({ hasRankingData: true });
+  },
+  /**
+   *  rankingStore中的originRanking发生变化时,回调此函数将originRanking的数据添加到rankingInfos
+   * @param {*} value
+   * @returns
+   */
+  handleOriginRanking(value) {
+    if (!value) return;
+    const newRankingInfo = { ...this.data.rankingInfos, originRanking: value };
+    this.setData({ rankingInfos: newRankingInfo });
+    this.setData({ hasRankingData: true });
+  },
+  /**
+   *  rankingStore中的upRanking发生变化时,回调此函数将upRanking的数据添加到rankingInfos
+   * @param {*} value
+   * @returns
+   */
+  handleUpRanking(value) {
+    if (!value) return;
+    const newRankingInfo = { ...this.data.rankingInfos, upRanking: value };
+    this.setData({ rankingInfos: newRankingInfo });
+    this.setData({ hasRankingData: true });
+  },
+  /**
    * 监听图片加载完毕之后,获取轮播图图片的高度
    */
   onBannerImageLoad() {
@@ -82,5 +124,13 @@ Page({
       .catch((err) => {
         console.log(err);
       });
+  },
+  onRecommendTap() {
+    wx.navigateTo({
+      url: "/pages/more-music/more-music?type=recommend",
+      success: (result) => {},
+      fail: () => {},
+      complete: () => {},
+    });
   },
 });

@@ -22,5 +22,16 @@ Component({
   /**
    * 组件的方法列表
    */
-  methods: {},
+  methods: {
+    onMenuMoreTap() {
+      wx.navigateTo({
+        url: '/pages/more-menu/more-menu',
+        success: (result)=>{
+          
+        },
+        fail: ()=>{},
+        complete: ()=>{}
+      });
+    }
+  },
 });
