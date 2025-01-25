@@ -26,3 +26,21 @@ export function getRecommendData(id) {
     },
   });
 }
+
+/**
+ * 获取歌单数据,默认获取全部
+ * @param {*} cat 
+ * @param {*} limit 
+ * @param {*} offset 
+ * @returns 
+ */
+export function getSongMenuList(cat = "全部", limit = 6, offset = 0) {
+  return myRequest.request({
+    url: "/top/playlist",
+    data: {
+      cat,
+      limit,
+      offset,
+    },
+  });
+}

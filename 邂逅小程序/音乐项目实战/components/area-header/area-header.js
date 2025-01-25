@@ -23,8 +23,13 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    onMoreTap() {
-      console.log("点击了更多");
+    onRecommendMoreTap() {
+      wx.navigateTo({
+        url: "/pages/more-music/more-music?type=recommend",
+        success: (result) => {},
+        fail: () => {},
+        complete: () => {},
+      });
     },
   },
 });

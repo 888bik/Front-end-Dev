@@ -2,7 +2,7 @@
 <view class="area-header">
   <view class="title">{{title}}</view>
   <view class="more" wx:if="{{hasMore}}">
-    <text class="text" bind:tap="onMoreTap">更多</text>
+    <text class="text" bind:tap="onRecommendMoreTap">更多</text>
     <van-icon name="arrow" />
   </view>
 </view>

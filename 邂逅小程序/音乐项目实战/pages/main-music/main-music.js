@@ -1,4 +1,8 @@
-import { getBannerData, getRecommendData } from "../../services/music";
+import {
+  getBannerData,
+  getRecommendData,
+  getSongMenuList,
+} from "../../services/music";
 import recommendStore from "../../store/recommendStore";
 import querySelect from "../../utils/query-select";
 import MyThrottle from "../../utils/throttle";
@@ -12,7 +16,12 @@ Page({
     banners: [],
     bannerHeight: 0,
     searchValue: "",
+    //推荐歌曲信息
     recommendSongs: [],
+    //热门歌单
+    hotMenuList: [],
+    // 推荐歌单
+    recMenuList: [],
   },
 
   /**
@@ -20,6 +29,7 @@ Page({
    */
   onLoad(options) {
     this.fetchBanners();
+    this.fetchSongMenuList();
     // this.fetchRecommendSongs();
     //监听recommendInfo的变化,一旦发生变化执行回调,注意不能调用,而是传入一个回调函数
     recommendStore.onState("recommendInfos", this.handleRecommendSongs);
@@ -36,14 +46,26 @@ Page({
   /**
    * 获取推荐歌曲
    */
-  async fetchRecommendSongs() {
-    const res = await getRecommendData();
-    this.setData({ recommendSongs: res.playlists });
+  // async fetchRecommendSongs() {
+  //   const res = await getRecommendData();
+  //   this.setData({ recommendSongs: res.playlists });
+  // },
+
+  /**
+   * 获取热门歌单
+   */
+  async fetchSongMenuList() {
+    getSongMenuList().then((res) => {
+      this.setData({ hotMenuList: res.playlists });
+    });
+    getSongMenuList("华语").then((res) => {
+      this.setData({ recMenuList: res.playlists });
+    });
   },
   /**
    * recommendStore获取推荐歌曲的回调
-   * @param {*} value 
-   * @returns 
+   * @param {*} value
+   * @returns
    */
   handleRecommendSongs(value) {
     if (!value.tracks) return;

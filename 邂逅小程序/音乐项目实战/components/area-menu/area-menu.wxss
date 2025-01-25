@@ -1,0 +1,18 @@
+/* components/area-menu/area-menu.wxss */
+.list {
+  /* display: flex; */
+  /* display: inline-block; */
+  margin-left: -24rpx;
+  white-space: nowrap;
+}
+
+.list .item {
+  display: inline-block;
+  /* flex-shrink: 0; */
+  /* height: 180px; */
+  width: 220rpx;
+  margin-left: 24rpx;
+}
+.list .item:last-of-type {
+  margin-right: 24rpx;
+}
