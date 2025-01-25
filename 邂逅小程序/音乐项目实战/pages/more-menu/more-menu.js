@@ -27,7 +27,6 @@ Page({
       allPromise.push(promise);
     }
     Promise.all(allPromise).then((res) => {
-      console.log(res);
       this.setData({ songMenuList: res });
     });
   },

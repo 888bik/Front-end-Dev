@@ -18,5 +18,15 @@ Component({
   /**
    * 组件的方法列表
    */
-  methods: {},
+  methods: {
+    onRankingItemTap() {
+      const id = this.properties.itemData.id;
+      wx.navigateTo({
+        url: `/pages/more-music/more-music?type=ranking&id=${id}`,
+        success: (result) => {},
+        fail: () => {},
+        complete: () => {},
+      });
+    },
+  },
 });

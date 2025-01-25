@@ -1,8 +1,8 @@
 <!-- components/area-item/area-item.wxml -->
 <wxs src="/utils/format.wxs" module="fmt" />
-<view class="menu-item">
+<view class="menu-item" bind:tap="onMenuItemTap">
   <view class="cover">
-    <image class="image" src="{{itemData.coverImgUrl}}" mode="widthFix" bindload=""></image>
+    <image class="image" src="{{itemData.coverImgUrl}}" mode="widthFix"></image>
     <view class="playCount">{{fmt.formatCount(itemData.playCount)}}</view>
   </view>
   <view class="content">{{itemData.name}}</view>

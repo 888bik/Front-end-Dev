@@ -57,3 +57,12 @@ export function getSongMenuTag() {
     url: "/playlist/hot",
   });
 }
+
+export function getPlaylistDetail(id) {
+  return myRequest.request({
+    url: "/playlist/detail",
+    data: {
+      id,
+    },
+  });
+}

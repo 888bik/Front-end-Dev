@@ -18,5 +18,15 @@ Component({
   /**
    * 组件的方法列表
    */
-  methods: {},
+  methods: {
+    onMenuItemTap() {
+      const id = this.properties.itemData.id;
+      wx.navigateTo({
+        url: `/pages/more-music/more-music?type=menu&id=${id}`,
+        success: (result) => {},
+        fail: () => {},
+        complete: () => {},
+      });
+    },
+  },
 });
