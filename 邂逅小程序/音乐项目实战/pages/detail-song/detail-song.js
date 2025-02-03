@@ -21,6 +21,7 @@ Page({
     sliderValue: 0,
     isWaiting: false,
     isPlaying: true,
+    isSliderChanging: false,
 
     contentHeight: 500,
     currentPage: 0,
@@ -39,7 +40,7 @@ Page({
     innerAudioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
     innerAudioContext.autoplay = true;
     innerAudioContext.onTimeUpdate(() => {
-      if (!this.data.isWaiting) {
+      if (!this.data.isSliderChanging && !this.data.isWaiting) {
         this.updateProgress();
       }
     });
@@ -85,7 +86,12 @@ Page({
    * 监听滑块滑动
    */
   onSliderChanging(event) {
-    console.log(event);
+    const value = event.detail.value;
+    const currentTime = (value / 100) * this.data.durationTime;
+
+    this.setData({ currentTime });
+
+    this.data.isSliderChanging = true;
   },
   /**
    * 监听滑块点击
@@ -105,7 +111,7 @@ Page({
     if (innerAudioContext.paused) {
       innerAudioContext.play();
     }
-    this.setData({ currentTime, sliderValue: value });
+    this.setData({ currentTime, sliderValue: value, isSliderChanging: false });
   },
   onChangeMode() {
     console.log("模式切换");
