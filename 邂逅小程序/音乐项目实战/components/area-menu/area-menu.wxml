@@ -1,10 +1,10 @@
 <!-- components/area-menu/area-menu.wxml -->
 <view class="menu" wx:if="{{menuList.length}}">
   <area-header title="{{title}}" bind:tap="onMenuMoreTap"></area-header>
-  <scroll-view class="list" enable-flex scroll-x="{{true}}">
+  <scroll-view class="list" enable-flex scroll-x="{{true}}" style="width:{{screenWidth}}px;">
     <block wx:for="{{menuList}}" wx:key="id">
       <view class="item">
-        <area-item itemData="{{item}}"/>
+        <area-item itemData="{{item}}" />
       </view>
     </block>
   </scroll-view>

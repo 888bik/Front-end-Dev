@@ -1,0 +1,50 @@
+<wxs src="/utils/format.wxs" module="fmt"></wxs>
+<!-- 背景图 -->
+<image src="{{currentSong.al.picUrl}}" mode="aspectFill" class="bg-image"></image>
+<view class="bg-cover"></view>
+<!-- 自定义导航栏 -->
+<nav-bar>
+  <view class="tabs" slot="center">
+    <block wx:for="{{tabTitles}}" wx:key="*this">
+      <view class="item {{currentPage === index ? 'active':''}}" bind:tap="onNavTabItemTap" data-index="{{index}}">
+        {{item}}
+      </view>
+      <!-- 分割线 -->
+      <view class="divide" wx:if="{{index !== tabTitles.length-1}}">|</view>
+    </block>
+  </view>
+</nav-bar>
+<!-- 具体内容 -->
+<swiper style="height: {{contentHeight}}px;" bindchange="onSwiperChange" current="{{currentPage}}">
+  <!-- 歌曲详情 -->
+  <swiper-item class="music" item-id="">
+    <!-- 封面 -->
+    <view class="album">
+      <image src="{{currentSong.al.picUrl}}" mode="widthFix" class="image" />
+    </view>
+    <!-- 歌曲歌手 -->
+    <view class="info">
+      <view class="name">{{currentSong.al.name}}</view>
+      <view class="singer">{{currentSong.ar[0].name}}</view>
+    </view>
+    <!-- 歌词 -->
+    <view class="lyric">歌词</view>
+    <!-- 进度 -->
+    <view class="progress">
+      <slider class="slider" block-size="12" value="{{sliderValue}}" bindchange="onSliderChange" bindchanging="onSliderChanging"></slider>
+      <view class="time">
+        <view class="currentTime">{{fmt.formatTime(currentTime)}}</view>
+        <view class="duration">{{fmt.formatTime(durationTime)}}</view>
+      </view>
+    </view>
+    <view class="controls">
+      <image src="/assets/images/player/play_random.png" class="btn mode" bind:tap="onChangeMode" />
+      <image src="/assets/images/player/play_prev.png" class="btn prev" bind:tap="onPrevTap" />
+      <image src="/assets/images/player/play_{{isPlaying?'pause':'resume'}}.png" class="btn play" bind:tap="onPlayOrPause" />
+      <image src="/assets/images/player/play_next.png" class="btn next" bind:tap="onNextTap" />
+      <image src="/assets/images/player/play_music.png" class="btn list" bind:tap="showListTap" />
+    </view>
+  </swiper-item>
+  <!-- 歌词列表 -->
+  <swiper-item class="lyric-list" item-id="">歌词</swiper-item>
+</swiper>

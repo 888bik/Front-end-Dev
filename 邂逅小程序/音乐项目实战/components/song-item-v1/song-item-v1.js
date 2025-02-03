@@ -18,5 +18,15 @@ Component({
   /**
    * 组件的方法列表
    */
-  methods: {},
+  methods: {
+    onItemTap() {
+      const { id } = this.properties.itemData;
+      wx.navigateTo({
+        url: `/pages/detail-song/detail-song?id=${id}`,
+        success: (result) => {},
+        fail: () => {},
+        complete: () => {},
+      });
+    },
+  },
 });

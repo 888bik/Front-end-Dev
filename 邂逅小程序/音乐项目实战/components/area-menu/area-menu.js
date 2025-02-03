@@ -1,4 +1,5 @@
 // components/area-menu/area-menu.js
+const app = getApp();
 Component({
   /**
    * 组件的属性列表
@@ -17,7 +18,14 @@ Component({
   /**
    * 组件的初始数据
    */
-  data: {},
+  data: {
+    screenWidth: 375,
+  },
+  lifetimes: {
+    attached() {
+      this.setData({ screenWidth: app.globalData.screenWidth });
+    },
+  },
 
   /**
    * 组件的方法列表
@@ -25,13 +33,11 @@ Component({
   methods: {
     onMenuMoreTap() {
       wx.navigateTo({
-        url: '/pages/more-menu/more-menu',
-        success: (result)=>{
-          
-        },
-        fail: ()=>{},
-        complete: ()=>{}
+        url: "/pages/more-menu/more-menu",
+        success: (result) => {},
+        fail: () => {},
+        complete: () => {},
       });
-    }
+    },
   },
 });

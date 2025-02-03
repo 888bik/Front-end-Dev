@@ -45,6 +45,12 @@ Page({
     rankingStore.onState("upRanking", this.handleUpRanking);
     rankingStore.dispatch("fetchRankingDataAction");
   },
+  onUnload() {
+    recommendStore.offState("recommendInfos", this.handleRecommendSongs);
+    rankingStore.offState("newRanking", this.handleNewRanking);
+    rankingStore.offState("originRanking", this.handleOriginRanking);
+    rankingStore.offState("upRanking", this.handleUpRanking);
+  },
   /**
    * 获取轮播图
    */

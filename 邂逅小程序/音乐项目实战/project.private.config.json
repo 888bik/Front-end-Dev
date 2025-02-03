@@ -10,6 +10,27 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/detail-song/detail-song",
+          "pathName": "pages/detail-song/detail-song",
+          "query": "id=2645500113",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/main-music/main-music",
+          "pathName": "pages/main-music/main-music",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/main-video/main-video",
+          "pathName": "pages/main-video/main-video",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/main-music/main-music",
           "pathName": "pages/main-music/main-music",
           "query": "",
