@@ -85,7 +85,7 @@ const playSongStore = new HYEventStore({
         innerAudioContext.onEnded(() => {
           //如果是单曲循环,不需要切换下一首
           if (innerAudioContext.loop) return;
-          // this.changeNewSongAction();
+            this.dispatch("changeNewSongAction")
         });
       }
     },

@@ -50,8 +50,10 @@ Page({
   onLoad(options) {
     const { id } = options;
 
-    //播放歌曲
-    playSongStore.dispatch("playMusicAction", id);
+    //播放歌曲,这里如果是从首页点击进来没有传递id的时候不需要播放
+    if (id) {
+      playSongStore.dispatch("playMusicAction", id);
+    }
     //获取歌曲列表
     playSongStore.onStates(
       ["playSongList", "playSongIndex"],
@@ -221,7 +223,13 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {},
+  onUnload() {
+    playSongStore.offStates(
+      ["playSongList", "playSongIndex"],
+      this.handleAllPlaySongsInfo
+    );
+    // playSongStore.offStates(this.data.stateKeys, this.handlePlayerInfos);
+  },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作

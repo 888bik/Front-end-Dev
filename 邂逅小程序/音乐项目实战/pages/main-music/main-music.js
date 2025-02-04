@@ -27,6 +27,9 @@ Page({
     // 巅峰榜数据
     rankingInfos: {},
     hasRankingData: false,
+    // 当前正在播放的歌曲信息
+    currentSong: {},
+    isPlaying: false,
   },
 
   /**
@@ -40,21 +43,25 @@ Page({
     recommendStore.onState("recommendInfos", this.handleRecommendSongs);
     // 发起action
     recommendStore.dispatch("fetchRecommendDataAction");
-
+    rankingStore.dispatch("fetchRankingDataAction");
+    //监听数据
     rankingStore.onState("newRanking", this.handleNewRanking);
     rankingStore.onState("originRanking", this.handleOriginRanking);
     rankingStore.onState("upRanking", this.handleUpRanking);
-    rankingStore.dispatch("fetchRankingDataAction");
+    playSongStore.onStates(["currentSong", "isPlaying"], this.handleSongInfo);
   },
-  onUnload() {
-    recommendStore.offState("recommendInfos", this.handleRecommendSongs);
-    rankingStore.offState("newRanking", this.handleNewRanking);
-    rankingStore.offState("originRanking", this.handleOriginRanking);
-    rankingStore.offState("upRanking", this.handleUpRanking);
+
+  onPlayBarImgTap() {
+    wx.navigateTo({
+      url: "/pages/detail-song/detail-song",
+    });
+  },
+  onPlayOrPauseTap() {
+    playSongStore.dispatch("changePlayStatus");
   },
   /**
    * 共享歌曲列表数据
-   * @param {} event 
+   * @param {} event
    */
   onItemTap(event) {
     const index = event.currentTarget.dataset.index;
@@ -68,13 +75,6 @@ Page({
     const res = await getBannerData();
     this.setData({ banners: res.banners });
   },
-  /**
-   * 获取推荐歌曲
-   */
-  // async fetchRecommendSongs() {
-  //   const res = await getRecommendData();
-  //   this.setData({ recommendSongs: res.playlists });
-  // },
 
   /**
    * 获取热门歌单
@@ -86,6 +86,16 @@ Page({
     getSongMenuList("华语").then((res) => {
       this.setData({ recMenuList: res.playlists });
     });
+  },
+
+  
+  handleSongInfo({ currentSong, isPlaying }) {
+    if (currentSong) {
+      this.setData({ currentSong });
+    }
+    if (isPlaying !== undefined) {
+      this.setData({ isPlaying });
+    }
   },
   /**
    * recommendStore获取推荐歌曲的回调
@@ -148,5 +158,11 @@ Page({
       fail: () => {},
       complete: () => {},
     });
+  },
+  onUnload() {
+    recommendStore.offState("recommendInfos", this.handleRecommendSongs);
+    rankingStore.offState("newRanking", this.handleNewRanking);
+    rankingStore.offState("originRanking", this.handleOriginRanking);
+    rankingStore.offState("upRanking", this.handleUpRanking);
   },
 });
