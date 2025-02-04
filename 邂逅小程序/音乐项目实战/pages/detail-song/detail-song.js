@@ -1,4 +1,5 @@
 import { getLyricInfo, getSongDetail } from "../../services/play";
+import { parseLyric } from "../../utils/parse-lyric";
 const app = getApp();
 // 创建播放器
 const innerAudioContext = wx.createInnerAudioContext();
@@ -13,7 +14,9 @@ Page({
   data: {
     id: -1,
     currentSong: {},
-    lyricInfo: {},
+    lyricInfos: {},
+    currentLyricText: "",
+    currentLyricIndex: 0,
     durationTime: 0,
     currentTime: 0,
 
@@ -23,6 +26,7 @@ Page({
     isPlaying: true,
     isSliderChanging: false,
 
+    scrollTop: 0,
     contentHeight: 500,
     currentPage: 0,
   },
@@ -40,12 +44,33 @@ Page({
     innerAudioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
     innerAudioContext.autoplay = true;
     innerAudioContext.onTimeUpdate(() => {
+      //更新歌曲进度
       if (!this.data.isSliderChanging && !this.data.isWaiting) {
         this.updateProgress();
       }
+      //匹配歌曲歌词
+      if (!this.data.lyricInfos.length) return;
+      //最后一句歌词是匹配不到的,如果for循环没有匹配到就让index的默认值为最后一个
+      let index = this.data.lyricInfos.length;
+      for (let i = 0; i < this.data.lyricInfos.length; i++) {
+        const element = this.data.lyricInfos[i];
+        if (element.time > innerAudioContext.currentTime * 1000) {
+          index = i - 1;
+          break;
+        }
+      }
+      //避免重复匹配
+      if (index === this.data.currentLyricIndex) return;
+      const currentLyricText = this.data.lyricInfos[index].text;
+      this.setData({
+        currentLyricText,
+        currentLyricIndex: index,
+        scrollTop: index * 35,
+      });
     });
+
     innerAudioContext.onSeeking(() => {
-      // innerAudioContext.pause();
+      innerAudioContext.pause();
     });
     innerAudioContext.onSeeked(() => {
       if (innerAudioContext.paused) {
@@ -57,7 +82,7 @@ Page({
   /**
    * 播放歌曲
    */
-  setupPlaySong(id) {},
+  // setupPlaySong(id) {},
   /**
    * 更新滑块进度
    */
@@ -80,7 +105,8 @@ Page({
    */
   async fetchLyricInfo() {
     const res = await getLyricInfo(this.data.id);
-    this.setData({ lyricInfo: res.lrc.lyric });
+    const lyricInfos = parseLyric(res.lrc.lyric);
+    this.setData({ lyricInfos });
   },
   /**
    * 监听滑块滑动
@@ -113,6 +139,12 @@ Page({
     }
     this.setData({ currentTime, sliderValue: value, isSliderChanging: false });
   },
+  /**
+   * 模式切换
+   * 0:顺序播放
+   * 1:循环播放
+   * 2:随机播放
+   */
   onChangeMode() {
     console.log("模式切换");
   },
