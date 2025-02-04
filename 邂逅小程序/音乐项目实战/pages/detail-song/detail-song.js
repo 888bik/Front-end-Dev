@@ -1,5 +1,7 @@
+import { throttle } from "underscore";
 import { getLyricInfo, getSongDetail } from "../../services/play";
 import { parseLyric } from "../../utils/parse-lyric";
+import playSongStore from "../../store/playSongStore";
 const app = getApp();
 // 创建播放器
 const innerAudioContext = wx.createInnerAudioContext();
@@ -19,12 +21,17 @@ Page({
     currentLyricIndex: 0,
     durationTime: 0,
     currentTime: 0,
+    playModeName: "order",
+    playModeIndex: 0,
+    playSongIndex: 0,
+    playSongList: [],
 
     tabTitles: ["歌曲", "歌词"],
     sliderValue: 0,
     isWaiting: false,
     isPlaying: true,
     isSliderChanging: false,
+    isFirstPlay: true,
 
     scrollTop: 0,
     contentHeight: 500,
@@ -36,53 +43,163 @@ Page({
    */
   onLoad(options) {
     const { id } = options;
-    this.data.id = id;
+
+    //播放歌曲
+    this.setupPlaySongById(id);
+    //获取歌曲列表
+    playSongStore.onStates(
+      ["playSongList", "playSongIndex"],
+      this.handlePlaySongInfo
+    );
+    // this.fetchSongInfo();
+    // this.fetchLyricInfo();
     this.setData({ contentHeight: app.globalData.contentHeight });
 
-    this.fetchSongInfo();
-    this.fetchLyricInfo();
-    innerAudioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
-    innerAudioContext.autoplay = true;
-    innerAudioContext.onTimeUpdate(() => {
-      //更新歌曲进度
-      if (!this.data.isSliderChanging && !this.data.isWaiting) {
-        this.updateProgress();
-      }
-      //匹配歌曲歌词
-      if (!this.data.lyricInfos.length) return;
-      //最后一句歌词是匹配不到的,如果for循环没有匹配到就让index的默认值为最后一个
-      let index = this.data.lyricInfos.length;
-      for (let i = 0; i < this.data.lyricInfos.length; i++) {
-        const element = this.data.lyricInfos[i];
-        if (element.time > innerAudioContext.currentTime * 1000) {
-          index = i - 1;
-          break;
-        }
-      }
-      //避免重复匹配
-      if (index === this.data.currentLyricIndex) return;
-      const currentLyricText = this.data.lyricInfos[index].text;
-      this.setData({
-        currentLyricText,
-        currentLyricIndex: index,
-        scrollTop: index * 35,
-      });
-    });
+    // innerAudioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+    // innerAudioContext.autoplay = true;
+    // innerAudioContext.onTimeUpdate(() => {
+    //   //更新歌曲进度
+    //   if (!this.data.isSliderChanging && !this.data.isWaiting) {
+    //     this.updateProgress();
+    //   }
+    //   //匹配歌曲歌词
+    //   if (!this.data.lyricInfos.length) return;
+    //   //最后一句歌词是匹配不到的,如果for循环没有匹配到就让index的默认值为最后一个
+    //   let index = this.data.lyricInfos.length;
+    //   for (let i = 0; i < this.data.lyricInfos.length; i++) {
+    //     const element = this.data.lyricInfos[i];
+    //     if (element.time > innerAudioContext.currentTime * 1000) {
+    //       index = i - 1;
+    //       break;
+    //     }
+    //   }
+    //   //避免重复匹配
+    //   if (index === this.data.currentLyricIndex) return;
+    //   //获取当前的歌词
+    //   const currentLyricText = this.data.lyricInfos[index].text;
 
-    innerAudioContext.onSeeking(() => {
-      innerAudioContext.pause();
+    //   //更新歌词在页面的位置
+    //   this.setData({
+    //     currentLyricText,
+    //     currentLyricIndex: index,
+    //     scrollTop: index * 35,
+    //   });
+    // });
+
+    // innerAudioContext.onSeeking(() => {
+    //   innerAudioContext.pause();
+    // });
+    // innerAudioContext.onSeeked(() => {
+    //   if (innerAudioContext.paused) {
+    //     innerAudioContext.play();
+    //   }
+    //   this.setData({ isPlaying: true });
+    // });
+  },
+
+  /**
+   * 切换歌曲
+   * @param {默认切换下一首} isNext
+   */
+  changeNewSong(isNext = true) {
+    let index = this.data.playSongIndex;
+    const length = this.data.playSongList.length;
+    switch (this.data.playModeIndex) {
+      case 1:
+      case 0:
+        index = isNext ? index + 1 : index - 1;
+        if (index === length) index = 0;
+        if (index === -1) index = length - 1;
+        break;
+      case 2:
+        index = Math.floor(Math.random() * length);
+        break;
+    }
+    const newSong = this.data.playSongList[index];
+    //将数据回到初始状态
+    this.setData({
+      currentSong: {},
+      sliderValue: 0,
+      currentTime: 0,
+      durationTime: 0,
     });
-    innerAudioContext.onSeeked(() => {
-      if (innerAudioContext.paused) {
-        innerAudioContext.play();
-      }
-      this.setData({ isPlaying: true });
-    });
+    this.setupPlaySongById(newSong.id);
+
+    //保存最新的索引
+    playSongStore.setState("playSongIndex", index);
+  },
+  /**
+   * 监听数据的回调
+   * @param {*} param0
+   */
+  handlePlaySongInfo({ playSongList, playSongIndex }) {
+    if (playSongList) {
+      this.setData({ playSongList });
+    }
+    if (playSongIndex !== undefined) {
+      this.setData({ playSongIndex });
+    }
   },
   /**
    * 播放歌曲
    */
-  // setupPlaySong(id) {},
+  setupPlaySongById(id) {
+    this.data.id = id;
+
+    this.fetchLyricInfo();
+    this.fetchSongInfo();
+
+    innerAudioContext.stop();
+    innerAudioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+    innerAudioContext.autoplay = true;
+    //判断歌曲是否第一次播放
+    if (this.data.isFirstPlay) {
+      this.data.isFirstPlay = false;
+      innerAudioContext.onTimeUpdate(() => {
+        //更新歌曲进度
+        if (!this.data.isSliderChanging && !this.data.isWaiting) {
+          this.updateProgress();
+        }
+        //匹配歌曲歌词
+        if (!this.data.lyricInfos.length) return;
+        //最后一句歌词是匹配不到的,如果for循环没有匹配到就让index的默认值为最后一个
+        let index = this.data.lyricInfos.length - 1;
+        for (let i = 0; i < this.data.lyricInfos.length; i++) {
+          const element = this.data.lyricInfos[i];
+          if (element.time > innerAudioContext.currentTime * 1000) {
+            index = i - 1;
+            break;
+          }
+        }
+        //避免重复匹配
+        if (index === this.data.currentLyricIndex) return;
+        //获取当前的歌词
+        const currentLyricText = this.data.lyricInfos[index].text;
+
+        //更新歌词在页面的位置
+        this.setData({
+          currentLyricText,
+          currentLyricIndex: index,
+          scrollTop: index * 35,
+        });
+      });
+
+      innerAudioContext.onSeeking(() => {
+        innerAudioContext.pause();
+      });
+      innerAudioContext.onSeeked(() => {
+        if (innerAudioContext.paused) {
+          innerAudioContext.play();
+        }
+        this.setData({ isPlaying: true });
+      });
+      innerAudioContext.onEnded(() => {
+        //如果是单曲循环,不需要切换下一首
+        if (innerAudioContext.loop) return;
+        this.changeNewSong();
+      });
+    }
+  },
   /**
    * 更新滑块进度
    */
@@ -110,15 +227,16 @@ Page({
   },
   /**
    * 监听滑块滑动
+   * 防抖处理:在拖动滑块的过程中,由于currentTime时间不断变化会导致页面不断刷新,从而导致页面卡顿
    */
-  onSliderChanging(event) {
+  onSliderChanging: throttle(function (event) {
     const value = event.detail.value;
     const currentTime = (value / 100) * this.data.durationTime;
 
     this.setData({ currentTime });
 
     this.data.isSliderChanging = true;
-  },
+  }, 150),
   /**
    * 监听滑块点击
    */
@@ -139,6 +257,7 @@ Page({
     }
     this.setData({ currentTime, sliderValue: value, isSliderChanging: false });
   },
+
   /**
    * 模式切换
    * 0:顺序播放
@@ -146,11 +265,26 @@ Page({
    * 2:随机播放
    */
   onChangeMode() {
-    console.log("模式切换");
+    let modeIndex = this.data.playModeIndex;
+    modeIndex = modeIndex + 1;
+    if (modeIndex === 3) modeIndex = 0;
+
+    //判断是否是单曲循环
+    if (modeIndex === 1) {
+      innerAudioContext.loop = true;
+    } else {
+      innerAudioContext.loop = false;
+    }
+    
+    this.setData({
+      playModeIndex: modeIndex,
+      playModeName: modeNames[modeIndex],
+    });
   },
-  onPrevTap() {
-    console.log("上一首");
-  },
+
+  /**
+   * 监听暂停或者播放
+   */
   onPlayOrPause() {
     if (!innerAudioContext.paused) {
       innerAudioContext.pause();
@@ -160,8 +294,17 @@ Page({
       this.setData({ isPlaying: true });
     }
   },
+  /**
+   * 监听上一首的点击
+   */
+  onPrevTap() {
+    this.changeNewSong(false);
+  },
+  /**
+   * 监听下一首的点击
+   */
   onNextTap() {
-    console.log("下一首");
+    this.changeNewSong();
   },
   showListTap() {
     console.log("歌单");
@@ -181,21 +324,6 @@ Page({
     const currentPage = event.detail.current;
     this.setData({ currentPage });
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {},
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {},
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {},
 
   /**
    * 生命周期函数--监听页面卸载

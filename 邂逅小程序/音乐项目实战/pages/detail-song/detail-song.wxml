@@ -38,7 +38,7 @@
       </view>
     </view>
     <view class="controls">
-      <image src="/assets/images/player/play_random.png" class="btn mode" bind:tap="onChangeMode" />
+      <image src="/assets/images/player/play_{{[playModeName]}}.png" class="btn mode" bind:tap="onChangeMode" />
       <image src="/assets/images/player/play_prev.png" class="btn prev" bind:tap="onPrevTap" />
       <image src="/assets/images/player/play_{{isPlaying?'pause':'resume'}}.png" class="btn play" bind:tap="onPlayOrPause" />
       <image src="/assets/images/player/play_next.png" class="btn next" bind:tap="onNextTap" />

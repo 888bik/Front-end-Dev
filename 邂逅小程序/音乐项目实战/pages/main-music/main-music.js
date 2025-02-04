@@ -3,6 +3,7 @@ import {
   getRecommendOrRankingData,
   getSongMenuList,
 } from "../../services/music";
+import playSongStore from "../../store/playSongStore";
 import rankingStore from "../../store/rankingStore";
 import recommendStore from "../../store/recommendStore";
 import querySelect from "../../utils/query-select";
@@ -50,6 +51,15 @@ Page({
     rankingStore.offState("newRanking", this.handleNewRanking);
     rankingStore.offState("originRanking", this.handleOriginRanking);
     rankingStore.offState("upRanking", this.handleUpRanking);
+  },
+  /**
+   * 共享歌曲列表数据
+   * @param {} event 
+   */
+  onItemTap(event) {
+    const index = event.currentTarget.dataset.index;
+    playSongStore.setState("playSongList", this.data.recommendSongs);
+    playSongStore.setState("playSongIndex", index);
   },
   /**
    * 获取轮播图

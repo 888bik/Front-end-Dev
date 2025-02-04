@@ -1,4 +1,5 @@
 import { getPlaylistDetail } from "../../services/music";
+import playSongStore from "../../store/playSongStore";
 import recommendStore from "../../store/recommendStore";
 
 // pages/more-music/more-music.js
@@ -37,5 +38,10 @@ Page({
   async fetchMenuList() {
     const res = await getPlaylistDetail(this.data.id);
     this.setData({ songInfo: res.playlist });
+  },
+  onItemTap(event) {
+    const index = event.currentTarget.dataset.index;
+    playSongStore.setState("playSongList", this.data.songInfo.tracks);
+    playSongStore.setState("playSongIndex", index);
   },
 });

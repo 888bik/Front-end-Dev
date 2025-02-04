@@ -16,7 +16,7 @@
   <!-- 歌曲列表 -->
   <view class="recommend-list">
     <block wx:for="{{recommendSongs}}" wx:key="id">
-      <song-item-v1 itemData="{{item}}"></song-item-v1>
+      <song-item-v1 itemData="{{item}}" bind:tap="onItemTap" data-index="{{index}}"></song-item-v1>
     </block>
   </view>
 </view>
