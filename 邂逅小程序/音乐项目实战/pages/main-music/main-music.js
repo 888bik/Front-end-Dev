@@ -51,11 +51,17 @@ Page({
     playSongStore.onStates(["currentSong", "isPlaying"], this.handleSongInfo);
   },
 
+  /**
+   * 监听播放栏封面跳转详情
+   */
   onPlayBarImgTap() {
     wx.navigateTo({
       url: "/pages/detail-song/detail-song",
     });
   },
+  /**
+   * 监听播放栏的暂停或者播放
+   */
   onPlayOrPauseTap() {
     playSongStore.dispatch("changePlayStatus");
   },
@@ -88,7 +94,10 @@ Page({
     });
   },
 
-  
+  /**
+   * 获取当前正在播放的歌曲信息
+   * @param {*} param0
+   */
   handleSongInfo({ currentSong, isPlaying }) {
     if (currentSong) {
       this.setData({ currentSong });
@@ -113,9 +122,9 @@ Page({
    */
   handleNewRanking(value) {
     if (!value) return;
+    this.setData({ hasRankingData: true });
     const newRankingInfo = { ...this.data.rankingInfos, newRanking: value };
     this.setData({ rankingInfos: newRankingInfo });
-    this.setData({ hasRankingData: true });
   },
   /**
    *  rankingStore中的originRanking发生变化时,回调此函数将originRanking的数据添加到rankingInfos
@@ -124,9 +133,9 @@ Page({
    */
   handleOriginRanking(value) {
     if (!value) return;
+    this.setData({ hasRankingData: true });
     const newRankingInfo = { ...this.data.rankingInfos, originRanking: value };
     this.setData({ rankingInfos: newRankingInfo });
-    this.setData({ hasRankingData: true });
   },
   /**
    *  rankingStore中的upRanking发生变化时,回调此函数将upRanking的数据添加到rankingInfos
@@ -135,9 +144,9 @@ Page({
    */
   handleUpRanking(value) {
     if (!value) return;
+    this.setData({ hasRankingData: true });
     const newRankingInfo = { ...this.data.rankingInfos, upRanking: value };
     this.setData({ rankingInfos: newRankingInfo });
-    this.setData({ hasRankingData: true });
   },
   /**
    * 监听图片加载完毕之后,获取轮播图图片的高度
