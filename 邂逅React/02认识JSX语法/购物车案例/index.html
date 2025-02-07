@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <div id="root"></div>
+  <body>
+    <script src="./data.js"></script>
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+      const root = ReactDOM.createRoot(document.querySelector("#root"));
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            books: books,
+          };
+        }
+        getTotalPrice() {
+          return this.state.books.reduce((preValue, currentItem) => {
+            return preValue + currentItem.count * currentItem.price;
+          }, 0);
+        }
+        increment(item, index) {
+          let newBooks = [...this.state.books];
+          newBooks[index].count += 1;
+          this.setState({
+            books: newBooks,
+          });
+        }
+        decrement(item, index) {
+          let newBooks = [...this.state.books];
+          newBooks[index].count -= 1;
+          this.setState({
+            books: newBooks,
+          });
+        }
+        deleteBtn(item, index) {
+          let newBooks = [...this.state.books];
+          newBooks.splice(index, 1);
+          this.setState({
+            books: newBooks,
+          });
+        }
+        // 把渲染书籍的代码放到一个函数中
+        renderBooksList() {
+          const { books } = this.state;
+          return (
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>书籍名称</th>
+                    <th>出版日期</th>
+                    <th>价格</th>
+                    <th>购买数量</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {books.map((item, index) => {
+                    return (
+                      <tr key={item.id}>
+                        <th>{index + 1}</th>
+                        <th>{item.name}</th>
+                        <th>{item.date}</th>
+                        <th>{item.price}</th>
+                        <th>
+                          <button
+                            onClick={() => {
+                              this.decrement(item, index);
+                            }}
+                            disabled={item.count <= 1}
+                          >
+                            -1
+                          </button>
+                          {item.count}
+                          <button onClick={() => this.increment(item, index)}>
+                            +1
+                          </button>
+                        </th>
+                        <th>
+                          <button onClick={() => this.deleteBtn(item, index)}>
+                            操作
+                          </button>
+                        </th>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              <h2>总价格:{"¥" + this.getTotalPrice()}</h2>
+            </div>
+          );
+        }
+
+        // 渲染购物车为空的界面
+        renderEmpty() {
+          return <h2>当前购物车为空,请添加书籍</h2>;
+        }
+        render() {
+          const { books } = this.state;
+          const totalPrice = books.reduce((preValue, item) => {
+            return preValue + item.price * item.count;
+          }, 0);
+          return books.length ? this.renderBooksList() : this.renderEmpty();
+        }
+      }
+      root.render(<App />);
+    </script>
+  </body>
+</html>

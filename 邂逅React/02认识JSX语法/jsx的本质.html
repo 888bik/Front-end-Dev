@@ -24,7 +24,16 @@
           this.state = {};
         }
         render() {
-          return <div></div>;
+          return (
+            <div className="container">
+              <button>按钮</button>
+              <span style={{fontSize:"30px"}}>文本</span>
+              <i>斜体文字</i>
+              <div className="content">
+                哈哈哈
+                </div>
+            </div>
+          );
         }
       }
       root.render(<App />);

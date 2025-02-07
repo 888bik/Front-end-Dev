@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <div id="root"></div>
   <body>
+    <div id="root"></div>
     <script
       src="https://unpkg.com/react@18/umd/react.development.js"
       crossorigin
@@ -21,13 +21,23 @@
       class App extends React.Component {
         constructor() {
           super();
-          this.state = {};
+          this.state = {
+            title: "title",
+          };
         }
         render() {
-          return <div></div>;
+          const { title } = this.state;
+          return (
+            <div>
+              {/*绑定基本属性*/}
+              <h2 title={title}>我是h2元素</h2>
+              {/*绑定style属性*/}
+              <h3 style={{ color: "red", fontSize: "30px" }}>我是h3元素</h3>
+            </div>
+          );
         }
       }
-      root.render(<App />);
+      root.render(<App/>);
     </script>
   </body>
 </html>

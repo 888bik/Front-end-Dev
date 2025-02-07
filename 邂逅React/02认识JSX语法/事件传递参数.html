@@ -21,10 +21,29 @@
       class App extends React.Component {
         constructor() {
           super();
-          this.state = {};
+          this.state = {
+            name: "bik",
+            age: 21,
+          };
+        }
+        btnClick(event) {
+          console.log(event);
+        }
+        btnClick2(event,name,age){
+          console.log(this,event,name,age);
         }
         render() {
-          return <div></div>;
+          const { name, age } = this.state;
+          return (
+            <div>
+              {/*1.默认有传递event参数*/}
+              <button onClick={(e) => this.btnClick(e)}>传递参数</button>
+              {/*2.传递更多的参数(推荐使用箭头函数)*/}
+              <button
+                onClick={(event) => this.btnClick2(event, name, age)}
+              >传递更多的参数</button>
+            </div>
+          );
         }
       }
       root.render(<App />);
