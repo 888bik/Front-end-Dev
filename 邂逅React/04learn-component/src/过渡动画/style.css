@@ -1,0 +1,18 @@
+.bik-appear,
+.bik-enter {
+  opacity: 0;
+}
+.bik-appear-active,
+.bik-enter-active {
+  opacity: 1;
+  transition: opacity 2s ease;
+}
+
+/* 离开动画 */
+.bik-exit {
+  opacity: 1;
+}
+.bik-exit-active {
+  opacity: 0;
+  transition: opacity 2s ease;
+}

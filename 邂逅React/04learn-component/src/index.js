@@ -1,6 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./非父子组件共享数据/App";
+import App from "./过渡动画/App";
+// import App from "./Portals的使用/App";
+// import App from "./高阶组件/App";
+// import App from "./高阶组件/01Props的增强";
+// import App from "./受控组件和非受控组件/App";
+// import App from "./ref获取DOM和组件/App";
+// import App from "./setState原理/App";
+// import App from "./非父子组件共享数据/App";
 // import App from "./插槽实现/props实现插槽";
 // import App from "./插槽实现/children实现插槽";
 // import App from "./组件间的通信/App";
