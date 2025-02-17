@@ -132,7 +132,9 @@ Page({
     function (currentTime) {
       if (this.data.isSliderChanging) return;
       const sliderValue = (currentTime / this.data.durationTime) * 100;
-      this.setData({ currentTime, sliderValue });
+      console.log(currentTime);
+      console.log(sliderValue);
+      this.setData({ currentTime:currentTime, sliderValue:sliderValue });
     },
     800,
     {
@@ -228,21 +230,6 @@ Page({
       ["playSongList", "playSongIndex"],
       this.handleAllPlaySongsInfo
     );
-    // playSongStore.offStates(this.data.stateKeys, this.handlePlayerInfos);
+    playSongStore.offStates(this.data.stateKeys, this.handlePlayerInfos);
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {},
 });

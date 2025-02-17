@@ -23,9 +23,10 @@ const playSongStore = new HYEventStore({
   actions: {
     playMusicAction(ctx, id) {
       //将数据初始化
+      console.log("hhh");
       ctx.currentSong = {};
       ctx.durationTime = 0;
-      ctx.durationTime = 0;
+      ctx.currentTime = 0;
       ctx.currentLyricIndex = 0;
       ctx.currentLyricText = "";
       ctx.lyricInfos = [];
@@ -46,6 +47,7 @@ const playSongStore = new HYEventStore({
       innerAudioContext.stop();
       innerAudioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
       innerAudioContext.autoplay = true;
+      innerAudioContext.play();
       //判断歌曲是否第一次播放
       if (ctx.isFirstPlay) {
         ctx.isFirstPlay = false;
