@@ -4,7 +4,8 @@ interface IPerson {
   name: string;
   age: number;
 }
-//T:IPerson
+// keyof T会生成一个联合类型,里面包含类型T中所有公共属性名(键) "name" | "age" |"height"|"address"
+// in会遍历联合类型中的每一个成员
 //keyof = "name"|"age"
 type MapPerson<T> = {
   //相当于从IPerson中遍历出name:string创建一个类型

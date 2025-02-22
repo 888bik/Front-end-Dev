@@ -5,3 +5,5 @@ type toArray<T> = T extends any ? T[] : never;
 
 //string[] |number[]
 type newType = toArray<string | number>;
+
+
