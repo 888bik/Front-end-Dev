@@ -17,6 +17,10 @@ export const homeRequest = new MyRequest({
       console.log("爱彼迎响应成功的拦截");
       return config;
     },
+    responseFailureFn: (err) => {
+      console.log("爱彼迎响应失败的拦截");
+      return err;
+    }
   },
 });
 export const entireRequest = new MyRequest({

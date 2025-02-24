@@ -5,6 +5,7 @@ import { MyRequestConfig } from "./type";
 class MyRequest {
   instance: AxiosInstance;
 
+  //为了添加拦截器功能,将AxiosRequestConfig改为MyRequestConfig
   constructor(config: MyRequestConfig) {
     this.instance = axios.create(config);
     //添加全局拦截器
@@ -31,11 +32,16 @@ class MyRequest {
     );
 
     //针对个别请求添加拦截
-    if (config.interceptors) {
-      this.instance.interceptors.request.use(config.interceptors.requestSuccessFn, config.interceptors.requestFailureFn);
-      // this.instance.interceptors.response.use(config.interceptors.responseSuccessFn, config.interceptors.responseFailureFn);
-    }
+    this.instance.interceptors.request.use(
+      config.interceptors?.requestSuccessFn,
+      config.interceptors?.requestFailureFn
+    );
+    this.instance.interceptors.response.use(
+      config.interceptors?.responseSuccessFn,
+      config.interceptors?.responseFailureFn
+    );
   }
+
   request(config: AxiosRequestConfig) {
     return this.instance.request(config);
   }
