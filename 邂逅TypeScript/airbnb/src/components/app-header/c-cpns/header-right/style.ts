@@ -40,10 +40,39 @@ export const RightWrapper = styled.div`
     cursor: pointer;
 
     ${(props) => props.theme.mixin.boxShadow};
-    
+
     .menu {
       margin-right: 10px;
     }
+
+    .panel {
+      position: absolute;
+      top: 54px;
+      right: 0;
+      width: 240px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+      color: #666;
+      .top .bottom {
+        padding: 10px 20px;
+      }
+      .top {
+        border-bottom: 1px solid #f5f5f5;
+      }
+
+      .item {
+        height: 20px;
+        line-height: 20px;
+        margin: 10px 10px;
+        padding: 10px 10px;
+        cursor: pointer;
+        font-weight: 600;
+
+        &:hover {
+          background-color: #f5f5f5;
+        }
+      }
+    }
   }
-  
 `;
