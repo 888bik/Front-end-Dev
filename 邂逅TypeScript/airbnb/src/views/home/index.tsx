@@ -8,7 +8,6 @@ const Home = memo(() => {
       <div className="Banner">
         <HomeBanner />
       </div>
-    
     </HomeWrapper>
   );
 });
