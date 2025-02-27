@@ -1,13 +1,18 @@
 import App from "@/App";
-import Detail from "@/views/detail";
-import Entire from "@/views/entire";
-import Home from "@/views/home";
+import NotFound from "@/views/notFound";
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
+
+const Home = lazy(() => import("@/views/home"));
+const Detail = lazy(() => import("@/views/detail"));
+const Entire = lazy(() => import("@/views/entire"));
+// import type { RouteObject } from "react-router-dom";
 
 const routers = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <NotFound />,
     children: [
       {
         index: true,

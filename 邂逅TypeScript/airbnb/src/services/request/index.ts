@@ -45,7 +45,7 @@ class MyRequest {
   request(config: AxiosRequestConfig) {
     return this.instance.request(config);
   }
-  get() {}
-  post() {}
+  // get() {}
+  // post() {}
 }
 export default MyRequest;
