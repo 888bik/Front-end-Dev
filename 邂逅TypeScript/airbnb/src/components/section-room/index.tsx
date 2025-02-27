@@ -1,10 +1,10 @@
 import React, { memo } from "react";
 import { SectionRoomWrapper } from "./style";
 import RoomItem from "../room-item";
-import { IGoodPriceItem } from "@/store";
+import { IRoomInfo } from "@/store";
 
 interface IProps {
-  roomList: IGoodPriceItem[];
+  roomList: IRoomInfo[];
 }
 const SectionRoom = memo((props: IProps) => {
   const { roomList = [] } = props;

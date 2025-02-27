@@ -10,6 +10,16 @@ export function getHomeGoodPriceData() {
   });
 }
 
+/**
+ * 
+ * @returns 获取首页高分房源数据
+ */
+export function getHomeHighScoreData() {
+  return homeRequest.request({
+    url: "/home/highscore",
+  });
+}
+
 // homeRequest
 //   .request({
 //     url: "/home/discount",

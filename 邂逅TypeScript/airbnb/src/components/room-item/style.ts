@@ -48,6 +48,7 @@ export const ItemRoomWrapper = styled.div<ItemRoomWrapperProps>`
 
   .price {
     margin: 8px 0;
+    font-size: 13px;
   }
 
   .bottom {

@@ -12,12 +12,12 @@ export const store = configureStore({
 // export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 //home模块的store
-export interface IGoodPriceItem {
+export interface IRoomInfo {
   id: number;
   name: string;
   price: number;
   price_format: string;
-  previews_count: number;
+  reviews_count: number;
   picture_url: string;
   verify_info: {
     message: string[];
@@ -27,14 +27,22 @@ export interface IGoodPriceItem {
     content: string;
     content_color: string;
   };
-  star_rating:number
+  star_rating: number;
+}
+interface IBaseSectionInfo {
+  title: string;
+  list: IRoomInfo[]; // 假设有统一的 RoomItem 类型
+}
+export interface IGoodPriceInfo extends IBaseSectionInfo {
+  subtitle?: string;
+}
+export interface IHighScoreInfo extends IBaseSectionInfo {
+  subtitle: string;
 }
 
 export interface IHomeState {
-  goodPriceInfo: {
-    title: string;
-    list: IGoodPriceItem[];
-  };
+  goodPriceInfo: IGoodPriceInfo;
+  highScoreInfo: IHighScoreInfo;
 }
 export type RootState = {
   home: IHomeState;

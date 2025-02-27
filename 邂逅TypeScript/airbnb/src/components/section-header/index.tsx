@@ -2,14 +2,15 @@ import React, { memo } from "react";
 import { SectionHeaderWrapper } from "./style";
 
 interface IProps {
-  title: string;
+  title?: string;
+  subtitle?: string;
 }
 const SectionHeader = memo((props: IProps) => {
-  const { title } = props;
+  const { title, subtitle } = props;
   return (
     <SectionHeaderWrapper>
       <div className="title">{title}</div>
-      <div className="subtitle"></div>
+      <div className="subtitle">{subtitle}</div>
     </SectionHeaderWrapper>
   );
 });

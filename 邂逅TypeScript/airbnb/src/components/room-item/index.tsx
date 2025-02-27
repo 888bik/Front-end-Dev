@@ -1,10 +1,10 @@
 import React, { memo } from "react";
 import { ItemRoomWrapper } from "./style";
-import { IGoodPriceItem } from "@/store";
+import { IRoomInfo } from "@/store";
 import Rating from "@mui/material/Rating";
 
 interface IProps {
-  itemData: IGoodPriceItem;
+  itemData: IRoomInfo;
 }
 const RoomItem = memo((props: IProps) => {
   const { itemData } = props;
@@ -28,6 +28,10 @@ const RoomItem = memo((props: IProps) => {
           readOnly
           sx={{ fontSize: "12px", color: "#00848A", marginRight: "-1px" }}
         />
+        <span className="count">{itemData.reviews_count}</span>
+        {itemData.bottom_info && (
+          <span className="extra">{itemData.bottom_info?.content}</span>
+        )}
       </div>
     </ItemRoomWrapper>
   );
