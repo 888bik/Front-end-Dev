@@ -20,6 +20,15 @@ export function getHomeHighScoreData() {
   });
 }
 
+/**
+ * 
+ * @returns 获取折扣优惠房源数据
+ */
+export function getDiscountData() {
+  return homeRequest.request({
+    url:"/home/discount"
+  })
+}
 // homeRequest
 //   .request({
 //     url: "/home/discount",

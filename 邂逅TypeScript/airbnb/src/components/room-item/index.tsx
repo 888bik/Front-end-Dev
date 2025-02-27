@@ -1,16 +1,18 @@
 import React, { memo } from "react";
 import { ItemRoomWrapper } from "./style";
-import { IRoomInfo } from "@/store";
+import { IRoomInfo } from "@/types/home";
 import Rating from "@mui/material/Rating";
 
 interface IProps {
   itemData: IRoomInfo;
+  itemWidth?: string;
 }
 const RoomItem = memo((props: IProps) => {
-  const { itemData } = props;
+  const { itemData, itemWidth = "25%" } = props;
   return (
     <ItemRoomWrapper
       $verifyColor={itemData?.verify_info?.text_color || "#39576a"}
+      $itemWidth={itemWidth}
     >
       <div className="inner">
         <div className="room-img">
