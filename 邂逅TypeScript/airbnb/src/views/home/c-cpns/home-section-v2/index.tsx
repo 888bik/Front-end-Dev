@@ -4,6 +4,7 @@ import { IDisCountInfo } from "@/types/home";
 import SectionHeader from "@/components/section-header";
 import SectionTab from "@/components/section-tab";
 import SectionRoom from "@/components/section-room";
+import SectionFooter from "@/components/section-footer";
 
 interface IProps {
   infoData: IDisCountInfo;
@@ -25,6 +26,7 @@ const HomeSectionV2 = memo((props: IProps) => {
         roomList={infoData.dest_list?.[tabName]}
         itemWidth="33.3333%"
       />
+      <SectionFooter name={tabName} />
     </HomeSectionV2Wrapper>
   );
 });

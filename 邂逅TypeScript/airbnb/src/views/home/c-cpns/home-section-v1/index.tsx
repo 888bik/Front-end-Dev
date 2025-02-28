@@ -3,6 +3,7 @@ import { HomeSectionV1Wrapper } from "./style";
 import SectionHeader from "@/components/section-header";
 import SectionRoom from "@/components/section-room";
 import { IGoodPriceInfo, IHighScoreInfo } from "@/types/home";
+import SectionFooter from "@/components/section-footer";
 
 interface IProps {
   infoData: IGoodPriceInfo | IHighScoreInfo;
@@ -15,7 +16,8 @@ const HomeSectionV1 = memo((props: IProps) => {
   return (
     <HomeSectionV1Wrapper>
       <SectionHeader title={infoData.title} subtitle={infoData?.subtitle} />
-      <SectionRoom roomList={infoData.list} itemWidth="25%"/>
+      <SectionRoom roomList={infoData.list} itemWidth="25%" />
+      <SectionFooter />
     </HomeSectionV1Wrapper>
   );
 });
