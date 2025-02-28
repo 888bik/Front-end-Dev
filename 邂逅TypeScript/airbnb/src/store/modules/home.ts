@@ -2,6 +2,7 @@ import {
   getDiscountData,
   getHomeGoodPriceData,
   getHomeHighScoreData,
+  getRecommendData,
 } from "@/services/modules/home";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -30,6 +31,9 @@ export const fetchHomeDataAction = createAsyncThunk(
       getDiscountData().then((res) => {
         dispatch(changeDisCountInfo(res));
       });
+      getRecommendData().then((res) => {
+        dispatch(changeRecommendInfo(res));
+      });
     } catch (error) {
       console.log("获取数据失败:" + error);
     }
@@ -42,6 +46,7 @@ const homeSlice = createSlice({
     goodPriceInfo: {},
     highScoreInfo: {},
     disCountInfo: {},
+    recommendInfo: {},
   },
   reducers: {
     changeGoodPriceInfo(state, { payload }) {
@@ -53,6 +58,9 @@ const homeSlice = createSlice({
     changeDisCountInfo(state, { payload }) {
       state.disCountInfo = payload;
     },
+    changeRecommendInfo(state, { payload }) {
+      state.recommendInfo = payload;
+    },
   },
   // extraReducers: (builder) => {
   //   // extraReducers 用于处理异步请求模块的 action
@@ -62,6 +70,10 @@ const homeSlice = createSlice({
   // },
 });
 
-export const { changeGoodPriceInfo, changeHighScoreInfo, changeDisCountInfo } =
-  homeSlice.actions;
+export const {
+  changeGoodPriceInfo,
+  changeHighScoreInfo,
+  changeDisCountInfo,
+  changeRecommendInfo,
+} = homeSlice.actions;
 export default homeSlice.reducer;

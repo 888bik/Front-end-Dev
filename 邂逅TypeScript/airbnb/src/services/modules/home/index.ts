@@ -11,7 +11,7 @@ export function getHomeGoodPriceData() {
 }
 
 /**
- * 
+ *
  * @returns 获取首页高分房源数据
  */
 export function getHomeHighScoreData() {
@@ -21,13 +21,19 @@ export function getHomeHighScoreData() {
 }
 
 /**
- * 
+ *
  * @returns 获取折扣优惠房源数据
  */
 export function getDiscountData() {
   return homeRequest.request({
-    url:"/home/discount"
-  })
+    url: "/home/discount",
+  });
+}
+
+export function getRecommendData() {
+  return homeRequest.request({
+    url: "/home/hotrecommenddest",
+  });
 }
 // homeRequest
 //   .request({

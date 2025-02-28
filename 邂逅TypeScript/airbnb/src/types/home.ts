@@ -58,8 +58,12 @@ export interface IHighScoreInfo extends IBaseSectionInfoV1 {
 export interface IDisCountInfo extends IBaseSectionInfoV2 {
   subtitle: string;
 }
+export interface IRecommendInfo extends IBaseSectionInfoV2 {
+  subtitle: string;
+}
 export interface IHomeState {
   goodPriceInfo: IGoodPriceInfo;
   highScoreInfo: IHighScoreInfo;
   disCountInfo: IDisCountInfo;
+  recommendInfo: IRecommendInfo;
 }
