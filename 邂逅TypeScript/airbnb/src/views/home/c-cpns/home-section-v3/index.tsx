@@ -2,12 +2,12 @@ import React, { memo } from "react";
 import { HomeSectionV3Wrapper } from "./style";
 import SectionHeader from "@/components/section-header";
 import SectionFooter from "@/components/section-footer";
-import { IPlusInfo } from "@/types/home";
 import ScrollView from "@/base-ui/scroll-view";
 import RoomItem from "@/components/room-item";
+import { IBaseSectionInfoV1 } from "@/types/home";
 
 interface IProps {
-  infoData: IPlusInfo;
+  infoData: IBaseSectionInfoV1;
 }
 const HomeSectionV3 = memo((props: IProps) => {
   const { infoData } = props;

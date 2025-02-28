@@ -2,6 +2,7 @@ import {
   getDiscountData,
   getHomeGoodPriceData,
   getHomeHighScoreData,
+  getLongForData,
   getPlusData,
   getRecommendData,
 } from "@/services/modules/home";
@@ -38,6 +39,9 @@ export const fetchHomeDataAction = createAsyncThunk(
       getPlusData().then((res) => {
         dispatch(changePlusInfo(res));
       });
+      getLongForData().then((res) => {
+        dispatch(changeLongForInfo(res));
+      });
     } catch (error) {
       console.log("获取数据失败:" + error);
     }
@@ -52,6 +56,7 @@ const homeSlice = createSlice({
     disCountInfo: {},
     recommendInfo: {},
     plusInfo: {},
+    longForInfo: {},
   },
   reducers: {
     changeGoodPriceInfo(state, { payload }) {
@@ -69,6 +74,9 @@ const homeSlice = createSlice({
     changePlusInfo(state, { payload }) {
       state.plusInfo = payload;
     },
+    changeLongForInfo(state, { payload }) {
+      state.longForInfo = payload;
+    },
   },
   // extraReducers: (builder) => {
   //   // extraReducers 用于处理异步请求模块的 action
@@ -84,5 +92,6 @@ export const {
   changeDisCountInfo,
   changeRecommendInfo,
   changePlusInfo,
+  changeLongForInfo,
 } = homeSlice.actions;
 export default homeSlice.reducer;

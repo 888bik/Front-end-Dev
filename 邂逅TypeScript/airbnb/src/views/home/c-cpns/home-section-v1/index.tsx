@@ -2,11 +2,13 @@ import React, { memo } from "react";
 import { HomeSectionV1Wrapper } from "./style";
 import SectionHeader from "@/components/section-header";
 import SectionRoom from "@/components/section-room";
-import { IGoodPriceInfo, IHighScoreInfo } from "@/types/home";
+// import { IGoodPriceInfo, IHighScoreInfo } from "@/types/home";
 import SectionFooter from "@/components/section-footer";
+import { IBaseSectionInfoV1 } from "@/types/home";
 
 interface IProps {
-  infoData: IGoodPriceInfo | IHighScoreInfo;
+  // infoData: IGoodPriceInfo | IHighScoreInfo;
+  infoData: IBaseSectionInfoV1;
 }
 /**
  * 高分/高性价比组件

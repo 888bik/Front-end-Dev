@@ -1,13 +1,13 @@
 import React, { memo, useCallback, useState } from "react";
 import { HomeSectionV2Wrapper } from "./style";
-import { IDisCountInfo } from "@/types/home";
 import SectionHeader from "@/components/section-header";
 import SectionTab from "@/components/section-tab";
 import SectionRoom from "@/components/section-room";
 import SectionFooter from "@/components/section-footer";
+import { IBaseSectionInfoV2 } from "@/types/home";
 
 interface IProps {
-  infoData: IDisCountInfo;
+  infoData: IBaseSectionInfoV2;
 }
 const HomeSectionV2 = memo((props: IProps) => {
   const { infoData } = props;

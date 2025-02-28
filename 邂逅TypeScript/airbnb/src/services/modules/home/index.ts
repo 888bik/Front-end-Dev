@@ -39,10 +39,22 @@ export function getRecommendData() {
     url: "/home/hotrecommenddest",
   });
 }
+/**
+ * 
+ * @returns 获取plus房源数据
+ */
 export function getPlusData() {
   return homeRequest.request({
     url: "/home/plus",
   });
+}
+/**
+ * 获取向往房源数据
+ */
+export function getLongForData() {
+  return homeRequest.request({
+    url:"/home/longfor"
+  })
 }
 // homeRequest
 //   .request({
