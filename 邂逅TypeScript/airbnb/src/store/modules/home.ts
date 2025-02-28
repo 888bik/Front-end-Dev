@@ -7,28 +7,32 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchHomeDataAction = createAsyncThunk(
   "home/fetchData",
-  async (payload, { dispatch }) => {
+  (payload, { dispatch }) => {
+    // try {
+    //   const [goodPriceRes, highScoreRes, discountRes] = await Promise.all([
+    //     getHomeGoodPriceData(),
+    //     getHomeHighScoreData(),
+    //     getDiscountData(),
+    //   ]);
+    //   dispatch(changeGoodPriceInfo(goodPriceRes));
+    //   dispatch(changeHighScoreInfo(highScoreRes));
+    //   dispatch(changeDisCountInfo(discountRes));
+    // } catch (error) {
+    //   console.log("获取数据失败", error);
+    // }
     try {
-      const [goodPriceRes, highScoreRes, discountRes] = await Promise.all([
-        getHomeGoodPriceData(),
-        getHomeHighScoreData(),
-        getDiscountData(),
-      ]);
-      dispatch(changeGoodPriceInfo(goodPriceRes));
-      dispatch(changeHighScoreInfo(highScoreRes));
-      dispatch(changeDisCountInfo(discountRes));
+      getHomeGoodPriceData().then((res) => {
+        dispatch(changeGoodPriceInfo(res));
+      });
+      getHomeHighScoreData().then((res) => {
+        dispatch(changeHighScoreInfo(res));
+      });
+      getDiscountData().then((res) => {
+        dispatch(changeDisCountInfo(res));
+      });
     } catch (error) {
-      console.log("获取数据失败", error);
+      console.log("获取数据失败:" + error);
     }
-    // getHomeGoodPriceData().then((res) => {
-    //   dispatch(changeGoodPriceInfo(res));
-    // });
-    // getHomeHighScoreData().then((res) => {
-    //   dispatch(changeHighScoreInfo(res));
-    // });
-    // getDiscountData().then((res) => {
-    //   dispatch(changeDisCountInfo(res));
-    // });
   }
 );
 

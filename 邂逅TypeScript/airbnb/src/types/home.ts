@@ -6,7 +6,7 @@ export interface IRoomInfo {
   reviews_count: number;
   picture_url: string;
   verify_info: {
-    message: string[];
+    messages: string[];
     text_color: string;
   };
   bottom_info: {

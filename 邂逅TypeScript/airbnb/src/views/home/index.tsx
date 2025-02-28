@@ -18,7 +18,10 @@ const Home = memo(() => {
     }),
     shallowEqual
   );
-  console.log(disCountData);
+  //判断对象是否为空
+  function isEmptyO(obj) {
+    return !!Object.keys(obj).length;
+  }
   // 派发事件
   const dispatch = useAppDispatch();
 
@@ -33,13 +36,19 @@ const Home = memo(() => {
       </div>
       <div className="content">
         <div className="good-price">
-          <HomeSectionV1 infoData={goodPriceData as IGoodPriceInfo} />
+          {isEmptyO(goodPriceData) && (
+            <HomeSectionV1 infoData={goodPriceData as IGoodPriceInfo} />
+          )}
         </div>
         <div className="hight-price">
-          <HomeSectionV1 infoData={highScoreData as IHighScoreInfo} />
+          {isEmptyO(highScoreData) && (
+            <HomeSectionV1 infoData={highScoreData as IHighScoreInfo} />
+          )}
         </div>
         <div className="discount-price">
-          <HomeSectionV2 infoData={disCountData as IDisCountInfo} />
+          {isEmptyO(disCountData) && (
+            <HomeSectionV2 infoData={disCountData as IDisCountInfo} />
+          )}
         </div>
       </div>
     </HomeWrapper>

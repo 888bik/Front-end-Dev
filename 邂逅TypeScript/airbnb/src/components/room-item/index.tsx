@@ -18,7 +18,7 @@ const RoomItem = memo((props: IProps) => {
         <div className="room-img">
           <img src={itemData.picture_url} alt="" />
         </div>
-        <div className="desc">{itemData.verify_info.message?.join(" ~ ")}</div>
+        <div className="desc">{itemData.verify_info.messages?.join("·")}</div>
         <div className="name">{itemData.name}</div>
         <div className="price">{itemData.price_format}/晚</div>
       </div>
