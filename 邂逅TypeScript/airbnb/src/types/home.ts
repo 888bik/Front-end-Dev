@@ -19,14 +19,14 @@ export interface IRoomInfo {
  * 房间详细数据的类型
  */
 interface IBaseSectionInfoV1 {
-  id: string | number;
-  type: string;
+  _id?: string | number;
+  type?: string;
   title: string;
   list: IRoomInfo[];
 }
 interface IBaseSectionInfoV2 {
-  id: string | number;
-  type: string;
+  _id?: string | number;
+  type?: string;
   title: string;
   dest_address: IAddress[];
   dest_list: {
@@ -61,9 +61,13 @@ export interface IDisCountInfo extends IBaseSectionInfoV2 {
 export interface IRecommendInfo extends IBaseSectionInfoV2 {
   subtitle: string;
 }
+export interface IPlusInfo extends IBaseSectionInfoV1 {
+  subtitle: string;
+}
 export interface IHomeState {
   goodPriceInfo: IGoodPriceInfo;
   highScoreInfo: IHighScoreInfo;
   disCountInfo: IDisCountInfo;
   recommendInfo: IRecommendInfo;
+  plusInfo: IBaseSectionInfoV1;
 }

@@ -11,9 +11,12 @@ const SectionFooter = memo((props: IProps) => {
   if (name) {
     showMessage = `显示更多${name}房源`;
   }
+  function moreClick() {
+    console.log("点击");
+  }
   return (
     <SectionFooterWrapper color={name ? "#00848A" : "#000"}>
-      <div className="info">
+      <div className="info" onClick={moreClick}>
         <div className="text">{showMessage}</div>
       </div>
     </SectionFooterWrapper>

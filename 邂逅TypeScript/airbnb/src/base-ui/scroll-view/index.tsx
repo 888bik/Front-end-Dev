@@ -32,7 +32,6 @@ const ScrollView = memo((props: IProps) => {
     //获取第二个tab距离左边的宽度,让它移动这个距离
     const nextEl = scrollContentRef.current.children[nextIndex];
     const nextOffsetLeft = nextEl.offsetLeft;
-    console.log(nextOffsetLeft);
     scrollContentRef.current.style.transform = `translate(-${nextOffsetLeft}px)`;
     //更新索引
     setPosIndex(nextIndex);

@@ -5,30 +5,38 @@ import { useAppDispatch, RootState } from "@/store";
 import { fetchHomeDataAction } from "@/store/modules/home";
 import { shallowEqual, useSelector } from "react-redux";
 import HomeSectionV1 from "./c-cpns/home-section-v1";
+import { isEmptyO } from "@/utils/isEmpty";
 import {
   IHighScoreInfo,
   IGoodPriceInfo,
   IDisCountInfo,
   IRecommendInfo,
+  IPlusInfo,
 } from "@/types/home";
 import HomeSectionV2 from "./c-cpns/home-section-v2";
+import HomeSectionV3 from "./c-cpns/home-section-v3";
 
 const Home = memo(() => {
   // 从store获取数据
-  const { goodPriceData, highScoreData, disCountData, recommendData } =
-    useSelector(
-      (state: RootState) => ({
-        goodPriceData: state.home.goodPriceInfo,
-        highScoreData: state.home.highScoreInfo,
-        disCountData: state.home.disCountInfo,
-        recommendData: state.home.recommendInfo,
-      }),
-      shallowEqual
-    );
-  //判断对象是否为空
-  function isEmptyO(obj) {
-    return !!Object.keys(obj).length;
-  }
+  const {
+    goodPriceData,
+    highScoreData,
+    disCountData,
+    recommendData,
+    plusData,
+  } = useSelector(
+    (state: RootState) => ({
+      goodPriceData: state.home.goodPriceInfo,
+      highScoreData: state.home.highScoreInfo,
+      disCountData: state.home.disCountInfo,
+      recommendData: state.home.recommendInfo,
+      plusData: state.home.plusInfo,
+    }),
+    shallowEqual
+  );
+  //这里打印四次
+  // console.log(goodPriceData);
+
   // 派发事件
   const dispatch = useAppDispatch();
 
@@ -49,7 +57,9 @@ const Home = memo(() => {
           )}
         </div>
         <div className="recommend">
-          <HomeSectionV2 infoData={recommendData as IRecommendInfo} />
+          {isEmptyO(recommendData) && (
+            <HomeSectionV2 infoData={recommendData as IRecommendInfo} />
+          )}
         </div>
         <div className="good-price">
           {isEmptyO(goodPriceData) && (
@@ -59,6 +69,11 @@ const Home = memo(() => {
         <div className="hight-price">
           {isEmptyO(highScoreData) && (
             <HomeSectionV1 infoData={highScoreData as IHighScoreInfo} />
+          )}
+        </div>
+        <div className="plus">
+          {isEmptyO(plusData) && (
+            <HomeSectionV3 infoData={plusData as IPlusInfo} />
           )}
         </div>
       </div>

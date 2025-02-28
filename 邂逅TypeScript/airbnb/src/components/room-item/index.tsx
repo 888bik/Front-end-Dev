@@ -26,7 +26,7 @@ const RoomItem = memo((props: IProps) => {
         <Rating
           name="half-rating-read"
           defaultValue={itemData.star_rating ?? 5}
-          precision={0.5}
+          precision={0.1}
           readOnly
           sx={{ fontSize: "12px", color: "#00848A", marginRight: "-1px" }}
         />

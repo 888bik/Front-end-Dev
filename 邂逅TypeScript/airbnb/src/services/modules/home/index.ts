@@ -30,9 +30,18 @@ export function getDiscountData() {
   });
 }
 
+/**
+ *
+ * @returns 获取推荐房源数据
+ */
 export function getRecommendData() {
   return homeRequest.request({
     url: "/home/hotrecommenddest",
+  });
+}
+export function getPlusData() {
+  return homeRequest.request({
+    url: "/home/plus",
   });
 }
 // homeRequest
