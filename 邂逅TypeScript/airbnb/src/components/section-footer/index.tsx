@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import { SectionFooterWrapper } from "./style";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   name?: string;
@@ -11,8 +12,9 @@ const SectionFooter = memo((props: IProps) => {
   if (name) {
     showMessage = `显示更多${name}房源`;
   }
+  const navigate = useNavigate();
   function moreClick() {
-    console.log("点击");
+    navigate("/entire");
   }
   return (
     <SectionFooterWrapper color={name ? "#00848A" : "#000"}>
