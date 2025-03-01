@@ -13,6 +13,7 @@ const EntireFilter = memo(() => {
       });
       newItems.splice(itemIndex, 1);
     } else {
+      //添加操作
       newItems.push(item);
     }
     setSelectedItem(newItems);

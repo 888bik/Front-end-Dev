@@ -10,13 +10,14 @@ interface IProps {
 }
 const HomeLongFor = memo((props: IProps) => {
   const { infoData } = props;
+
   return (
     <HomeLongForWrapper>
       <SectionHeader title={infoData.title} subtitle={infoData.subtitle} />
       <div className="longFor-list">
         <ScrollView>
           {infoData.list.map((item) => {
-            return <LongForItem itemData={item} key={item.id} />;
+            return <LongForItem itemData={item} key={item.image_url} />;
           })}
         </ScrollView>
       </div>

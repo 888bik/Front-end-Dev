@@ -1,5 +1,7 @@
 // import { entireRequest } from "../..";
 
+import { entireRequest } from "..";
+
 // entireRequest
 //   .request({
 //     url: "/entire/list",
@@ -14,3 +16,12 @@
 //   .catch((err) => {
 //     console.log(err);
 //   });
+export function getEntireRoomList(offset = 0, size = 20) {
+  return entireRequest.request({
+    url: "/entire/list",
+    params: {
+      offset,
+      size,
+    },
+  });
+}

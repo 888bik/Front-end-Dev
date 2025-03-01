@@ -1,4 +1,5 @@
-import { homeRequest } from "../..";
+import { homeRequest } from "..";
+
 
 /**
  *
