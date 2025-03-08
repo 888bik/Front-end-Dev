@@ -24,12 +24,12 @@ Component({
    */
   methods: {
     onMoreTap() {
-      // wx.navigateTo({
-      //   url: "/pages/more-music/more-music?type=recommend",
-      //   success: (result) => {},
-      //   fail: () => {},
-      //   complete: () => {},
-      // });
+      wx.navigateTo({
+        url: "/pages/more-music/more-music?type=recommend",
+        success: (result) => {},
+        fail: () => {},
+        complete: () => {},
+      });
       this.triggerEvent("moreTap");
     },
   },

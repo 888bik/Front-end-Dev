@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #id {
+        background-color: rgba(255, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 宽高默认为300,150 -->
+    <canvas id="canvas" width="300" height="150"> </canvas>
+    <script>
+      window.onload = function () {
+        // 1.获取canvas对象
+        let canvasEl = document.querySelector("#canvas");
+        if (!canvasEl) {
+          return;
+        }
+        // 2.拿到Canvas渲染的上下文
+        // ctx: CanvasRenderingContext2D
+        // ctx是一个绘图的上下文: 提供了绘图的指令, 可以绘制各种图形( 圆形 直线 椭圆... )
+        let ctx = canvasEl.getContext("2d");
+        console.log(ctx);
+      };
+    </script>
+  </body>
+</html>

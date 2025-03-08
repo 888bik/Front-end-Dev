@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-image: url(../../images/grid.png);
+      }
+      #canvas {
+        background-color: rgba(255, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 宽高默认为300,150 -->
+    <canvas id="canvas" width="300" height="300"> </canvas>
+    <script>
+      window.onload = function () {
+        // 1.获取canvas对象
+        let canvasEl = document.querySelector("#canvas");
+        if (!canvasEl) {
+          return;
+        }
+        // 2.拿到Canvas渲染的上下文
+        // ctx: CanvasRenderingContext2D
+        // ctx是一个绘图的上下文: 提供了绘图的指令, 可以绘制各种图形( 圆形 直线 椭圆... )
+        let ctx = canvasEl.getContext("2d");
+        let sun = new Image();
+        sun.src = "../../images/canvas_sun.png";
+
+        let earth = new Image();
+        earth.src = "../../images/canvas_earth.png";
+        let moon = new Image();
+        moon.src = "../../images/canvas_moon.png";
+
+        //调用绘制的函数
+        requestAnimationFrame(draw);
+
+        function draw() {
+          ctx.clearRect(0, 0, 300, 300);
+          //绘制太阳背景
+          ctx.save();
+          ctx.drawImage(sun, 0, 0);
+          ctx.translate(150, 150); //移动坐标
+          //绘制轨道
+          ctx.strokeStyle = "rgba(0,153,255,0.4)";
+          ctx.beginPath();
+          ctx.arc(0, 0, 105, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+
+          //绘制地球背景
+          ctx.save();
+          ctx.translate(150, 150);
+          ctx.translate(105, 0);
+          ctx.drawImage(earth, -12, -12);
+
+          //绘制月球
+          ctx.translate(0, -24);
+          ctx.drawImage(moon, 0, 0);
+          ctx.restore();
+
+          requestAnimationFrame(draw);
+        }
+      };
+    </script>
+  </body>
+</html>
