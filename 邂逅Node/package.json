@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "express": "^4.21.2",
-    "koa": "^2.16.0",
-    "koa-router": "^13.0.1"
-  }
-}
