@@ -1,24 +1,31 @@
-<!-- 相当于div -->
-<view>
-  hello {{globalData.message}}
+<form bindsubmit="formSubmit">
+  <!-- 各表单组件 -->
+  <view class="intro">
+    <input name="name" placeholder="请输入姓名" />
+    <input name="age" placeholder="请输入年龄" />
+    <textarea name="bio" placeholder="自我介绍(50字以内)" />
+  </view>
+  <view class="divider"></view>
+  <view class="gender">
+    <text class="title">请选择您的性别:</text>
+    <radio-group name="gender">
+      <radio value="male" />男
+      <radio value="female" />女
+    </radio-group>
+  </view>
+  <view class="hobbies">
+    <text class="title">请选择您的爱好:</text>
+    <checkbox-group name="hobbies">
+      <checkbox value="敲代码" />敲代码
+      <checkbox value="爱运动" />爱运动
+      <checkbox value="看美女" />看美女
+    </checkbox-group>
+  </view>
+  <button form-type="submit">提交</button>
+</form>
+<view wx:if="{{showInfo}}">
+  <view class="showArea">个人信息展示</view>
+  <text>姓名：{{userInfo.name}}\n</text>
+  <text>性别：{{userInfo.gender==='male'?'男':'女'}}\n</text>
+  <text>爱好：{{userInfo.hobbies}}</text>
 </view>
-<!-- 相当于span -->
-<text class="title" user-select="false" space="false" decode="true">
-  &lt;哈哈哈哈&gt;
-</text>
-<!-- 按钮 -->
-<button class="btn1" bindtap="onclickbtn" type="primary" size="mini">{{message}}</button>
-<button type="warn" plain="{{true}}" loading="{{true}}" disabled="{{true}}">哈哈哈哈哈哈</button>
-<button hover-class="button-hover" form-type="submit">提交</button>
-<button open-type="share">分享</button>
-<!-- 列表展示 -->
-<block wx:for="{{books}}" wx:key="*this">
-  <view style="background-color: {{color[index]}};">{{item}}</view>
-</block>
-<!-- 自定义item,index名称 -->
-<block wx:for="{{books}}" wx:key="*this" wx:for-item="book" wx:for-index="bookIndex">
-  <view style="background-color: {{color[bookIndex]}};">{{book}}</view>
-</block>
-
-<my-cpn info="info" bind:tap="onCpnClick">
-</my-cpn>

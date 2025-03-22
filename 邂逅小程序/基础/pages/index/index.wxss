@@ -1,12 +1,14 @@
 .title {
-  background-color: red;
+  font-size: large;
 }
-.btn1 {
-  background-color: aqua;
+.divider {
+  border: 0;
+  border-top: 2px solid #333; 
+  margin: 20px 0;  /* 上下间距 */
 }
-.button-hover {
-  background-color: rebeccapurple;
-}
-.info{
-  background-color: green;
+.showArea {
+  font-size: 30px;
+  color: aqua;
+  display: flex;
+  justify-content: center;
 }
