@@ -77,7 +77,6 @@ const verifyAuth = async (context, next) => {
       algorithms: ["RS256"],
     });
     context.user = result;
-
     await next();
   } catch (error) {
     context.app.emit("error", UNAUTHORIZED, context);
