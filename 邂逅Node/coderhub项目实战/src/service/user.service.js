@@ -20,5 +20,9 @@ class UserService {
     const [result] = await connection.execute(statement, [userName]);
     return result;
   }
+
+  async queryUser(user) {
+    
+  }
 }
 module.exports = new UserService();
