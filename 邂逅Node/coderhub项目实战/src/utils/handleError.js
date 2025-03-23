@@ -6,6 +6,7 @@ const {
   USERNAME_OR_PASSWORD_IS_INCORRECT,
   UNAUTHORIZED,
   CONTENT_IS_NOT_EMPTY,
+  COMMENT_IS_NOT_EXISTS,
 } = require("../config/constant");
 
 /**
@@ -29,11 +30,14 @@ app.on("error", (error, context) => {
       break;
     case UNAUTHORIZED:
       code = -1004;
-      message = "未授权,请登录后再尝试";
+      message = "您暂时没有权限操作此内容";
       break;
     case CONTENT_IS_NOT_EMPTY:
       code = -1005;
       message = "发布的内容不能为空";
+      break;
+    case COMMENT_IS_NOT_EXISTS:
+      (code = -1006), (message = "修改的动态不存在");
       break;
   }
   context.body = {

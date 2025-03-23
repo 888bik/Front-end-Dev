@@ -18,5 +18,15 @@ class MomentController {
       data: result,
     };
   }
+  async update(context, next) {
+    const { content } = context.request.body;
+    const { momentId } = context.params;
+    const result = await momentService.updateMoment(content, momentId);
+    context.body = {
+      code: 0,
+      message: "修改动态成功",
+      data: result,
+    };
+  }
 }
 module.exports = new MomentController();
