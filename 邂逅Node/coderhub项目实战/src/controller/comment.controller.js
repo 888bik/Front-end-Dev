@@ -40,5 +40,18 @@ class CommentController {
       return context.app.emit("error", COMMENT_IS_NOT_EXISTS, context);
     }
   }
+  async remove(context, next) {
+    const { id } = context.params;
+    const result = await commentService.removeComment(id);
+    console.log(result);
+    if (result.affectedRows === 0) {
+      return context.app.emit("error", COMMENT_IS_NOT_EXISTS, context);
+    }
+    context.body = {
+      code: 0,
+      message: "删除评论成功",
+      data: result,
+    };
+  }
 }
 module.exports = new CommentController();
