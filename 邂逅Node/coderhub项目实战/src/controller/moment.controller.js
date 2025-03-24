@@ -2,6 +2,7 @@ const {
   CONTENT_IS_NOT_EMPTY,
   MOMENT_IS_NOT_EXISTS,
 } = require("../config/constant");
+const labelService = require("../service/label.service");
 const momentService = require("../service/moment.service");
 
 class MomentController {
@@ -60,6 +61,31 @@ class MomentController {
       message: "查询动态成功",
       data: result,
     };
+  }
+  async addLabels(context, next) {
+    const { labels } = context;
+    const { momentId } = context.params;
+    try {
+      for (const label of labels) {
+        //判断动态是否已经有该标签
+        const isExists = await labelService.hasLabel(label.id, momentId);
+        if (!isExists) {
+          const result = await labelService.addLabelsToMoment(
+            label.id,
+            momentId
+          );
+        }
+      }
+      context.body = {
+        code: 0,
+        message: "添加成功",
+      };
+    } catch (error) {
+      return (context.body = {
+        code: -1001,
+        message: "添加失败",
+      });
+    }
   }
 }
 module.exports = new MomentController();

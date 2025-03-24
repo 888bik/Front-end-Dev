@@ -11,7 +11,7 @@ class UserController {
 
     //给客户端返回响应
     context.body = {
-      code: 1001,
+      code: 0,
       message: "创建用户成功",
       data: result,
     };
@@ -27,6 +27,7 @@ class UserController {
     });
     context.body = {
       code: 0,
+      message: "登录成功",
       data: { id, name, token },
     };
   }

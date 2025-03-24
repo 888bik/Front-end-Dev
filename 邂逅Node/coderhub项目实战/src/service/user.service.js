@@ -9,9 +9,7 @@ class UserService {
    */
   async createUser(user) {
     const { username, password } = user;
-    //预处理语句
     const statement = "insert into user(name,password) values(?,?);";
-    //执行sql语句
     const [result] = await connection.execute(statement, [username, password]);
     return result;
   }

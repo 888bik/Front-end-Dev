@@ -5,6 +5,8 @@ const UNAUTHORIZED = "unauthorized";
 const CONTENT_IS_NOT_EMPTY = "content_is_not_empty";
 const MOMENT_IS_NOT_EXISTS = "moment_is_not_exists";
 const COMMENT_IS_NOT_EXISTS = "comment_is_not_exists";
+const LABEL_NAME_IS_ALREADY_EXISTS = "labeName_is_already_exists";
+
 module.exports = {
   NAME_IS_ALREADY_EXISTS,
   NAME_AND_PASSWORD_IS_REQUIRED,
@@ -13,4 +15,5 @@ module.exports = {
   CONTENT_IS_NOT_EMPTY,
   MOMENT_IS_NOT_EXISTS,
   COMMENT_IS_NOT_EXISTS,
+  LABEL_NAME_IS_ALREADY_EXISTS
 };

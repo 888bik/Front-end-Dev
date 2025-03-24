@@ -1,8 +1,11 @@
 const router = require("koa-router");
 const { verifyAuth } = require("../middleware/user.middleware");
 const { publish } = require("../controller/moment.controller");
-const { verifyPermission } = require("../middleware/permissioni.middleware");
+const {
+  verifyPermissionMoment,
+} = require("../middleware/permission.middleware");
 const momentController = require("../controller/moment.controller");
+const { verifyLabelExists } = require("../middleware/label.middleware");
 
 const momentRouter = new router({ prefix: "/moment" });
 
@@ -13,7 +16,7 @@ momentRouter.post("/publish", verifyAuth, publish);
 momentRouter.patch(
   "/update/:momentId",
   verifyAuth,
-  verifyPermission,
+  verifyPermissionMoment,
   momentController.update
 );
 
@@ -21,13 +24,22 @@ momentRouter.patch(
 momentRouter.delete(
   "/remove/:momentId",
   verifyAuth,
-  verifyPermission,
+  verifyPermissionMoment,
   momentController.remove
 );
 
 //查询所有动态
-momentRouter.get("/", momentController.queryList);
+momentRouter.get("/list", momentController.queryList);
 
 //查询某条动态
 momentRouter.get("/:momentId", momentController.query);
+
+//给动态添加标签
+momentRouter.post(
+  "/:momentId/labels",
+  verifyAuth,
+  verifyPermissionMoment,
+  verifyLabelExists,
+  momentController.addLabels
+);
 module.exports = momentRouter;

@@ -41,9 +41,11 @@ class CommentController {
     }
   }
   async remove(context, next) {
-    const { id } = context.params;
-    const result = await commentService.removeComment(id);
-    console.log(result);
+    //comment表的主键id
+    const { commentId } = context.params;
+    //当前登录的id
+    const { id } = context.user;
+    const result = await commentService.removeComment(commentId,id);
     if (result.affectedRows === 0) {
       return context.app.emit("error", COMMENT_IS_NOT_EXISTS, context);
     }

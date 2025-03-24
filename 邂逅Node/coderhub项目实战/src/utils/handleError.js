@@ -7,6 +7,7 @@ const {
   CONTENT_IS_NOT_EMPTY,
   MOMENT_IS_NOT_EXISTS,
   COMMENT_IS_NOT_EXISTS,
+  LABEL_NAME_IS_ALREADY_EXISTS,
 } = require("../config/constant");
 
 /**
@@ -43,6 +44,10 @@ app.on("error", (error, context) => {
     case COMMENT_IS_NOT_EXISTS:
       code = -1007;
       message = "回复失败,该评论已被删除";
+      break;
+    case LABEL_NAME_IS_ALREADY_EXISTS:
+      code = -1008;
+      message = "创建失败,标签已存在";
       break;
   }
   context.body = {
