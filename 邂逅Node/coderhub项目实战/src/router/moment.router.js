@@ -17,10 +17,17 @@ momentRouter.patch(
   momentController.update
 );
 
+//删除动态
 momentRouter.delete(
   "/remove/:momentId",
   verifyAuth,
   verifyPermission,
   momentController.remove
 );
+
+//查询所有动态
+momentRouter.get("/", momentController.queryList);
+
+//查询某条动态
+momentRouter.get("/:momentId", momentController.query);
 module.exports = momentRouter;

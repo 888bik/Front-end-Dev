@@ -2,11 +2,10 @@ const app = require("../app");
 const {
   NAME_IS_ALREADY_EXISTS,
   NAME_OR_PASSWORD_IS_REQUIRED,
-  USER_IS_NOT_EXISTS,
   USERNAME_OR_PASSWORD_IS_INCORRECT,
   UNAUTHORIZED,
   CONTENT_IS_NOT_EMPTY,
-  COMMENT_IS_NOT_EXISTS,
+  MOMENT_IS_NOT_EXISTS
 } = require("../config/constant");
 
 /**
@@ -36,7 +35,7 @@ app.on("error", (error, context) => {
       code = -1005;
       message = "发布的内容不能为空";
       break;
-    case COMMENT_IS_NOT_EXISTS:
+    case MOMENT_IS_NOT_EXISTS:
       code = -1006;
       message = "操作的动态不存在";
       break;

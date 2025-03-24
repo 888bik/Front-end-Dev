@@ -1,4 +1,7 @@
-const { CONTENT_IS_NOT_EMPTY } = require("../config/constant");
+const {
+  CONTENT_IS_NOT_EMPTY,
+  MOMENT_IS_NOT_EXISTS,
+} = require("../config/constant");
 const momentService = require("../service/moment.service");
 
 class MomentController {
@@ -34,6 +37,27 @@ class MomentController {
     context.body = {
       code: 0,
       message: "删除动态成功",
+      data: result,
+    };
+  }
+  async queryList(context, next) {
+    const { offset, size } = context.query;
+    const result = await momentService.queryMomentList(offset, size);
+    context.body = {
+      code: 0,
+      message: "查询动态成功",
+      data: result,
+    };
+  }
+  async query(context, next) {
+    const { momentId } = context.params;
+    const result = await momentService.queryMomentById(momentId);
+    if (!result.length) {
+      return context.app.emit("error", MOMENT_IS_NOT_EXISTS, context);
+    }
+    context.body = {
+      code: 0,
+      message: "查询动态成功",
       data: result,
     };
   }
