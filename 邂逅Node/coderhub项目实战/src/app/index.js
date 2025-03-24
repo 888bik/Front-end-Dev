@@ -2,6 +2,7 @@ const koa = require("koa");
 const userRouter = require("../router/user.router");
 const bodyParser = require("koa-bodyparser");
 const momentRouter = require("../router/moment.router");
+const commentRouter = require("../router/comment.router");
 
 const app = new koa();
 
@@ -11,5 +12,7 @@ app.use(userRouter.routes());
 app.use(userRouter.allowedMethods());
 app.use(momentRouter.routes());
 app.use(momentRouter.allowedMethods());
+app.use(commentRouter.routes())
+app.use(commentRouter.allowedMethods())
 
 module.exports = app;

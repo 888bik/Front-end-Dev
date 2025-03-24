@@ -5,7 +5,8 @@ const {
   USERNAME_OR_PASSWORD_IS_INCORRECT,
   UNAUTHORIZED,
   CONTENT_IS_NOT_EMPTY,
-  MOMENT_IS_NOT_EXISTS
+  MOMENT_IS_NOT_EXISTS,
+  COMMENT_IS_NOT_EXISTS,
 } = require("../config/constant");
 
 /**
@@ -38,6 +39,10 @@ app.on("error", (error, context) => {
     case MOMENT_IS_NOT_EXISTS:
       code = -1006;
       message = "操作的动态不存在";
+      break;
+    case COMMENT_IS_NOT_EXISTS:
+      code = -1007;
+      message = "回复失败,该评论已被删除";
       break;
   }
   context.body = {
