@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/favor/favor",
     "pages/category/category",
-    "pages/cart/cart"
+    "pages/cart/cart",
+    "pages/music",
+    "pages/music/music"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -27,10 +29,10 @@
         "selectedIconPath": "assets/tabbar/category_active.png"
       },
       {
-        "pagePath": "pages/cart/cart",
-        "text": "购物车",
-        "iconPath": "assets/tabbar/cart.png",
-        "selectedIconPath": "assets/tabbar/cart_active.png"
+        "pagePath": "pages/music/music",
+        "text": "音乐",
+        "iconPath": "assets/tabbar/music.png",
+        "selectedIconPath": "assets/tabbar/music_active.png"
       }
     ]
   },
@@ -39,6 +41,6 @@
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {
-    "my-cpn":"/components/my-cpn"
+    "my-cpn": "/components/my-cpn"
   }
 }

@@ -50,7 +50,7 @@ class MomentController {
       data: result,
     };
   }
-  async query(context, next) {
+  async queryDetail(context, next) {
     const { momentId } = context.params;
     const result = await momentService.queryMomentById(momentId);
     if (!result.length) {

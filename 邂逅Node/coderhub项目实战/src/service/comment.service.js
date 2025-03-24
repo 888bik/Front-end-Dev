@@ -22,9 +22,9 @@ class CommentService {
     ]);
     return result;
   }
-  async removeComment(commentId,userId) {
+  async removeComment(commentId, userId) {
     const statement = "delete from comment where id = ? and user_id = ?;";
-    const [result] = await connection.execute(statement, [commentId,userId]);
+    const [result] = await connection.execute(statement, [commentId, userId]);
     return result;
   }
 }

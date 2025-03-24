@@ -23,6 +23,7 @@ class CommentController {
   }
   async reply(context, next) {
     const { momentId, content, commentId } = context.request.body;
+    console.log(momentId, content, commentId);
     const { id } = context.user;
     try {
       const result = await commentService.replyComment(
@@ -45,7 +46,7 @@ class CommentController {
     const { commentId } = context.params;
     //当前登录的id
     const { id } = context.user;
-    const result = await commentService.removeComment(commentId,id);
+    const result = await commentService.removeComment(commentId, id);
     if (result.affectedRows === 0) {
       return context.app.emit("error", COMMENT_IS_NOT_EXISTS, context);
     }

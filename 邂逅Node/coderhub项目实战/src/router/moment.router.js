@@ -32,7 +32,7 @@ momentRouter.delete(
 momentRouter.get("/list", momentController.queryList);
 
 //查询某条动态
-momentRouter.get("/:momentId", momentController.query);
+momentRouter.get("/:momentId", momentController.queryDetail);
 
 //给动态添加标签
 momentRouter.post(
