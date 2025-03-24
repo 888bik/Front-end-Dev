@@ -37,7 +37,8 @@ app.on("error", (error, context) => {
       message = "发布的内容不能为空";
       break;
     case COMMENT_IS_NOT_EXISTS:
-      (code = -1006), (message = "修改的动态不存在");
+      code = -1006;
+      message = "操作的动态不存在";
       break;
   }
   context.body = {

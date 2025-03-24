@@ -16,5 +16,11 @@ class MomentService {
     const [result] = await connection.execute(statement, [content, momentId]);
     return result;
   }
+  async removeMoment(momentId) {
+    const statement = "delete from moment where id = ? ";
+    const [result] = await connection.execute(statement, [momentId]);
+    return result
+  }
 }
+
 module.exports = new MomentService();
