@@ -17,8 +17,10 @@ userRouter.post(
   userController.register
 );
 
-userRouter.post("/login", verifyLogin, userController.sign);
+userRouter.post("/login", verifyLogin, userController.signToken);
+
+userRouter.get("/avatar/:userId", userController.showUserAvatar);
 
 userRouter.get("/test", verifyAuth, userController.testAuth);
-//导出路由
+
 module.exports = userRouter;
