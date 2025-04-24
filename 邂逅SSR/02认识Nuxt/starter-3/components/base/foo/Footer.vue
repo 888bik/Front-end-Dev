@@ -1,5 +1,5 @@
 <template>
   <div>
-    <h1>About Page</h1>
+    <h3>底部</h3>
   </div>
 </template>

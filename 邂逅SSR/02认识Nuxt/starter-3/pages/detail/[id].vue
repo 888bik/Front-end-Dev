@@ -1,6 +1,6 @@
 <template>
-  <div>
-    {{ $route.params.id }}
-    <h3>I am detail Page children</h3>
-  </div>
+  <div>detail Page: {{ $route.params.id }}</div>
 </template>
+
+<script>
+</script>

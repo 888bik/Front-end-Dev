@@ -1,5 +1,5 @@
 <template>
   <div>
-    <h1>About Page</h1>
+    {{ $route.params.role }}
   </div>
 </template>
