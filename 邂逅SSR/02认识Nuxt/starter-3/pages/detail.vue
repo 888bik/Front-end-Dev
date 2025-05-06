@@ -9,6 +9,9 @@
     </div> -->
 
     <div>
+      <Head>
+        <Title>bik666</Title>
+      </Head>
       <NuxtLink to="/detail/children1">children1 Page</NuxtLink>
       <NuxtLink to="/detail/children2">children2 Page</NuxtLink>
     </div>
@@ -18,6 +21,6 @@
 </template>
 
 <script setup>
-const { message } = await $fetch("/api/hello");
-const posts = await $fetch("/api/posts");
+// const { message } = await $fetch("/api/hello");
+// const posts = await $fetch("/api/posts");
 </script>

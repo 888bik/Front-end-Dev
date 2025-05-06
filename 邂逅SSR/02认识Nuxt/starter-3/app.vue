@@ -2,6 +2,7 @@
   <div>
     <!-- <NuxtRouteAnnouncer /> -->
     <!-- <NuxtWelcome /> -->
+    <!-- <NuxtLayout name="custom-layout"> -->
     <NuxtLayout>
       <NuxtPage></NuxtPage>
     </NuxtLayout>
@@ -12,11 +13,11 @@
 //手动引入全局样式
 import "~/assets/styles/global.scss";
 
-let router = useRouter()
+let router = useRouter();
 function goBack() {
   router.go(-1);
 }
-router.beforeEach((to,from) => {
-  console.log(to,from);
-})
+router.beforeEach((to, from) => {
+  // console.log(to,from);
+});
 </script>

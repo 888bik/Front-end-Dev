@@ -24,4 +24,18 @@ function gotoDetail() {
 function goToAbout() {
   return navigateTo("/about");
 }
+//局部注册中间件
+definePageMeta({
+  middleware: [
+    function (to, from) {
+      console.log(to);
+      console.log(from);
+      console.log("第一个中间件");
+    },
+    function (to, from) {
+      console.log("第二个中间件");
+    },
+    "format",
+  ],
+});
 </script>
