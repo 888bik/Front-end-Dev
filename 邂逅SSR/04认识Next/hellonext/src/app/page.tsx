@@ -1,8 +1,10 @@
-import React, { Component, memo } from "react";
+import React, { memo } from "react";
 
 const page = memo(() => {
-  return <div>Home Page</div>;
+  return <div className="home">
+    
+  </div>;
 });
 
-
+page.displayName = "page";
 export default page;
