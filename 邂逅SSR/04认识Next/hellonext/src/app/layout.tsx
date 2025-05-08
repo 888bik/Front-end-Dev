@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <h1>我是layout ,我包裹了 template</h1>
+        <h1 className="nav-bar">我是layout ,我包裹了 template</h1>
         {children}
       </body>
     </html>

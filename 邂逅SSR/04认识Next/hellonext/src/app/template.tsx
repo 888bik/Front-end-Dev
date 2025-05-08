@@ -6,7 +6,8 @@ interface IProps {
 const Template = memo(({ children }: IProps) => {
   return (
     <div>
-      我是 template,我被layout包裹
+      <div className="nav-bar">我是 template,我被layout包裹</div>
+
       {children}
     </div>
   );
