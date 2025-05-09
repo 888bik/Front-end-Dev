@@ -1,7 +1,11 @@
 import React, { memo } from "react";
-
-interface IProps {
-  children: React.ReactElement;
+export interface RouteParams {
+  slug: string;
+  posts: string;
+}
+export interface IProps {
+  children?: React.ReactElement;
+  params?: RouteParams;
 }
 const Template = memo(({ children }: IProps) => {
   return (
