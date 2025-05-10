@@ -1,8 +1,17 @@
-"use client";
-import React, { memo } from "react";
-const Home = memo(() => {
-  return <div className="home">Home Page</div>;
-});
+async function getData() {
+  const res = await fetch("https://api.thecatapi.com/v1/images/search", {
+    next: { tags: ["collection"] },
+    cache: "force-cache",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
 
-Home.displayName = "page";
-export default Home;
+  return res.json();
+}
+
+export default async function Page() {
+  const data = await getData();
+
+  return <img src={data[0].url} width="300" />;
+}
