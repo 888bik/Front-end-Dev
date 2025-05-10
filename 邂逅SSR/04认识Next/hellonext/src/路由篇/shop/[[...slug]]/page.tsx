@@ -1,4 +1,4 @@
-import { IProps } from "@/app/template";
+import { IProps } from "@/路由篇/template";
 import React, { memo } from "react";
 
 const ShopSlug = memo((props: IProps) => {

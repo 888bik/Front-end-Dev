@@ -1,8 +1,8 @@
-import { IProps } from "@/app/template";
+import { IProps } from "@/路由篇/template";
 import React, { memo } from "react";
 
 const Page = memo((props: IProps) => {
-  console.log(props.params.slug);
+  console.log(props.params!.slug);
   return <div>Page</div>;
 });
 
