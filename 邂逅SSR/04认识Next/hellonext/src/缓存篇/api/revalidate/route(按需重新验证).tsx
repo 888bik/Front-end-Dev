@@ -7,3 +7,15 @@ export async function GET(request: NextRequest) {
   revalidateTag(tag);
   return Response.json({ revalidated: true, now: Date.now() });
 }
+
+// export default async function GET() {
+//   const url = (
+//     await (
+//       await fetch("https://api.thecatapi.com/v1/images/search", {
+//         next: { tags: ["collection"] },
+//       })
+//     ).json()
+//   )[0].url;
+
+//   return <img src={url} width="300" alt="cat" />;
+// }
