@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.not-found {
+  color: red;
+}
+.nav-bar {
+  background-color: aliceblue;
+}

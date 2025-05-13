@@ -1,4 +1,4 @@
-import { IProps } from "@/app/layout";
+import { IProps } from "@/组件篇/layout";
 import Link from "next/link";
 
 // export const dynamic = "force-dynamic";
