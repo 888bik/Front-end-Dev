@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,16 +23,21 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
+    "next-env.d.ts",
     "src/组件篇/actions.js",
-    "src/组件篇/page.jsx"
-  ],
-  "exclude": ["node_modules"]
+    "src/组件篇/page.jsx",
+    "build/types/**/*.ts"
+, "src/mdx-components.js", "next.config.ts"  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

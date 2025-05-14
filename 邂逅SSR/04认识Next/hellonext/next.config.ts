@@ -1,8 +1,11 @@
 import type { NextConfig } from "next";
+import withMDX from "@next/mdx";
+
 // import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  basePath: "/docs",
   logging: {
     fetches: {
       fullUrl: true,
@@ -54,11 +57,26 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/",
+        source: "/profile",
         destination: "/about",
       },
     ];
   },
+  devIndicators: {
+    // buildActivityPosition: "bottom-right",
+    // buildActivity: false,
+  },
+  // distDir: "build",
+  env: {
+    customKey: "hello bik",
+  },
+  eslint: {
+    ignoreDuringBuilds: true, //为true表示即使有错误,也要构建
+  },
+  /** @type {import('next').NextConfig} */
+  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
+  // experimental: {
+  //   esmExternals: "loose",
+  // },
 };
-
-export default nextConfig;
+export default withMDX()(nextConfig);
