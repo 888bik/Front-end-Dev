@@ -1,0 +1,51 @@
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  width: 90%;
+  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.avatar-large {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 75rpx;
+  margin-bottom: 30rpx;
+  border: 4rpx solid #eeeeee;
+}
+
+.info {
+  font-size: 30rpx;
+  color: #333333;
+}
+
+.info-item {
+  margin: 12rpx 0;
+}
+
+.tags {
+  margin-top: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12rpx;
+}
+
+.tag {
+  background-color: #d0ebff;
+  color: #1c7ed6;
+  font-size: 26rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 32rpx;
+}

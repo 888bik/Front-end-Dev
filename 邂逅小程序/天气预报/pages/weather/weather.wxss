@@ -1,0 +1,67 @@
+.container {
+  background: linear-gradient(to bottom, #4facfe, #00f2fe);
+  min-height: 100vh;
+  color: #fff;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.city {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.update-time {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+.forecast-list .card {
+  background: rgba(255, 255, 255, 0.15);
+  margin-bottom: 20rpx;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.card .date {
+  font-size: 28rpx;
+  margin-bottom: 10rpx;
+  font-weight: bold;
+}
+
+.icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.day, .night {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 6rpx;
+}
+
+.temp {
+  font-size: 30rpx;
+  text-align: center;
+  margin-bottom: 6rpx;
+}
+
+.wind {
+  font-size: 26rpx;
+  text-align: center;
+  opacity: 0.9;
+}

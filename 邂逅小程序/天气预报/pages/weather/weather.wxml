@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="header">
+    <text class="city">清远：</text>
+    <text class="update-time">更新时间：{{updateTime}}</text>
+  </view>
+
+  <view class="forecast-list">
+    <block wx:for="{{dailyForecast}}" wx:key="fxDate">
+      <view class="card">
+        <view class="date">{{item.fxDate}}</view>
+        <view class="icons">
+          <view class="day">
+            <image class="icon" src="{{item.iconDayUrl}}" mode="aspectFit" />
+            <text>{{item.textDay}}</text>
+          </view>
+          <view class="night">
+            <image class="icon" src="{{item.iconNightUrl}}" mode="aspectFit" />
+            <text>{{item.textNight}}</text>
+          </view>
+        </view>
+        <view class="temp">
+          {{item.tempMin}}℃ ~ {{item.tempMax}}℃
+        </view>
+        <view class="wind">
+          {{item.windDirDay}} {{item.windScaleDay}}级
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

@@ -1,5 +1,0 @@
-<!--components/my-cpn.wxml-->
-<view class="content info">
-<text>哈哈哈</text>
-</view>
-<button bind:tap="onBtnTap">按钮</button>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .wrapper {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 200px auto 200px;
+      }
+      .left,
+      .right,
+      .middle {
+        height: 200px;
+      }
+      .left {
+        background-color: red;
+      }
+      .right {
+        background-color: blue;
+      }
+      .middle {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="left">左边</div>
+      <div class="middle">中间</div>
+      <div class="right">右边</div>
+    </div>
+  </body>
+</html>

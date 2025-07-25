@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+      }
+      .box {
+        height: 500px;
+        width: 500px;
+        background-color: red;
+        text-align: center;
+      }
+      /* 添加伪元素 */
+      .box::before {
+        content: "";
+        vertical-align: middle;
+        height: 100%;
+        display: inline-block;
+      }
+      .item {
+        display: inline-block;
+        height: 100px;
+        width: 100px;
+        background-color: aqua;
+        vertical-align: middle;
+      }
+      /* 参照物 */
+      /* .brother {
+        display: inline-block;
+        vertical-align: middle;
+        height: 500px;
+        width: 2px;
+        background-color: blue;
+      } */
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="item"></div>
+      <div class="brother"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<view class="page">
+
+<!-- 学生列表 -->
+<view class="section">
+  <view class="section-title">学生列表</view>
+  <view wx:for="{{students}}" wx:key="_id" class="student-card" bindtap="goToDetail" data-id="{{item._id}}">
+    <image src="{{item.avatarUrl}}" class="avatar-small"></image>
+    <view class="student-info">
+      <view class="name">{{item.name}}</view>
+      <view class="meta">{{item.age}} 岁 ｜ {{item.gender}}</view>
+    </view>
+    <button class="delete-btn" size="mini" type="warn" data-id="{{item._id}}" bindtap="deleteStudent">删除</button>
+  </view>
+</view>
+
+<!-- 添加学生表单 -->
+<view class="section">
+  <view class="section-title">添加学生</view>
+  <view class="form-card">
+    <button class="select-avatar">选择头像</button>
+    <input placeholder="姓名" class="input" bindinput="onNameInput" />
+    <input placeholder="年龄" class="input" bindinput="onAgeInput" type="number" />
+
+    <view class="form-label">性别：</view>
+    <radio-group class="gender-group" bindchange="onGenderChange">
+      <label><radio value="男" /> 男</label>
+      <label><radio value="女" /> 女</label>
+    </radio-group>
+
+    <view class="form-label">兴趣爱好：</view>
+    <checkbox-group class="hobby-group" bindchange="onHobbiesChange">
+      <label><checkbox value="足球" /> 足球</label>
+      <label><checkbox value="篮球" /> 篮球</label>
+      <label><checkbox value="跑步" /> 跑步</label>
+      <label><checkbox value="读书" /> 读书</label>
+      <label><checkbox value="写字" /> 写字</label>
+      <label><checkbox value="编程" /> 编程</label>
+      <label><checkbox value="唱歌" /> 唱歌</label>
+    </checkbox-group>
+
+    <button class="submit-btn" type="primary" bindtap="submitStudent">添加学生</button>
+  </view>
+</view>
+
+</view>

@@ -1,0 +1,14 @@
+<view class="page">
+  <view class="card">
+    <image src="{{student.avatarUrl}}" class="avatar-large" mode="aspectFill"></image>
+    <view class="info">
+      <view class="info-item">👤 姓名：{{student.name}}</view>
+      <view class="info-item">🎂 年龄：{{student.age}}</view>
+      <view class="info-item">🚻 性别：{{student.gender}}</view>
+      <view class="info-item">🎯 兴趣爱好：</view>
+      <view class="tags">
+        <view wx:for="{{student.hobbies}}" wx:key="index" class="tag">{{item}}</view>
+      </view>
+    </view>
+  </view>
+</view>

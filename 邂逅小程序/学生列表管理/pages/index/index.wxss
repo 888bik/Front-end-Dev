@@ -1,0 +1,95 @@
+.page {
+  padding: 20rpx;
+  background-color: #f4f6f8;
+}
+
+.section {
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  color: #333;
+}
+
+.student-card {
+  background-color: #ffffff;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+  box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.avatar-small {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.student-info {
+  flex: 1;
+}
+
+.name {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.meta {
+  color: #888;
+  font-size: 26rpx;
+  margin-top: 4rpx;
+}
+
+.delete-btn {
+  margin-left: 10rpx;
+  height: 100%;
+}
+
+.form-card {
+  background-color: #ffffff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.input {
+  border: 1rpx solid #ddd;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  font-size: 30rpx;
+  margin-bottom: 20rpx;
+  background-color: #fefefe;
+}
+
+.form-label {
+  margin-top: 20rpx;
+  margin-bottom: 10rpx;
+  font-size: 28rpx;
+  color: #555;
+}
+
+.gender-group label,
+.hobby-group label {
+  display: inline-block;
+  margin-right: 30rpx;
+  margin-bottom: 10rpx;
+  font-size: 28rpx;
+}
+
+.submit-btn {
+  margin-top: 30rpx;
+  width: 100%;
+}
+
+.select-avatar {
+  margin-bottom: 20rpx;
+  background-color: #eee;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+}

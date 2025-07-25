@@ -1,31 +1,3 @@
-<form bindsubmit="formSubmit">
-  <!-- 各表单组件 -->
-  <view class="intro">
-    <input name="name" placeholder="请输入姓名" />
-    <input name="age" placeholder="请输入年龄" />
-    <textarea name="bio" placeholder="自我介绍(50字以内)" />
-  </view>
-  <view class="divider"></view>
-  <view class="gender">
-    <text class="title">请选择您的性别:</text>
-    <radio-group name="gender">
-      <radio value="male" />男
-      <radio value="female" />女
-    </radio-group>
-  </view>
-  <view class="hobbies">
-    <text class="title">请选择您的爱好:</text>
-    <checkbox-group name="hobbies">
-      <checkbox value="敲代码" />敲代码
-      <checkbox value="爱运动" />爱运动
-      <checkbox value="看美女" />看美女
-    </checkbox-group>
-  </view>
-  <button form-type="submit">提交</button>
-</form>
-<view wx:if="{{showInfo}}">
-  <view class="showArea">个人信息展示</view>
-  <text>姓名：{{userInfo.name}}\n</text>
-  <text>性别：{{userInfo.gender==='male'?'男':'女'}}\n</text>
-  <text>爱好：{{userInfo.hobbies}}</text>
+<view>
+hello 
 </view>

@@ -1,12 +1,14 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/add-student/add-student",
+    "pages/detail/detail"
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "",
-    "navigationBarBackgroundColor": "#ff8189",
-    "backgroundColor": "#f00"
+    "navigationBarTitleText": "Weixin",
+    "navigationBarBackgroundColor": "#ffffff"
   },
   "style": "v2",
   "componentFramework": "glass-easel",
