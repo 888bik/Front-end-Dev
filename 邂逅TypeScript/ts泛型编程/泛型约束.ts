@@ -16,8 +16,7 @@ function getLength(arg: ILength) {
 function getInfo<T extends ILength>(arg: T) {
   return arg.length;
 }
-getInfo(["bik", "zsd"]);
-getInfo("bikjlasdfajsl");
-// getInfo({ name: "bik", length: 20 });
+console.log(getInfo(["bik", "zsd"]));
+console.log(getInfo("fjlasj;fklasjfklsa"));
 
 export {};

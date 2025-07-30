@@ -3,6 +3,6 @@
 type IKun = "dance" | "sing" | "rap";
 
 type MyExtract<T, E> = T extends E ? T : never;
-// type newType = Extract<IKun, "dance">;
+// type newType = Extract<IKun, "dance"| "rap">;
 type newType = MyExtract<IKun, "dance" | "rap">;
 export {};

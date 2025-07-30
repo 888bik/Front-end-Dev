@@ -9,6 +9,7 @@ function excCalc(calcFn: ICalFn) {
   console.log(res);
   console.log(calcFn.name);
 }
+
 function sum(num1: number, num2: number) {
   return num1 + num2;
 }

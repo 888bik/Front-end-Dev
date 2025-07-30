@@ -6,7 +6,7 @@ class Dog {
   constructor(public name: string, public age: number) {}
 }
 //1.泛型约束:确保传入的参数是构造函数类型
-//2.条件类型和类型推断:如果T是构造函数类型,则使用infer R 提取其实例类型Rj'k'j
+//2.条件类型和类型推断:如果T是构造函数类型,则使用infer R 提取其实例类型R
 type MyInstanceType<T extends new (...args: any[]) => any> = T extends new (
   ...args: any[]
 ) => infer R

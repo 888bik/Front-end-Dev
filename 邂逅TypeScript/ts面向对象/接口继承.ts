@@ -1,18 +1,17 @@
 //接口和类一样是可以继承的,并且接口是支持多继承的(类不支持多继承)
-interface Person {
+interface Animal {
   name: string;
   age: number;
 }
-interface Animal {
+interface Behavior {
   running: () => void;
 }
-interface Student extends Person, Animal {}
-const p: Student = {
-  name: "bik",
-  age: 21,
+interface Dog extends Behavior, Animal {}
+const d: Dog = {
+  name: "dik",
+  age: 3,
   running() {
-    console.log("跑步");
+    console.log("跑");
   },
 };
 export {};
-

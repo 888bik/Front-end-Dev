@@ -3,5 +3,4 @@ type IKun = "dance" | "sing" | "rap";
 
 type MyExclude<T, E> = T extends E ? never : T;
 // i = "sing"|"rap"
-// type i = Exclude<IKun,"dance">
 type i = MyExclude<IKun, "dance">;

@@ -1,6 +1,7 @@
 //Object表示所有的数据类型
-const p1: Object = null;
-const p2: Object = undefined;
+//将strictNullChecks": false的时候,null和undefined可以赋值给Object类型
+// const p1: Object = null;
+// const p2: Object = undefined;
 const p3: Object = "hello ts";
 const p4: Object = 99;
 console.log(p1, p2, p3, p4);

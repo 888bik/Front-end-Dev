@@ -6,12 +6,7 @@ interface IRun {
   running: () => void;
 }
 class Student implements ISwim, ISwim {
-  name: string;
-  age: number;
-  constructor(name: string, age: number) {
-    this.name = name;
-    this.age = age;
-  }
+  constructor(public name: string, public age: number) {}
   running() {
     console.log(this.name + "跑步");
   }
@@ -20,8 +15,6 @@ class Student implements ISwim, ISwim {
   }
 }
 const s = new Student("bik", 20);
-// console.log(s.age);
-// s.running();
 
 function swim(swimmer: ISwim) {
   swimmer.swimming();
