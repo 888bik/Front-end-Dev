@@ -65,15 +65,16 @@ export class NestApplication {
   private getMethodParams(
     instance: any,
     methodName: string,
-    request?: Request,
-    response?: Response,
-    next?: NextFunction
+    request: Request,
+    response: Response,
+    next: NextFunction
   ) {
     const paramsMetadata: any[] = Reflect.getMetadata(
       "params",
       instance,
       methodName
     );
+    if (!paramsMetadata || paramsMetadata.length === 0) return [];
     // [ { paramIndex: 1, key: 'Request' }, { paramIndex: 0, key: 'Req' } ]
     //获取类似上面这种格式的参数元数据,对其排列,因为正常来说都是索引为0的排在第一
     return paramsMetadata
