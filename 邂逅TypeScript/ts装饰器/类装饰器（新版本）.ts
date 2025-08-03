@@ -1,4 +1,4 @@
-function Logger<T extends new (...args: any[]) => any>(
+function Logger<T extends { new (...args: any[]): any }>(
   constructor: T,
   context: ClassDecoratorContext
 ) {
