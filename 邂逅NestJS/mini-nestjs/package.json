@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node ./src/main.ts",
+    "start": "ts-node  ./src/main.ts",
     "start:dev": "nodemon"
   },
   "keywords": [],
@@ -18,7 +18,11 @@
     "@types/express": "^5.0.3",
     "cli-color": "^2.0.4",
     "express": "^5.1.0",
+    "express-session": "^1.18.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "@types/express-session": "^1.18.2"
   }
 }

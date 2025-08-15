@@ -6,15 +6,25 @@ export function createParamsDecorator(key: string) {
    * methName:方法名
    * paramsIndex:参数索引
    */
-  return function (target: any, methodName: string, paramIndex: number) {
-    //问题:如何保存方法对应的参数在他的元数据上呢
-    const existingParameters =
-      Reflect.getMetadata("params", target, methodName) || [];
-    existingParameters.push({ paramIndex, key });
-    //[{ parameterIndex: 1, key: 'Request' },{ parameterIndex: 0, key: 'Req' }]
-    Reflect.defineMetadata("params", existingParameters, target, methodName);
-  };
+  return (data?: any) =>
+    (target: any, methodName: string, paramIndex: number) => {
+      //问题:如何保存方法对应的参数在他的元数据上呢
+      const existingParameters =
+        Reflect.getMetadata("params", target, methodName) || [];
+      existingParameters.push({ paramIndex, key, data });
+      //格式像这样:{ parameterIndex: 1, key: 'Request',data:"id" },{ parameterIndex: 0, key: 'Req',data:"user" }]
+      Reflect.defineMetadata("params", existingParameters, target, methodName);
+    };
 }
 //因为有多种参数装饰器,所以用一个参数装饰器工厂来创建
 export const Req = createParamsDecorator("Req");
 export const Request = createParamsDecorator("Request");
+export const Query = createParamsDecorator("Query");
+export const Headers = createParamsDecorator("Headers");
+export const Session = createParamsDecorator("Session");
+export const Ip = createParamsDecorator("Ip");
+export const Param = createParamsDecorator("Param");
+export const Body = createParamsDecorator("Body");
+export const Response = createParamsDecorator("Response");
+export const Res = createParamsDecorator("Res");
+export const Next = createParamsDecorator("Next");
