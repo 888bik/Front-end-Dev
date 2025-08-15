@@ -3,7 +3,6 @@ import "reflect-metadata";
 import express, { Express, NextFunction, Request, Response } from "express";
 import { Logger } from "./logger";
 import path from "path";
-import { resourceUsage } from "process";
 
 export class NestApplication {
   //在内部创建一个express应用
@@ -12,10 +11,10 @@ export class NestApplication {
   constructor(protected readonly module: any) {
     this.app.use(express.json()); //用来把JSON格式的请求体对象放在req.body上
     this.app.use(express.urlencoded({ extended: true })); //把form表单格式的请求体对象放在req.body
-    // this.app.use((req, res, next) => {
-    //   req.user = { name: "admin", role: "admin" };
-    //   next();
-    // });
+    this.app.use((req, res, next) => {
+      (req as any).user = { name: "admin", role: "admin" };
+      next();
+    });
   }
 
   /**
@@ -165,7 +164,22 @@ export class NestApplication {
         return a.paramIndex - b.paramIndex;
       })
       .map((paramsMetadata) => {
-        const { key, data } = paramsMetadata;
+        const { key, data, factory } = paramsMetadata;
+        const ctx = {
+          switchToHttp: () => {
+            return {
+              getRequest() {
+                return request;
+              },
+              getResponse() {
+                return response;
+              },
+              getNext() {
+                return next;
+              },
+            };
+          },
+        };
         switch (key) {
           case "Request":
           case "Req":
@@ -187,6 +201,9 @@ export class NestApplication {
             return response;
           case "Next":
             return next;
+          case "DecoratorFactory":
+            //执行函数得到结果并返回
+            return factory(data, ctx);
           default:
             return null;
         }

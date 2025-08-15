@@ -17,9 +17,17 @@ import {
   Next,
   Redirect,
 } from "./@nestjs/common";
+import { User } from "./user.decorator";
 
 @Controller("/user")
 export class UserController {
+  @Get("custom")
+  customParamDecorator(@User("role") role, @User() user) {
+    console.log("user", user);
+    console.log("role", role);
+    return user;
+  }
+
   @Get("/redirect")
   @Redirect("/user/getAllUser", 301)
   handleRedirect() {

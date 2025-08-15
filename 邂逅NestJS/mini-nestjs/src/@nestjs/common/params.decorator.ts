@@ -1,18 +1,27 @@
 import "reflect-metadata";
-export function createParamsDecorator(key: string) {
-  //给方法上的参数添加元数据
+export function createParamsDecorator(keyOrFactory: string | Function) {
   /**
+   * 给方法上的参数添加元数据
    * target:类的原型对象prototype
    * methName:方法名
    * paramsIndex:参数索引
    */
   return (data?: any) =>
     (target: any, methodName: string, paramIndex: number) => {
-      //问题:如何保存方法对应的参数在他的元数据上呢
       const existingParameters =
         Reflect.getMetadata("params", target, methodName) || [];
-      existingParameters.push({ paramIndex, key, data });
-      //格式像这样:{ parameterIndex: 1, key: 'Request',data:"id" },{ parameterIndex: 0, key: 'Req',data:"user" }]
+      if (keyOrFactory instanceof Function) {
+        //如果是函数,格式类似这样:{parameterIndex:1,key:"DecoratorFactory",factory:Function(){},data:"age"}
+        existingParameters.push({
+          paramIndex,
+          key: "DecoratorFactory",
+          factory: keyOrFactory,
+          data,
+        });
+      } else {
+        //格式像这样:{ parameterIndex: 1, key: 'Request',data:"id" },{ parameterIndex: 0, key: 'Req',data:"user" }]
+        existingParameters.push({ paramIndex, key: keyOrFactory, data });
+      }
       Reflect.defineMetadata("params", existingParameters, target, methodName);
     };
 }
