@@ -3,10 +3,13 @@ import "reflect-metadata";
 import express, { Express, NextFunction, Request, Response } from "express";
 import { Logger } from "./logger";
 import path from "path";
+import { DESIGN_PARAMTYPES, INJECTABLE, INJECTABLE_TOKENS } from "../common";
 
 export class NestApplication {
   //在内部创建一个express应用
   private readonly app: Express = express();
+  //用于保存所有的提供者
+  private readonly providers = new Map();
 
   constructor(protected readonly module: any) {
     this.app.use(express.json()); //用来把JSON格式的请求体对象放在req.body上
@@ -15,6 +18,36 @@ export class NestApplication {
       (req as any).user = { name: "admin", role: "admin" };
       next();
     });
+    this.initProviders();
+  }
+  private initProviders() {
+    const providers = Reflect.getMetadata("providers", this.module) ?? [];
+    for (const provider of providers) {
+      //判断provider是以什么格式注册的
+      if (provider.provide && provider.useValue) {
+        this.providers.set(provider.provide, provider.useValue);
+      } else if (provider.provide && provider.useClass) {
+        //useClass是一个类，本身可能也依赖其他类
+        const dependencies = this.resolveDependencies(provider.useClass);
+
+        const instance = new provider.useClass(...dependencies);
+        this.providers.set(provider.provide, instance);
+      } else if (provider.provide && provider.useFactory) {
+        const inject = provider.inject ?? [];
+
+        //inject可能为普通的字符串或者其他provider
+        const injectValues = inject.map((value) => {
+          return this.getProvider(value);
+        });
+
+        const value = provider.useFactory(...injectValues);
+        this.providers.set(provider.provide, value);
+      } else {
+        //直接写LoggerService的情况,同样判断是否依赖其类
+        const dependencies = this.resolveDependencies(provider);
+        this.providers.set(provider, new provider(...dependencies));
+      }
+    }
   }
 
   /**
@@ -36,7 +69,10 @@ export class NestApplication {
 
     //路由映射的核心是知道 什么样的请求方法什么样的路径对应的哪个处理函数
     for (const Controller of controllers) {
-      const controller = new Controller();
+      //获取类需要哪些依赖
+      const dependencies = this.resolveDependencies(Controller);
+      //将实例注入类中
+      const controller = new Controller(...dependencies);
       //从每个controller类获取前缀prefix,如果没有前缀则默认"/"
       const prefix = Reflect.getMetadata("prefix", Controller) || "/";
       //开始解析路由
@@ -117,6 +153,34 @@ export class NestApplication {
     Logger.log(`Nest application successfully started`, "NestApplication");
   }
 
+  /**
+   *
+   * @param clazz 类
+   * @returns
+   */
+  private resolveDependencies(Clazz) {
+    //获取通过Inject注入的依赖的token，如果不存在则说明是通过构造器直接注入的
+    const injectedTokens = Reflect.getMetadata(INJECTABLE_TOKENS, Clazz) ?? [];
+    //属性注入
+
+    //直接获取构造函数参数所需的依赖类
+    const constructorParams =
+      Reflect.getMetadata(DESIGN_PARAMTYPES, Clazz) ?? [];
+    return constructorParams.map((param, index) => {
+      return this.getProvider(injectedTokens[index] ?? param);
+    });
+  }
+
+  private getProvider(injectedToken) {
+    return this.providers.get(injectedToken) ?? injectedToken;
+  }
+
+  /**
+   *
+   * @param controller controller类
+   * @param methodName 方法名
+   * @returns
+   */
   private getResponseMetadata(controller: any, methodName: string) {
     const paramsMetadata =
       Reflect.getMetadata("params", controller, methodName) ?? [];
