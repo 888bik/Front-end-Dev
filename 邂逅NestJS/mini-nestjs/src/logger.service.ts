@@ -22,3 +22,11 @@ export class UseFactory {
     console.log("UseFactory", this.prefix1, this.prefix2);
   }
 }
+
+@Injectable()
+export class Test {
+  constructor() {}
+  log(message) {
+    console.log("test");
+  }
+}

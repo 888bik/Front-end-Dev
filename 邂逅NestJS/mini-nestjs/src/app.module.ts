@@ -1,6 +1,11 @@
 import { Module } from "./@nestjs/common";
 import { AppController } from "./app.controller";
-import { LoggerService, UseValueService, UseFactory } from "./logger.service";
+import {
+  LoggerService,
+  UseValueService,
+  UseFactory,
+  Test,
+} from "./logger.service";
 import { UserController } from "./user.controller";
 
 /**
@@ -27,6 +32,7 @@ import { UserController } from "./user.controller";
       inject: ["prefix1", "SUFFIX"],
       useFactory: (prefix1, prefix2) => new UseFactory(prefix1, prefix2),
     },
+    Test,
   ],
 })
 export class AppModule {}

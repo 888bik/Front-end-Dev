@@ -20,34 +20,62 @@ export class NestApplication {
     });
     this.initProviders();
   }
+
   private initProviders() {
     const providers = Reflect.getMetadata("providers", this.module) ?? [];
-    for (const provider of providers) {
-      //判断provider是以什么格式注册的
-      if (provider.provide && provider.useValue) {
-        this.providers.set(provider.provide, provider.useValue);
-      } else if (provider.provide && provider.useClass) {
-        //useClass是一个类，本身可能也依赖其他类
-        const dependencies = this.resolveDependencies(provider.useClass);
-
-        const instance = new provider.useClass(...dependencies);
-        this.providers.set(provider.provide, instance);
-      } else if (provider.provide && provider.useFactory) {
-        const inject = provider.inject ?? [];
-
-        //inject可能为普通的字符串或者其他provider
-        const injectValues = inject.map((value) => {
-          return this.getProvider(value);
-        });
-
-        const value = provider.useFactory(...injectValues);
-        this.providers.set(provider.provide, value);
+    providers.forEach((provider) => {
+      if (provider.provide) {
+        // useValue
+        if (provider.useValue) {
+          this.providers.set(provider.provide, provider.useValue);
+        }
+        // useClass
+        else if (provider.useClass) {
+          const instance = this.resolveDependencies(provider.useClass);
+          this.providers.set(provider.provide, instance);
+        }
+        // useFactory
+        else if (provider.useFactory) {
+          const injectTokens = provider.inject || [];
+          const injectDeps = injectTokens.map((token) =>
+            this.getProvider(token)
+          );
+          const instance = provider.useFactory(...injectDeps);
+          this.providers.set(provider.provide, instance);
+        }
       } else {
-        //直接写LoggerService的情况,同样判断是否依赖其类
-        const dependencies = this.resolveDependencies(provider);
-        this.providers.set(provider, new provider(...dependencies));
+        // 直接传了一个 class
+        console.log("provider", provider);
+        const instance = this.resolveDependencies(provider);
+        this.providers.set(provider, instance);
       }
-    }
+    });
+    // for (const provider of providers) {
+    //   //判断provider是以什么格式注册的
+    //   if (provider.provide && provider.useValue) {
+    //     this.providers.set(provider.provide, provider.useValue);
+    //   } else if (provider.provide && provider.useClass) {
+    //     //useClass是一个类，本身可能也依赖其他类
+    //     const dependencies = this.resolveDependencies(provider.useClass);
+
+    //     const instance = new provider.useClass(...dependencies);
+    //     this.providers.set(provider.provide, instance);
+    //   } else if (provider.provide && provider.useFactory) {
+    //     const inject = provider.inject ?? [];
+
+    //     //inject可能为普通的字符串或者其他provider
+    //     const injectValues = inject.map((value) => {
+    //       return this.getProvider(value);
+    //     });
+
+    //     const value = provider.useFactory(...injectValues);
+    //     this.providers.set(provider.provide, value);
+    //   } else {
+    //     //直接写LoggerService的情况,同样判断是否依赖其类
+    //     const dependencies = this.resolveDependencies(provider);
+    //     this.providers.set(provider, new provider(...dependencies));
+    //   }
+    // }
   }
 
   /**
@@ -62,21 +90,18 @@ export class NestApplication {
    * 配置映射路由
    */
   async init() {
-    //取出模块中所有的controller,将controller中的prefix数据与类中所有方法的路径拼接
     const controllers = Reflect.getMetadata("controllers", this.module);
 
     Logger.log(`AppModule dependencies initialized`, "InstanceLoader");
 
     //路由映射的核心是知道 什么样的请求方法什么样的路径对应的哪个处理函数
     for (const Controller of controllers) {
-      //获取类需要哪些依赖
-      const dependencies = this.resolveDependencies(Controller);
-      //将实例注入类中
-      const controller = new Controller(...dependencies);
+      const controller = this.resolveDependencies(Controller);
+
       //从每个controller类获取前缀prefix,如果没有前缀则默认"/"
-      const prefix = Reflect.getMetadata("prefix", Controller) || "/";
+      const prefixPath = Reflect.getMetadata("prefix", Controller) || "/";
       //开始解析路由
-      Logger.log(`${Controller.name} {${prefix}}`, "RoutesResolver");
+      Logger.log(`${Controller.name} {${prefixPath}}`, "RoutesResolver");
       // const controllerPrototype = Reflect.getPrototypeOf(controller);
       const controllerPrototype = Controller.prototype;
       //从每个实例对象上获取所有方法
@@ -97,7 +122,7 @@ export class NestApplication {
         //如果方法不存在则跳过,这里不能判断path,因为路径可能为空,也就是可能以controller的prefix开头的方法
         if (!httpMethod) continue;
         //开始拼接完整路由
-        const routePath = path.posix.join("/", prefix, pathMetadata); //类似 abc/getALlUser
+        const routePath = path.posix.join("/", prefixPath, pathMetadata); //类似 abc/getALlUser
         //app.get("/abc/getAllUser",()=>{})
         this.app[httpMethod.toLocaleLowerCase()](
           routePath,
@@ -159,16 +184,27 @@ export class NestApplication {
    * @returns
    */
   private resolveDependencies(Clazz) {
-    //获取通过Inject注入的依赖的token，如果不存在则说明是通过构造器直接注入的
-    const injectedTokens = Reflect.getMetadata(INJECTABLE_TOKENS, Clazz) ?? [];
-    //属性注入
+    //获取通过@Inject注入的依赖的token元数据
+    const metadata = Reflect.getMetadata(INJECTABLE_TOKENS, Clazz) ?? [];
 
-    //直接获取构造函数参数所需的依赖类
+    // 获取构造函数的参数类型（LoggerService / UseValueService 等）
     const constructorParams =
       Reflect.getMetadata(DESIGN_PARAMTYPES, Clazz) ?? [];
-    return constructorParams.map((param, index) => {
-      return this.getProvider(injectedTokens[index] ?? param);
+
+    // 构造函数依赖解析,比如loggerService通过StringToken获取对应的提供者
+    const constructorDeps = constructorParams.map((param, index) => {
+      const token = metadata.params[index] ?? param;
+      return this.getProvider(token);
     });
+
+    const instance = new Clazz(...constructorDeps);
+
+    // 属性注入（如果有）
+    for (const [key, token] of Object.entries(metadata.properties ?? {})) {
+      instance[key] = this.getProvider(token);
+    }
+
+    return instance;
   }
 
   private getProvider(injectedToken) {
