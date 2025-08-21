@@ -22,60 +22,77 @@ export class NestApplication {
   }
 
   private initProviders() {
+    //获取当前模块import进来的模块的元数据
+    const imports = Reflect.getMetadata("imports", this.module) ?? [];
+
+    //遍历imports数组
+    for (const importedModule of imports) {
+      this.registerProviderFromModule(importedModule);
+    }
+    //获取当前模块提供者的元数据
     const providers = Reflect.getMetadata("providers", this.module) ?? [];
-    providers.forEach((provider) => {
-      if (provider.provide) {
-        // useValue
-        if (provider.useValue) {
-          this.providers.set(provider.provide, provider.useValue);
-        }
-        // useClass
-        else if (provider.useClass) {
-          const instance = this.resolveDependencies(provider.useClass);
-          this.providers.set(provider.provide, instance);
-        }
-        // useFactory
-        else if (provider.useFactory) {
-          const injectTokens = provider.inject || [];
-          const injectDeps = injectTokens.map((token) =>
-            this.getProvider(token)
-          );
-          const instance = provider.useFactory(...injectDeps);
-          this.providers.set(provider.provide, instance);
-        }
-      } else {
-        // 直接传了一个 class
-        console.log("provider", provider);
-        const instance = this.resolveDependencies(provider);
-        this.providers.set(provider, instance);
+    //遍历注册个提供者
+    for (const provider of providers) {
+      this.addProvider(provider);
+    }
+  }
+
+  private addProvider(provider) {
+    //为了避免循环依赖，每次添加前可以做一个判断，如果Map中已经存在，则直接返回
+    const injectedProviderToken = provider.provide ?? provider;
+    if (this.providers.has(injectedProviderToken)) return;
+    if (provider.provide) {
+      if (provider.useValue) {
+        this.providers.set(provider.provide, provider.useValue);
+      } else if (provider.useClass) {
+        const instance = this.resolveDependencies(provider.useClass);
+        this.providers.set(provider.provide, instance);
+      } else if (provider.useFactory) {
+        const injectTokens = provider.inject || [];
+        const injectDeps = injectTokens.map((token) => {
+          return this.getProvider(token);
+        });
+        const instance = provider.useFactory(...injectDeps);
+        this.providers.set(provider.provide, instance);
       }
-    });
-    // for (const provider of providers) {
-    //   //判断provider是以什么格式注册的
-    //   if (provider.provide && provider.useValue) {
-    //     this.providers.set(provider.provide, provider.useValue);
-    //   } else if (provider.provide && provider.useClass) {
-    //     //useClass是一个类，本身可能也依赖其他类
-    //     const dependencies = this.resolveDependencies(provider.useClass);
+    } else {
+      const instance = this.resolveDependencies(provider);
+      this.providers.set(provider, instance);
+    }
+  }
 
-    //     const instance = new provider.useClass(...dependencies);
-    //     this.providers.set(provider.provide, instance);
-    //   } else if (provider.provide && provider.useFactory) {
-    //     const inject = provider.inject ?? [];
+  private registerProviderFromModule(module) {
+    //获取模块的所有providers
+    const providers = Reflect.getMetadata("providers", module) || [];
 
-    //     //inject可能为普通的字符串或者其他provider
-    //     const injectValues = inject.map((value) => {
-    //       return this.getProvider(value);
-    //     });
-
-    //     const value = provider.useFactory(...injectValues);
-    //     this.providers.set(provider.provide, value);
-    //   } else {
-    //     //直接写LoggerService的情况,同样判断是否依赖其类
-    //     const dependencies = this.resolveDependencies(provider);
-    //     this.providers.set(provider, new provider(...dependencies));
-    //   }
-    // }
+    //获取模块的export的provider
+    const exportsProviders = Reflect.getMetadata("exports", module);
+    for (const exportTokens of exportsProviders) {
+      //export有可能是其他模块,所以先判断这个导出的是否是模块(模块的重新导出)
+      if (this.isModule(exportTokens)) {
+        //递归调用
+        this.registerProviderFromModule(exportTokens);
+      } else {
+        //判断导入的当前模块是否有exports对应的服务
+        const provider = providers.find(
+          (provider) =>
+            provider.provide === exportTokens || provider === exportTokens
+        );
+        if (provider) this.addProvider(provider);
+      }
+    }
+  }
+  /**
+   * 判断是否为模块
+   * @param injectedToken token
+   * @returns boolean
+   */
+  private isModule(injectedToken) {
+    return (
+      injectedToken &&
+      injectedToken instanceof Function &&
+      Reflect.getMetadata("isModule", injectedToken)
+    );
   }
 
   /**
@@ -185,7 +202,10 @@ export class NestApplication {
    */
   private resolveDependencies(Clazz) {
     //获取通过@Inject注入的依赖的token元数据
-    const metadata = Reflect.getMetadata(INJECTABLE_TOKENS, Clazz) ?? [];
+    const metadata = Reflect.getMetadata(INJECTABLE_TOKENS, Clazz) ?? {
+      params: [],
+      properties: {},
+    };
 
     // 获取构造函数的参数类型（LoggerService / UseValueService 等）
     const constructorParams =

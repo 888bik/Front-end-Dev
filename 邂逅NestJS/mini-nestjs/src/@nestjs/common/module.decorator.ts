@@ -3,6 +3,8 @@ import "reflect-metadata";
 interface ModuleMetadata {
   controllers?: Function[];
   providers?: any[];
+  imports?: any[];
+  exports?: any[];
 }
 //定义模块装饰器,用于标记一个类为 NestJS 模块，并提供模块的元数据。
 export function Module(metadata: ModuleMetadata): ClassDecorator {
@@ -12,5 +14,9 @@ export function Module(metadata: ModuleMetadata): ClassDecorator {
     Reflect.defineMetadata("controllers", metadata.controllers, target);
     //添加providers元数据 [LoggerService]
     Reflect.defineMetadata("providers", metadata.providers, target);
+    Reflect.defineMetadata("imports", metadata.imports, target);
+    Reflect.defineMetadata("exports", metadata.exports, target);
+    //给模块做一个标识,表示该类为一个模块
+    Reflect.defineMetadata("isModule",true,target)
   };
 }

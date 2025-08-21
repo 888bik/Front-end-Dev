@@ -1,30 +1,14 @@
 import { Controller, Get, Req, Request, Inject } from "./@nestjs/common";
-import {
-  LoggerService,
-  Test,
-  UseFactory,
-  UseValueService,
-} from "./logger.service";
+import { LoggerService, UseFactory, UseValueService } from "./logger.service";
+import { UserService } from "./user.service";
 
 @Controller("abc")
 export class AppController {
-  constructor(
-    private loggerService: LoggerService,
-    @Inject("StringToken") private useValueService: UseValueService
-  ) {}
-
-  @Inject("FactoryToken")
-  public useFactory: UseFactory;
-
-  @Inject(Test)
-  public test: Test;
+  constructor(@Inject(UserService) private userService: UserService) {}
 
   @Get("test")
   index() {
-    this.loggerService.log("logger");
-    this.useValueService.log("useValueService");
-    this.useFactory.log("");
-    this.test.log("test")
+    this.userService.create(99);
     return "hello nest";
   }
 }
