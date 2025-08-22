@@ -3,7 +3,12 @@ import "reflect-metadata";
 import express, { Express, NextFunction, Request, Response } from "express";
 import { Logger } from "./logger";
 import path from "path";
-import { DESIGN_PARAMTYPES, INJECTABLE, INJECTABLE_TOKENS } from "../common";
+import {
+  defineModule,
+  DESIGN_PARAMTYPES,
+  INJECTABLE,
+  INJECTABLE_TOKENS,
+} from "../common";
 
 export class NestApplication {
   //在内部创建一个express应用
@@ -22,16 +27,44 @@ export class NestApplication {
       (req as any).user = { name: "admin", role: "admin" };
       next();
     });
-    this.initProviders();
   }
 
-  private initProviders() {
-    //获取当前模块import进来的模块的元数据
+  private async initProviders() {
+    //获取根模块import进来的模块的元数据
     const imports = Reflect.getMetadata("imports", this.module) ?? [];
 
     //遍历imports数组
     for (const importedModule of imports) {
-      this.registerProviderFromModule(importedModule, this.module);
+      let importModule = importedModule;
+      //如果导入的是一个Promise，说是它是异步的动态模块
+      if (importModule instanceof Promise) {
+        importModule = await importModule;
+      }
+      if ("module" in importModule) {
+        //获取扩展的元数据
+        const { controllers, exports, module, providers } = importModule;
+        const oldProviders = Reflect.getMetadata("providers", module);
+        const newProviders = [...(oldProviders ?? []), ...(providers ?? [])];
+        //将最新的providers存储在当前模块
+        Reflect.defineMetadata("providers", newProviders, module);
+        //模块隔离
+        defineModule(module, newProviders);
+        const oldControllers = Reflect.getMetadata("controllers", module);
+        const newControllers = [
+          ...(oldControllers ?? []),
+          ...(controllers ?? []),
+        ];
+        Reflect.defineMetadata("controllers", newControllers, module);
+        defineModule(module, newControllers);
+
+        const oldExports = Reflect.getMetadata("exports", module);
+        const newExports = [...(oldExports ?? []), ...(exports ?? [])];
+        Reflect.defineMetadata("exports", newExports, module);
+
+        this.registerProviderFromModule(module, this.module);
+      } else {
+        this.registerProviderFromModule(importedModule, this.module);
+      }
     }
     //获取当前模块提供者的元数据
     const providers = Reflect.getMetadata("providers", this.module) ?? [];
@@ -254,11 +287,13 @@ export class NestApplication {
   }
 
   private getProvider(injectedToken, module) {
-    console.log(this.globalProviders);
-    if (this.globalProviders.has(injectedToken)) {
+    if (
+      this.moduleProviders.get(module)?.has(injectedToken) ||
+      this.globalProviders.has(injectedToken)
+    ) {
       return this.providerInstancePool.get(injectedToken);
-    } else if (this.moduleProviders.get(module)?.has(injectedToken)) {
-      return this.providerInstancePool.get(injectedToken);
+    } else {
+      return null;
     }
   }
 
@@ -367,6 +402,7 @@ export class NestApplication {
    * @param port 端口号
    */
   async listen(port: number) {
+    await this.initProviders();
     //调用init
     await this.init();
     //启动一个http服务器实例,并监听端口

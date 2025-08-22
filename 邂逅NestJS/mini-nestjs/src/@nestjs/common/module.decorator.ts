@@ -26,6 +26,7 @@ export function Module(metadata: ModuleMetadata): ClassDecorator {
     Reflect.defineMetadata("isModule", true, target);
   };
 }
+//定义单独的模块进行模块隔离
 export function defineModule(module, targets = []) {
   targets.forEach((target) => Reflect.defineMetadata("module", module, target));
 }
@@ -34,4 +35,7 @@ export function Global(): ClassDecorator {
   return function (target: Function) {
     Reflect.defineMetadata("global", true, target);
   };
+}
+export interface DynamicModule extends ModuleMetadata {
+  module: Function;
 }
