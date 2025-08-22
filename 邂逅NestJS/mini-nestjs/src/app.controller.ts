@@ -4,11 +4,16 @@ import { UserService } from "./user.service";
 
 @Controller("abc")
 export class AppController {
-  constructor(@Inject(UserService) private userService: UserService) {}
+  constructor(
+    private loggerService: LoggerService,
+    private userService: UserService
+  ) {}
 
   @Get("test")
   index() {
-    this.userService.create(99);
+    // this.userService.create(99);
+    this.loggerService.log("loggerService");
+    this.userService.create(99)
     return "hello nest";
   }
 }
