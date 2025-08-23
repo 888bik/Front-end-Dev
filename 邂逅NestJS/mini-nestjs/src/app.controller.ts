@@ -2,13 +2,12 @@ import { Controller, Get, Req, Request, Inject } from "./@nestjs/common";
 import { LoggerService, UseFactory, UseValueService } from "./logger.service";
 import { UserService } from "./user.service";
 
-@Controller("abc")
+@Controller("app")
 export class AppController {
-  constructor(@Inject("CONFIG") private dynamicValue) {}
+  constructor() {}
 
   @Get("test")
   index() {
-    // this.userService.create(99);
-    return this.dynamicValue;
+    return "hello nest";
   }
 }

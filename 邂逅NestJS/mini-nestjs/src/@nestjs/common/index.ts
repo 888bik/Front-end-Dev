@@ -4,4 +4,7 @@ export * from "./http-method.decorator";
 export * from "./params.decorator";
 export * from "./injectable.decorator";
 export * from "./constant";
-export * from "./inject.decorator"
+export * from "./inject.decorator";
+export * from "./nest.middleware";
+export * from "./request.method.enum";
+export * from "./nest.module";

@@ -6,8 +6,10 @@ import path from "path";
 import {
   defineModule,
   DESIGN_PARAMTYPES,
-  INJECTABLE,
   INJECTABLE_TOKENS,
+  IRoute,
+  RequestMethod,
+  NestMiddleware,
 } from "../common";
 
 export class NestApplication {
@@ -19,20 +21,100 @@ export class NestApplication {
   private readonly globalProviders = new Set();
   //记录每个模块有哪些token，可以根据这个token去实例池中找到对应的实例
   private readonly moduleProviders = new Map();
+  //保存所有的中间件
+  private readonly middlewares = [];
 
+  private readonly excludedRoutes = [];
   constructor(protected readonly module: any) {
     this.app.use(express.json()); //用来把JSON格式的请求体对象放在req.body上
     this.app.use(express.urlencoded({ extended: true })); //把form表单格式的请求体对象放在req.body
-    this.app.use((req, res, next) => {
-      (req as any).user = { name: "admin", role: "admin" };
-      next();
+    // this.app.use((req, res, next) => {
+    //   (req as any).user = { name: "admin", role: "admin" };
+    //   next();
+    // });
+  }
+
+  private initMiddleware() {
+    this.module.prototype?.configure(this);
+  }
+  private apply(...middleware): this {
+    defineModule(this.module, middleware);
+    this.middlewares.push(...middleware);
+    return this;
+  }
+  private exclude(...routes: IRoute[]) {
+    this.excludedRoutes.push(...routes);
+    return this;
+  }
+  private forRoutes(...routes: IRoute[]) {
+    //遍历每个传入的路径，给每个路径添加中间件
+    for (const route of routes) {
+      const { routeMethod, routePath } = this.normalizeRouteInfo(route);
+      for (const middleware of this.middlewares) {
+        this.app.use(
+          routePath,
+          (req: Request, res: Response, next: NextFunction) => {
+            //排除路由
+            if (this.isExcluded(req.originalUrl, req.method)) {
+              return next();
+            }
+
+            if (
+              routeMethod === req.method ||
+              routeMethod === RequestMethod.ALL
+            ) {
+              //middleware可能是一个函数中间件，也可能是一个类中间件
+              if ("use" in middleware || "use" in middleware.prototype) {
+                const middlewareInstance = this.resolveDependencies(middleware);
+                //执行逻辑
+                middlewareInstance.use(req, res, next);
+              } else if (middleware instanceof Function) {
+                middleware(req, res, next);
+              } else {
+                next();
+              }
+            } else {
+              next();
+            }
+          }
+        );
+      }
+    }
+  }
+  private isExcluded(reqPath, method): boolean {
+    return this.excludedRoutes.some((routeInfo) => {
+      const { routePath, routeMethod } = this.normalizeRouteInfo(routeInfo);
+      return (
+        routePath === reqPath &&
+        (routeMethod === method || routeMethod === RequestMethod.ALL)
+      );
     });
+  }
+  /**
+   * 统一格式化路径参数
+   * @param route 路由路径，可能是字符串，也可能是一个对象
+   */
+  private normalizeRouteInfo(route: IRoute) {
+    let routePath = "";
+    let routeMethod = RequestMethod.ALL;
+    if (typeof route === "string") {
+      routePath = route;
+    } else if ("path" in route) {
+      routePath = route.path;
+      routeMethod = route.method ?? RequestMethod.ALL;
+    } else if (route instanceof Function) {
+      routePath = Reflect.getMetadata("prefix", route);
+    }
+    routePath = path.posix.join("/", routePath);
+    return {
+      routePath,
+      routeMethod,
+    };
   }
 
   private async initProviders() {
     //获取根模块import进来的模块的元数据
     const imports = Reflect.getMetadata("imports", this.module) ?? [];
-
     //遍历imports数组
     for (const importedModule of imports) {
       let importModule = importedModule;
@@ -40,6 +122,7 @@ export class NestApplication {
       if (importModule instanceof Promise) {
         importModule = await importModule;
       }
+      //如果导入的模块有module属性，说明是一个动态模块
       if ("module" in importModule) {
         //获取扩展的元数据
         const { controllers, exports, module, providers } = importModule;
@@ -171,7 +254,6 @@ export class NestApplication {
     //路由映射的核心是知道 什么样的请求方法什么样的路径对应的哪个处理函数
     for (const Controller of controllers) {
       const controller = this.resolveDependencies(Controller);
-
       //从每个controller类获取前缀prefix,如果没有前缀则默认"/"
       const prefixPath = Reflect.getMetadata("prefix", Controller) || "/";
       //开始解析路由
@@ -275,14 +357,12 @@ export class NestApplication {
       const token = metadataToken.params[index] ?? param;
       return this.getProvider(token, metadataModule);
     });
-
     const instance = new Clazz(...constructorDeps);
 
     // 属性注入（如果有）
     for (const [key, token] of Object.entries(metadataToken.properties ?? {})) {
       instance[key] = this.getProvider(token, metadataModule);
     }
-
     return instance;
   }
 
@@ -403,6 +483,7 @@ export class NestApplication {
    */
   async listen(port: number) {
     await this.initProviders();
+    this.initMiddleware();
     //调用init
     await this.init();
     //启动一个http服务器实例,并监听端口

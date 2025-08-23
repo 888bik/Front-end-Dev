@@ -28,7 +28,7 @@ export class DynamicConfigModule {
             provider instanceof Function ? provider : provider.provide
           ),
         });
-      }, 30000);
+      }, 3000);
     });
 
     // return {

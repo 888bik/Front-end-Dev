@@ -28,7 +28,16 @@ export function Module(metadata: ModuleMetadata): ClassDecorator {
 }
 //定义单独的模块进行模块隔离
 export function defineModule(module, targets = []) {
-  targets.forEach((target) => Reflect.defineMetadata("module", module, target));
+  // Array.isArray(targets)
+  //   ? targets
+  //   : [targets]
+  //       .filter(Boolean)
+  //       .forEach((targets) =>
+  //         Reflect.defineMetadata("module", module, targets)
+  //       );
+  targets.forEach((target) => {
+    Reflect.defineMetadata("module", module, target);
+  });
 }
 
 export function Global(): ClassDecorator {
