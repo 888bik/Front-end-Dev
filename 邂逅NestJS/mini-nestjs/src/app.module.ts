@@ -1,4 +1,6 @@
+import { APP_FILTER } from "@nestjs/core";
 import {
+  CustomExceptionFilter,
   MiddlewareConsumer,
   NestModule,
   RequestMethod,
@@ -18,15 +20,17 @@ import { UserService } from "./user.service";
  *AppModule组织和集中引入整个项目中用到的所有功能模块（feature modules），形成完整的依赖树，是整个应用的入口模块。
  */
 @Module({
-  imports: [LoggerModule, UserModule],
+  imports: [],
   controllers: [AppController],
-  providers: [],
+  providers: [
+    {
+      provide: "prefix",
+      useValue: "prefix",
+    },
+    {
+      provide:APP_FILTER,
+      useClass:CustomExceptionFilter
+    }
+  ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(LoggerMiddleware)
-      .exclude({ path: "app/1", method: RequestMethod.GET })
-      .forRoutes(AppController);
-  }
-}
+export class AppModule {}

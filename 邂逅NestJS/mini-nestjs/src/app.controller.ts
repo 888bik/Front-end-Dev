@@ -1,6 +1,17 @@
-import { Controller, Get, Req, Request, Inject } from "./@nestjs/common";
-import { LoggerService, UseFactory, UseValueService } from "./logger.service";
-import { UserService } from "./user.service";
+import {
+  Controller,
+  Get,
+  Req,
+  Request,
+  Inject,
+  HttpException,
+  HttpStatus,
+  BadRequestException,
+  Catch,
+  CustomExceptionFilter,
+  UseFilters,
+} from "./@nestjs/common";
+import { LoggerService } from "./logger.service";
 
 @Controller("app")
 export class AppController {
@@ -8,6 +19,12 @@ export class AppController {
 
   @Get("test")
   index() {
-    return "hello nest";
+    // throw new HttpException("Forbidden", HttpStatus.FORBIDDEN);
+    throw new BadRequestException("请求失败", "111111");
+  }
+
+  @Get("custom1")
+  custom1() {
+    throw new HttpException("Forbidden", HttpStatus.FORBIDDEN);
   }
 }

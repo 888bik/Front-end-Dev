@@ -1,4 +1,4 @@
-import { INJECTABLE_TOKENS } from "./constant";
+import { INJECTABLE_TOKENS } from "./constants";
 
 export function Inject(token: string | Function) {
   return function (

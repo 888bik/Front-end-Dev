@@ -3,6 +3,7 @@ import { AppModule } from "./app.module";
 import session from "express-session";
 import { LoggerMiddleware } from "./logger.middleware";
 import { loggerFunction } from "./logger.function.middleware";
+import { CustomExceptionFilter } from "./@nestjs/common";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,8 +15,8 @@ async function bootstrap() {
       cookie: { maxAge: 1000 * 60 * 60 * 24 }, //定义会话的cookie配置，设置cookie的最大存活时间是一天
     })
   );
-  app.use(loggerFunction);
-
+  // app.use(loggerFunction);
+  app.useGlobalFilters(CustomExceptionFilter);
   app.listen(3000);
 }
 

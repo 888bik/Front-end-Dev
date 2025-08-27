@@ -14,9 +14,6 @@ export function Module(metadata: ModuleMetadata): ClassDecorator {
     Reflect.defineMetadata("controllers", metadata.controllers, target);
     //给每一个controller添加一个标识，表示这是一个单独的模块
     defineModule(target, metadata.controllers);
-    // metadata.controllers.forEach((controller) => {
-    //   Reflect.defineMetadata("module", target, controller);
-    // });
     //添加providers元数据 [LoggerService]
     Reflect.defineMetadata("providers", metadata.providers, target);
     defineModule(target, metadata.providers ?? []);
