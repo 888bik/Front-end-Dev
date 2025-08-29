@@ -44,15 +44,18 @@ export class NestApplication {
   private initMiddleware() {
     this.module.prototype.configure?.(this);
   }
+
   private apply(...middleware): this {
     defineModule(this.module, middleware);
     this.middlewares.push(...middleware);
     return this;
   }
+
   private exclude(...routes: IRoute[]) {
     this.excludedRoutes.push(...routes);
     return this;
   }
+
   private forRoutes(...routes: IRoute[]) {
     //遍历每个传入的路径，给每个路径添加中间件
     for (const route of routes) {
@@ -87,7 +90,10 @@ export class NestApplication {
         );
       }
     }
+    this.middlewares.length = 0;
+    return this;
   }
+
   private isExcluded(reqPath, method): boolean {
     return this.excludedRoutes.some((routeInfo) => {
       const { routePath, routeMethod } = this.normalizeRouteInfo(routeInfo);
@@ -97,6 +103,7 @@ export class NestApplication {
       );
     });
   }
+
   /**
    * 统一格式化路径参数
    * @param route 路由路径，可能是字符串，也可能是一个对象
@@ -383,6 +390,7 @@ export class NestApplication {
       }
     }
   }
+
   getFilterInstance(filter) {
     //判断filter是类还是实例
     if (filter instanceof Function) {
@@ -506,37 +514,61 @@ export class NestApplication {
         return a.paramIndex - b.paramIndex;
       })
       .map((paramsMetadata) => {
-        const { key, data, factory } = paramsMetadata;
-
+        const { key, data, factory, pipes } = paramsMetadata;
+        let value;
         switch (key) {
           case "Request":
           case "Req":
-            return request;
+            value = request;
+            break;
           case "Query":
-            return data ? request.query[data] : request.query;
+            value = data ? request.query[data] : request.query;
+            break;
           case "Headers":
-            return data ? request.headers[data] : request.headers;
+            value = data ? request.headers[data] : request.headers;
+            break;
           case "Session":
-            return data ? request.session[data] : request.session;
+            value = data ? request.session[data] : request.session;
+            break;
           case "Ip":
-            return request.ip;
+            value = request.ip;
+            break;
           case "Param":
-            return data ? request.params[data] : request.params;
+            value = data ? request.params[data] : request.params;
+            break;
           case "Body":
-            return data ? request.body[data] : request.body;
+            value = data ? request.body[data] : request.body;
+            break;
           case "Response":
           case "Res":
-            return response;
+            value = response;
+            break;
           case "Next":
-            return next;
+            value = next;
+            break;
           case "DecoratorFactory":
             //执行函数得到结果并返回
-            return factory(data, host);
+            value = factory(data, host);
+            break;
           default:
-            return null;
+            value = null;
+            break;
         }
+        for (const pipe of [...pipes]) {
+          const PipeInstance = this.getPipeInstance(pipe);
+          value = PipeInstance.transform(value, { type: key, data });
+        }
+        return value;
       });
     //return [req,req]
+  }
+
+  private getPipeInstance(pipe) {
+    if (pipe instanceof Function) {
+      const PipeInstance = this.resolveDependencies(pipe);
+      return PipeInstance;
+    }
+    return pipe;
   }
 
   /**

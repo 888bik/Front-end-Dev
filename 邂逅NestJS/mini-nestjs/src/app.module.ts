@@ -27,10 +27,10 @@ import { UserService } from "./user.service";
       provide: "prefix",
       useValue: "prefix",
     },
-    {
-      provide:APP_FILTER,
-      useClass:CustomExceptionFilter
-    }
+    // {
+    //   provide:APP_FILTER,
+    //   useClass:CustomExceptionFilter
+    // }
   ],
 })
 export class AppModule {}

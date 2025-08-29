@@ -1,9 +1,11 @@
 {
-  "type": "node",
-  "request": "launch",
-  "name": "debug nest",
-  "runtimeExecutable": "npm",
-  "args": ["run", "start:dev"],
-  "skipFiles": ["<node_internals>/**"],
-  "console": "integratedTerminal"
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "运行 JS 文件",
+      "program": "${workspaceFolder}/test.js"
+    }
+  ]
 }

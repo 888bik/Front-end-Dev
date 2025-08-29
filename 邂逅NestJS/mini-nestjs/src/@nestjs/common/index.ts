@@ -16,3 +16,5 @@ export * from "./catch.decorator";
 export * from "./exception-filter.interface";
 export * from "./custom-exception.filter";
 export * from "./use-filters.decorator";
+export * from "./pipe-transform.interface";
+export * from "./argument-metadata.interface";

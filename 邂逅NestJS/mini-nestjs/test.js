@@ -1,11 +1,13 @@
-var Obj = {
-  toString() {
-    return "200";
-  },
-  valueOf() {
-    return 100;
-  },
-};
-var res = Obj + "3";
-console.log(res);//1003
-console.log(typeof res);//string
+function foo() {
+  var temp_object = new Object();
+  temp_object.x = 1;
+  temp_object.y = 2;
+  temp_object.array = new Array(200000);
+  /**
+   *   使用temp_object
+   */
+  return function () {
+    debugger;
+    console.log(temp_object.x);
+  };
+}

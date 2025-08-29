@@ -16,7 +16,7 @@ async function bootstrap() {
     })
   );
   // app.use(loggerFunction);
-  app.useGlobalFilters(CustomExceptionFilter);
+  // app.useGlobalFilters(CustomExceptionFilter);
   app.listen(3000);
 }
 

@@ -6,7 +6,7 @@ export function createParamsDecorator(keyOrFactory: string | Function) {
    * methName:方法名
    * paramsIndex:参数索引
    */
-  return (data?: any) =>
+  return (data?: any, ...pipes) =>
     (target: any, methodName: string, paramIndex: number) => {
       const existingParameters =
         Reflect.getMetadata("params", target, methodName) || [];
@@ -17,10 +17,11 @@ export function createParamsDecorator(keyOrFactory: string | Function) {
           key: "DecoratorFactory",
           factory: keyOrFactory,
           data,
+          pipes,
         });
       } else {
         //格式像这样:{ parameterIndex: 1, key: 'Request',data:"id" },{ parameterIndex: 0, key: 'Req',data:"user" }]
-        existingParameters.push({ paramIndex, key: keyOrFactory, data });
+        existingParameters.push({ paramIndex, key: keyOrFactory, data, pipes });
       }
       Reflect.defineMetadata("params", existingParameters, target, methodName);
     };

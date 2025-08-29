@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function foo() {
+        var temp_object = new Object();
+        temp_object.x = 1;
+        temp_object.y = 2;
+        temp_object.array = new Array(200000);
+        /**
+         *   使用temp_object
+         */
+        let x = temp_object.x;
+        return function () {
+          console.log(x);
+        };
+      }
+      foo();
+    </script>
+  </body>
+</html>
