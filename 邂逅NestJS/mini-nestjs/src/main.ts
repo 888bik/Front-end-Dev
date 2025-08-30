@@ -1,9 +1,10 @@
 import { NestFactory } from "./@nestjs/core";
 import { AppModule } from "./app.module";
 import session from "express-session";
-import { LoggerMiddleware } from "./logger.middleware";
-import { loggerFunction } from "./logger.function.middleware";
+import { LoggerMiddleware } from "./logger/logger.middleware";
+import { loggerFunction } from "./logger/logger.function.middleware";
 import { CustomExceptionFilter } from "./@nestjs/common";
+import { ValidationPipe } from "./@nestjs/common/pipes";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,6 +18,7 @@ async function bootstrap() {
   );
   // app.use(loggerFunction);
   // app.useGlobalFilters(CustomExceptionFilter);
+  // app.useGlobalPipes(new ValidationPipe());
   app.listen(3000);
 }
 

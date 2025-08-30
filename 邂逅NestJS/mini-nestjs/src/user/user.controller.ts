@@ -16,7 +16,7 @@ import {
   Header,
   Next,
   Redirect,
-} from "./@nestjs/common";
+} from "../@nestjs/common";
 import { User } from "./user.decorator";
 
 @Controller("/user")

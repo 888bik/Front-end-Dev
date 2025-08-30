@@ -1,5 +1,9 @@
-import { Global, Module } from "./@nestjs/common";
-import { LoggerService, UseFactory, UseValueService } from "./logger.service";
+import { Global, Module } from "../@nestjs/common";
+import {
+  LoggerService,
+  UseFactory,
+  UseValueService,
+} from "../logger/logger.service";
 import { UserController } from "./user.controller";
 import { UserService } from "./user.service";
 

@@ -5,3 +5,5 @@ export * from "./parse-array.pipe";
 export * from "./parse-uuid.pipe";
 export * from "./parse-enum.pipe";
 export * from "./default-value.pipe";
+export * from "./zod-validation.pipe";
+export * from "./validation-pipe";

@@ -18,3 +18,4 @@ export * from "./custom-exception.filter";
 export * from "./use-filters.decorator";
 export * from "./pipe-transform.interface";
 export * from "./argument-metadata.interface";
+export * from "./use-pipes.decorator";

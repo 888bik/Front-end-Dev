@@ -10,6 +10,11 @@ export function createParamsDecorator(keyOrFactory: string | Function) {
     (target: any, methodName: string, paramIndex: number) => {
       const existingParameters =
         Reflect.getMetadata("params", target, methodName) || [];
+      const metatype = Reflect.getMetadata(
+        "design:paramtypes",
+        target,
+        methodName
+      )[paramIndex];
       if (keyOrFactory instanceof Function) {
         //如果是函数,格式类似这样:{parameterIndex:1,key:"DecoratorFactory",factory:Function(){},data:"age"}
         existingParameters.push({
@@ -18,10 +23,17 @@ export function createParamsDecorator(keyOrFactory: string | Function) {
           factory: keyOrFactory,
           data,
           pipes,
+          metatype,
         });
       } else {
         //格式像这样:{ parameterIndex: 1, key: 'Request',data:"id" },{ parameterIndex: 0, key: 'Req',data:"user" }]
-        existingParameters.push({ paramIndex, key: keyOrFactory, data, pipes });
+        existingParameters.push({
+          paramIndex,
+          key: keyOrFactory,
+          data,
+          pipes,
+          metatype,
+        });
       }
       Reflect.defineMetadata("params", existingParameters, target, methodName);
     };

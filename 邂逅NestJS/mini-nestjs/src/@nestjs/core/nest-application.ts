@@ -15,8 +15,9 @@ import {
   ArgumentsHost,
   ExceptionFilter,
   HttpException,
+  PipeTransform,
 } from "../common";
-import { APP_FILTER } from "./constants";
+import { APP_FILTER, APP_PIPE } from "./constants";
 
 export class NestApplication {
   //在内部创建一个express应用
@@ -36,12 +37,13 @@ export class NestApplication {
 
   private readonly globalHttpExceptionFilters: ExceptionFilter[] = [];
 
+  private readonly globalPipes: PipeTransform[] = [];
   constructor(protected readonly module: any) {
     this.app.use(express.json()); //用来把JSON格式的请求体对象放在req.body上
     this.app.use(express.urlencoded({ extended: true })); //把form表单格式的请求体对象放在req.body
   }
 
-  private initMiddleware() {
+  private async initMiddleware() {
     this.module.prototype.configure?.(this);
   }
 
@@ -177,13 +179,21 @@ export class NestApplication {
       ? this.globalProviders
       : this.moduleProviders.get(module) || new Set();
 
-    if (!global && !this.moduleProviders.has(module)) {
+    if (!global) {
       this.moduleProviders.set(module, providersSet);
     }
 
     //为了避免循环依赖，每次添加前可以做一个判断，如果Map中已经存在，则直接返回
-    // const injectedProviderToken = provider.provide ?? provider;
-    // if (providers.has(injectedProviderToken)) return;
+    const injectedProviderToken = provider.provide ?? provider;
+    //如果实例池里已经有此token对应的实例了
+    if (this.providerInstancePool.has(injectedProviderToken)) {
+      //则直接把此token放入到providers这个集合直接返回
+      if (!providersSet.has(injectedProviderToken)) {
+        providersSet.add(injectedProviderToken);
+      }
+      return;
+    }
+
     if (provider.provide) {
       if (provider.useValue) {
         //存储实例
@@ -270,6 +280,7 @@ export class NestApplication {
       const controller = this.resolveDependencies(Controller);
       const controllerFilters =
         Reflect.getMetadata("filters", Controller) ?? [];
+      const controllerPipes = Reflect.getMetadata("pipes", Controller) ?? [];
       //从每个controller类获取前缀prefix,如果没有前缀则默认"/"
       const prefixPath = Reflect.getMetadata("prefix", Controller) || "/";
       //开始解析路由
@@ -282,6 +293,9 @@ export class NestApplication {
         //获取实例对象上的方法
         const method = controllerPrototype[methodName];
         const methodFilters = Reflect.getMetadata("filters", method) ?? [];
+        const methodPipes = Reflect.getMetadata("pipes", method) ?? [];
+        //合并pipe
+        const pipes = [...controllerPipes, ...methodPipes];
         const pathMetadata = Reflect.getMetadata("path", method); //../getAllUser
         const httpMethod: string = Reflect.getMetadata("method", method); //"GET" | "POST" | ....
         const statusCode = Reflect.getMetadata("statusCode", method);
@@ -298,7 +312,7 @@ export class NestApplication {
         //app.get("/abc/getAllUser",()=>{})
         this.app[httpMethod.toLocaleLowerCase()](
           routePath,
-          (request: Request, response: Response, next: NextFunction) => {
+          async (request: Request, response: Response, next: NextFunction) => {
             const host: ArgumentsHost = {
               switchToHttp: () => ({
                 getRequest: () => request,
@@ -308,16 +322,17 @@ export class NestApplication {
             };
             try {
               //获取方法参数
-              const args = this.getMethodParams(
+              const args = await this.getMethodParams(
                 controller,
                 methodName,
                 request,
                 response,
                 next,
-                host
+                host,
+                pipes
               );
               //显示调用controller的特定方法并传入参数
-              const result = method.call(controller, ...args);
+              const result = await method.call(controller, ...args);
 
               //判断如果需要重定向，则直接重定向到指定的redirectUrl并指定重定向状态码
               if (redirectUrl) {
@@ -408,7 +423,7 @@ export class NestApplication {
     this.globalHttpExceptionFilters.push(...filters);
   }
 
-  initGlobalExceptionFilters() {
+  async initGlobalExceptionFilters() {
     const providers = Reflect.getMetadata("providers", this.module);
     const appFilterProvider = providers.find(
       (provider) => provider.provide === APP_FILTER
@@ -449,7 +464,7 @@ export class NestApplication {
     return instance;
   }
 
-  private getProvider(injectedToken, module) {
+  private getProvider(injectedToken, module = this.module) {
     if (
       this.moduleProviders.get(module)?.has(injectedToken) ||
       this.globalProviders.has(injectedToken)
@@ -493,13 +508,14 @@ export class NestApplication {
    * @param next express的next
    * @returns
    */
-  private getMethodParams(
+  private async getMethodParams(
     instance: any,
     methodName: string,
     request: Request,
     response: Response,
     next: NextFunction,
-    host: ArgumentsHost
+    host: ArgumentsHost,
+    pipes: PipeTransform[]
   ) {
     const paramsMetadata: any[] = Reflect.getMetadata(
       "params",
@@ -509,57 +525,69 @@ export class NestApplication {
     if (!paramsMetadata || paramsMetadata.length === 0) return [];
     // [ { paramIndex: 1, key: 'Request' }, { paramIndex: 0, key: 'Req' } ]
     //获取类似上面这种格式的参数元数据,对其排列,因为正常来说都是索引为0的排在第一
-    return paramsMetadata
-      .sort((a, b) => {
-        return a.paramIndex - b.paramIndex;
-      })
-      .map((paramsMetadata) => {
-        const { key, data, factory, pipes } = paramsMetadata;
-        let value;
-        switch (key) {
-          case "Request":
-          case "Req":
-            value = request;
-            break;
-          case "Query":
-            value = data ? request.query[data] : request.query;
-            break;
-          case "Headers":
-            value = data ? request.headers[data] : request.headers;
-            break;
-          case "Session":
-            value = data ? request.session[data] : request.session;
-            break;
-          case "Ip":
-            value = request.ip;
-            break;
-          case "Param":
-            value = data ? request.params[data] : request.params;
-            break;
-          case "Body":
-            value = data ? request.body[data] : request.body;
-            break;
-          case "Response":
-          case "Res":
-            value = response;
-            break;
-          case "Next":
-            value = next;
-            break;
-          case "DecoratorFactory":
-            //执行函数得到结果并返回
-            value = factory(data, host);
-            break;
-          default:
-            value = null;
-            break;
-        }
-        for (const pipe of [...pipes]) {
-          const PipeInstance = this.getPipeInstance(pipe);
-          value = PipeInstance.transform(value, { type: key, data });
-        }
-        return value;
-      });
+    return Promise.all(
+      paramsMetadata
+        .sort((a, b) => {
+          return a.paramIndex - b.paramIndex;
+        })
+        .map(async (paramsMetadata) => {
+          const {
+            key,
+            data,
+            factory,
+            pipes: paramPipes,
+            metatype,
+          } = paramsMetadata;
+          let value;
+          switch (key) {
+            case "Request":
+            case "Req":
+              value = request;
+              break;
+            case "Query":
+              value = data ? request.query[data] : request.query;
+              break;
+            case "Headers":
+              value = data ? request.headers[data] : request.headers;
+              break;
+            case "Session":
+              value = data ? request.session[data] : request.session;
+              break;
+            case "Ip":
+              value = request.ip;
+              break;
+            case "Param":
+              value = data ? request.params[data] : request.params;
+              break;
+            case "Body":
+              value = data ? request.body[data] : request.body;
+              break;
+            case "Response":
+            case "Res":
+              value = response;
+              break;
+            case "Next":
+              value = next;
+              break;
+            case "DecoratorFactory":
+              //执行函数得到结果并返回
+              value = factory(data, host);
+              break;
+            default:
+              value = null;
+              break;
+          }
+          for (const pipe of [...this.globalPipes, ...pipes, ...paramPipes]) {
+            const PipeInstance = this.getPipeInstance(pipe);
+            value = await PipeInstance.transform(value, {
+              type: key,
+              data,
+              metatype,
+            });
+          }
+          return value;
+        })
+    );
     //return [req,req]
   }
 
@@ -570,15 +598,27 @@ export class NestApplication {
     }
     return pipe;
   }
-
+  useGlobalPipes(...pipes: PipeTransform[]) {
+    this.globalPipes.push(...pipes);
+  }
+  private async initGlobalPipes() {
+    const providers = Reflect.getMetadata("providers", this.module) || [];
+    for (const provider of providers) {
+      if (provider.provide === APP_PIPE) {
+        const instance = this.getProvider(APP_PIPE, this.module);
+        this.useGlobalPipes(instance);
+      }
+    }
+  }
   /**
    * 用于初始化并启动一个express服务
    * @param port 端口号
    */
   async listen(port: number) {
     await this.initProviders();
-    this.initGlobalExceptionFilters();
-    this.initMiddleware();
+    await this.initGlobalExceptionFilters();
+    await this.initMiddleware();
+    await this.initGlobalPipes();
     //调用init
     await this.init();
     //启动一个http服务器实例,并监听端口
