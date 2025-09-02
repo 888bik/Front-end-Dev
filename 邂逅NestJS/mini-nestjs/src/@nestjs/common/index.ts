@@ -19,3 +19,7 @@ export * from "./use-filters.decorator";
 export * from "./pipe-transform.interface";
 export * from "./argument-metadata.interface";
 export * from "./use-pipes.decorator";
+export * from "./use-guards.decorator";
+export * from "./set-metadata.decorator";
+export * from "./can-activate.interface";
+export * from "./execution-context.interface";

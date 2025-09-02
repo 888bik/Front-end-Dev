@@ -15,9 +15,10 @@ import { LoggerModule } from "./logger/logger.module";
 import { LoggerService } from "./logger/logger.service";
 import { UserModule } from "./user/user.module";
 import { UserService } from "./user/user.service";
-import { APP_PIPE } from "./@nestjs/core";
+import { APP_GUARD, APP_PIPE } from "./@nestjs/core";
 import { CustomPipe } from "./@nestjs/common/pipes/custom.pipe";
 import { ValidationPipe } from "./@nestjs/common/pipes";
+import { AuthGuard } from "./auth.guard";
 
 /**
  *AppModule组织和集中引入整个项目中用到的所有功能模块（feature modules），形成完整的依赖树，是整个应用的入口模块。
@@ -37,6 +38,10 @@ import { ValidationPipe } from "./@nestjs/common/pipes";
     {
       provide: APP_PIPE,
       useClass: ValidationPipe,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
     },
   ],
 })

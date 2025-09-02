@@ -16,8 +16,18 @@ import {
   ExceptionFilter,
   HttpException,
   PipeTransform,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
 } from "../common";
-import { APP_FILTER, APP_PIPE } from "./constants";
+import {
+  APP_FILTER,
+  APP_GUARD,
+  APP_PIPE,
+  FORBIDDEN_MESSAGE,
+} from "./constants";
+import { Reflector } from "./reflector";
+import { AuthGuard } from "src/auth.guard";
 
 export class NestApplication {
   //在内部创建一个express应用
@@ -38,6 +48,9 @@ export class NestApplication {
   private readonly globalHttpExceptionFilters: ExceptionFilter[] = [];
 
   private readonly globalPipes: PipeTransform[] = [];
+
+  private readonly globalGuards: CanActivate[] = [];
+
   constructor(protected readonly module: any) {
     this.app.use(express.json()); //用来把JSON格式的请求体对象放在req.body上
     this.app.use(express.urlencoded({ extended: true })); //把form表单格式的请求体对象放在req.body
@@ -128,7 +141,12 @@ export class NestApplication {
     };
   }
 
+  private addCoreProvider() {
+    this.addProvider(Reflector, this.module, true);
+  }
+
   private async initProviders() {
+    this.addCoreProvider();
     //获取根模块import进来的模块的元数据
     const imports = Reflect.getMetadata("imports", this.module) ?? [];
     //遍历imports数组
@@ -146,7 +164,7 @@ export class NestApplication {
         const newProviders = [...(oldProviders ?? []), ...(providers ?? [])];
         //将最新的providers存储在当前模块
         Reflect.defineMetadata("providers", newProviders, module);
-        //模块隔离
+        //进行模块隔离
         defineModule(module, newProviders);
         const oldControllers = Reflect.getMetadata("controllers", module);
         const newControllers = [
@@ -281,6 +299,7 @@ export class NestApplication {
       const controllerFilters =
         Reflect.getMetadata("filters", Controller) ?? [];
       const controllerPipes = Reflect.getMetadata("pipes", Controller) ?? [];
+      const controllerGuards = Reflect.getMetadata("guards", Controller) ?? [];
       //从每个controller类获取前缀prefix,如果没有前缀则默认"/"
       const prefixPath = Reflect.getMetadata("prefix", Controller) || "/";
       //开始解析路由
@@ -294,9 +313,18 @@ export class NestApplication {
         const method = controllerPrototype[methodName];
         const methodFilters = Reflect.getMetadata("filters", method) ?? [];
         const methodPipes = Reflect.getMetadata("pipes", method) ?? [];
+        const methodGuards = Reflect.getMetadata("guards", method) ?? [];
         //合并pipe
         const pipes = [...controllerPipes, ...methodPipes];
+        //合并guard
+        const guards = [
+          ...this.globalGuards,
+          ...controllerGuards,
+          ...methodGuards,
+        ];
+
         const pathMetadata = Reflect.getMetadata("path", method); //../getAllUser
+
         const httpMethod: string = Reflect.getMetadata("method", method); //"GET" | "POST" | ....
         const statusCode = Reflect.getMetadata("statusCode", method);
         const headers = Reflect.getMetadata("headers", method) ?? [];
@@ -320,7 +348,15 @@ export class NestApplication {
                 getNext: () => next,
               }),
             };
+            const context: ExecutionContext = {
+              ...host,
+              getClass: () => Controller,
+              getHandler: () => method,
+            };
             try {
+              //执行守卫
+              await this.callGuards(guards, context);
+
               //获取方法参数
               const args = await this.getMethodParams(
                 controller,
@@ -382,6 +418,26 @@ export class NestApplication {
     }
     Logger.log(`Nest application successfully started`, "NestApplication");
   }
+
+  private async callGuards(guards: CanActivate[], context: ExecutionContext) {
+    for (const guard of guards) {
+      const guardInstance = this.getGuardsInstance(guard);
+      const canActivate = await guardInstance.canActivate(context);
+      //如果返回的不是true,则说明校验失败,抛出异常
+      if (!canActivate) {
+        throw new ForbiddenException(FORBIDDEN_MESSAGE);
+      }
+    }
+  }
+
+  private getGuardsInstance(guard: CanActivate | Function): CanActivate {
+    if (typeof guard === "function") {
+      const instance = this.resolveDependencies(guard);
+      return instance;
+    }
+    return guard;
+  }
+
   private callExceptionFilters(error, host, controllerFilters, methodFilters) {
     const allFilters = [
       ...methodFilters,
@@ -406,7 +462,7 @@ export class NestApplication {
     }
   }
 
-  getFilterInstance(filter) {
+  private getFilterInstance(filter) {
     //判断filter是类还是实例
     if (filter instanceof Function) {
       const instance = this.resolveDependencies(filter);
@@ -433,6 +489,23 @@ export class NestApplication {
       this.addProvider(appFilterProvider, this.module, true);
     }
   }
+
+  useGlobalGuards(...guards) {
+    this.globalGuards.push(...guards);
+  }
+
+  async initGlobalGuards() {
+    const providers = Reflect.getMetadata("providers", this.module);
+    for (const provider of providers) {
+      if (provider.provide === APP_GUARD) {
+        const instance = this.resolveDependencies(provider.useClass);
+        // const instance = this.getProvider(APP_GUARD, this.module);
+        console.log(instance);
+        this.useGlobalGuards(instance);
+      }
+    }
+  }
+
   /**
    *
    * @param clazz 类
@@ -618,6 +691,7 @@ export class NestApplication {
     await this.initProviders();
     await this.initGlobalExceptionFilters();
     await this.initMiddleware();
+    await this.initGlobalGuards();
     await this.initGlobalPipes();
     //调用init
     await this.init();

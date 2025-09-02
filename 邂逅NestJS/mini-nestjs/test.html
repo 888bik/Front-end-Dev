@@ -4,23 +4,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      div {
+        width: 200px;
+        height: 200px;
+        overflow: auto;
+        background: gray;
+      }
+    </style>
   </head>
   <body>
-    <script>
-      function foo() {
-        var temp_object = new Object();
-        temp_object.x = 1;
-        temp_object.y = 2;
-        temp_object.array = new Array(200000);
-        /**
-         *   使用temp_object
-         */
-        let x = temp_object.x;
-        return function () {
-          console.log(x);
-        };
-      }
-      foo();
-    </script>
+    <div>
+      <p>
+        所以元素有了层叠上下文的属性或者需要被剪裁，那么就会被提升成为单独一层，你可以参看下图：
+      </p>
+      <p>
+        从上图我们可以看到，document 层上有 A 和 B 层，而 B
+        层之上又有两个图层。这些图层组织在一起也是一颗树状结构。
+      </p>
+      <p>
+        图层树是基于布局树来创建的，为了找出哪些元素需要在哪些层中，渲染引擎会遍历布局树来创建层树（Update
+        LayerTree）。
+      </p>
+    </div>
   </body>
+  <script>
+    // function runStack(n, cb) {
+    //   if (n === 0) return 100;
+    //   cb();
+    //   return setTimeout(() => {
+    //     runStack(n - 2, cb);
+    //   }, 0);
+    // }
+    // runStack(50000, () => {
+    //   console.log("1");
+    // });
+  </script>
 </html>

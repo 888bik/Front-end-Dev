@@ -15,6 +15,7 @@ import {
   Query,
   Post,
   UsePipes,
+  UseGuards,
 } from "./@nestjs/common";
 import {
   ParseArrayPipe,
@@ -28,8 +29,13 @@ import {
 } from "./@nestjs/common/pipes";
 import { ClassValidationPipe } from "./@nestjs/common/pipes/class-validation.pipe";
 import { CustomPipe } from "./@nestjs/common/pipes/custom.pipe";
+import { Reflector } from "./@nestjs/core/reflector";
+import { AuthGuard } from "./auth.guard";
+import { AuthGuard2 } from "./auth2.guard";
 import { CreateCatDto, createCatSchema } from "./create-cat.dto";
 import { LoggerService } from "./logger/logger.service";
+import { Roles } from "./roles.decorator";
+import { Roles2 } from "./roles2.decorator";
 import { CreateUserDto } from "./user/create-user.dto";
 
 enum UserRole {
@@ -115,5 +121,26 @@ export class AppController {
   ): Promise<string> {
     console.log("Global Create User DTO:", createUserDto);
     return "This action adds a new user globally";
+  }
+
+  // 使用 @Roles 装饰器来限制只有具有 'admin' 角色的用户才能访问此方z法
+  @Roles("admin")
+  @UseGuards(AuthGuard)
+  @Get("guards")
+  testGuards() {
+    return "test guards";
+  }
+
+  @Roles2(["admin"])
+  @UseGuards(new AuthGuard2(new Reflector()))
+  @Get("guards2")
+  testGuards2() {
+    return "test guards2";
+  }
+
+  @Roles("aaa")
+  @Get("guards3")
+  testGlobalGuards() {
+    return "test global guards";
   }
 }

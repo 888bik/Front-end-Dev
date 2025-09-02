@@ -5,6 +5,7 @@ import { LoggerMiddleware } from "./logger/logger.middleware";
 import { loggerFunction } from "./logger/logger.function.middleware";
 import { CustomExceptionFilter } from "./@nestjs/common";
 import { ValidationPipe } from "./@nestjs/common/pipes";
+import { AuthGuard } from "./auth.guard";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,8 +18,9 @@ async function bootstrap() {
     })
   );
   // app.use(loggerFunction);
-  // app.useGlobalFilters(CustomExceptionFilter);
+  app.useGlobalGuards(AuthGuard);
   // app.useGlobalPipes(new ValidationPipe());
+  // app.useGlobalFilters(CustomExceptionFilter);
   app.listen(3000);
 }
 
