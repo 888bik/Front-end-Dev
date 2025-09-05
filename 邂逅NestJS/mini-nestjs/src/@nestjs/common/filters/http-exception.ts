@@ -1,4 +1,4 @@
-import { HttpStatus } from "./http-status.enum";
+import { HttpStatus } from "../types/http-status.enum";
 
 export class HttpException extends Error {
   //response 参数定义了 JSON 响应体，可以是如下所述的 string 或 object 类型。

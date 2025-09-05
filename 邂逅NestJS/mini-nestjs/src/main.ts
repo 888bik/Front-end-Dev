@@ -6,6 +6,7 @@ import { loggerFunction } from "./logger/logger.function.middleware";
 import { CustomExceptionFilter } from "./@nestjs/common";
 import { ValidationPipe } from "./@nestjs/common/pipes";
 import { AuthGuard } from "./auth.guard";
+import { Logging5Interceptor } from "./@nestjs/common/interceptors/logging5.interceptor";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +20,7 @@ async function bootstrap() {
   );
   // app.use(loggerFunction);
   app.useGlobalGuards(AuthGuard);
+  app.useGlobalInterceptors(new Logging5Interceptor());
   // app.useGlobalPipes(new ValidationPipe());
   // app.useGlobalFilters(CustomExceptionFilter);
   app.listen(3000);

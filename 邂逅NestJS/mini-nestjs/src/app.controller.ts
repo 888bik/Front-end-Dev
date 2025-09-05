@@ -16,6 +16,7 @@ import {
   Post,
   UsePipes,
   UseGuards,
+  UseInterceptors,
 } from "./@nestjs/common";
 import {
   ParseArrayPipe,
@@ -33,10 +34,15 @@ import { Reflector } from "./@nestjs/core/reflector";
 import { AuthGuard } from "./auth.guard";
 import { AuthGuard2 } from "./auth2.guard";
 import { CreateCatDto, createCatSchema } from "./create-cat.dto";
-import { LoggerService } from "./logger/logger.service";
 import { Roles } from "./roles.decorator";
 import { Roles2 } from "./roles2.decorator";
 import { CreateUserDto } from "./user/create-user.dto";
+import { Logging1Interceptor } from "./@nestjs/common/interceptors/logging1.interceptor";
+import { Logging2Interceptor } from "./@nestjs/common/interceptors/logging2.interceptor";
+import { Logging3Interceptor } from "./@nestjs/common/interceptors/logging3.interceptor";
+import { ExcludeNull } from "./@nestjs/common/interceptors/excludeNull.interceptor";
+import { Transform } from "./@nestjs/common/interceptors/transform.interceptor";
+import { ErrorInterceptor } from "./@nestjs/common/interceptors/errors.interceptor";
 
 enum UserRole {
   Admin = "Admin",
@@ -142,5 +148,30 @@ export class AppController {
   @Get("guards3")
   testGlobalGuards() {
     return "test global guards";
+  }
+
+  @Get("pay")
+  @UseInterceptors(Logging3Interceptor)
+  @UseInterceptors(Logging2Interceptor)
+  @UseInterceptors(Logging1Interceptor)
+  testInterceptor() {
+    return "interceptor";
+  }
+
+  @Get("excludeNull")
+  @UseInterceptors(ExcludeNull)
+  excludeNull() {
+    return null;
+  }
+  @Get("transform")
+  @UseInterceptors(Transform)
+  transform() {
+    return "abc";
+  }
+
+  @Get("throwError")
+  @UseInterceptors(ErrorInterceptor)
+  throwError() {
+    throw new Error("abc");
   }
 }

@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { PipeTransform } from "./pipe-transform.interface";
+import { PipeTransform } from "../types/pipe-transform.interface";
 export function UsePipes(
   ...pipes: PipeTransform[]
 ): MethodDecorator & ClassDecorator {

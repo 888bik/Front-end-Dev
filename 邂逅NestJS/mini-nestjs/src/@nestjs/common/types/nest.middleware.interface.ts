@@ -1,4 +1,4 @@
-import { RequestMethod } from "./index";
+import { RequestMethod } from "../index";
 import type { NextFunction, Request, Response } from "express";
 
 export interface NestMiddleware {

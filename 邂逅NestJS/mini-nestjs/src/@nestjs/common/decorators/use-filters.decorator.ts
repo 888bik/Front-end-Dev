@@ -1,6 +1,6 @@
 import "reflect-metadata";
-import { ExceptionFilter } from "./exception-filter.interface";
 import { Type } from "@nestjs/common";
+import { ExceptionFilter } from "../types/exception-filter.interface";
 export function UseFilters(
   ...filters: (ExceptionFilter | Type<ExceptionFilter>)[]
 ) {

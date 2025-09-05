@@ -1,5 +1,6 @@
-import { BadRequestException } from "../http-exception";
-import { PipeTransform } from "../pipe-transform.interface";
+import { BadRequestException } from "../filters/http-exception";
+import { PipeTransform } from "../types/pipe-transform.interface";
+
 interface ParseArrayPipeOptions {
   items: any;
   separator?: string;

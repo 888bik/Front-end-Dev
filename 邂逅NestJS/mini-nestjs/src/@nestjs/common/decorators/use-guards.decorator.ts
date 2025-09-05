@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { CanActivate } from "./can-activate.interface";
+import { CanActivate } from "../types/can-activate.interface";
 export function UseGuards(...guards: (CanActivate | Function)[]) {
   return function (
     target: Function | object,

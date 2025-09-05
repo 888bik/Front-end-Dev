@@ -1,9 +1,7 @@
-import {
-  ArgumentsHost,
-  ExceptionFilter,
-  HttpException,
-  HttpStatus,
-} from "./index";
+import type { ArgumentsHost } from "../types/arguments-host.interface";
+import type { ExceptionFilter } from "../types/exception-filter.interface";
+import { HttpStatus } from "../types/http-status.enum";
+import { HttpException } from "./http-exception";
 
 /**
  * 过滤器处理类型为 HttpException（及其子类）的异常。

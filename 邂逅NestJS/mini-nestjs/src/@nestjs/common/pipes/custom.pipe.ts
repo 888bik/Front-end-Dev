@@ -1,5 +1,5 @@
-import { ArgumentMetadata } from "../argument-metadata.interface";
-import { PipeTransform } from "../pipe-transform.interface";
+import { ArgumentMetadata } from "../types/argument-metadata.interface";
+import { PipeTransform } from "../types/pipe-transform.interface";
 
 export class CustomPipe implements PipeTransform {
   transform(value: any, metadata?: ArgumentMetadata) {

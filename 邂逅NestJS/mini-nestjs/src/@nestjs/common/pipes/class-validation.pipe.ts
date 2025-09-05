@@ -1,9 +1,9 @@
 import { plainToInstance } from "class-transformer";
-import { ArgumentMetadata } from "../argument-metadata.interface";
-import { Injectable } from "../injectable.decorator";
-import { PipeTransform } from "../pipe-transform.interface";
+import { ArgumentMetadata } from "../types/argument-metadata.interface";
 import { validate } from "class-validator";
-import { BadRequestException } from "../http-exception";
+import { Injectable } from "../decorators/injectable.decorator";
+import { PipeTransform } from "../types/pipe-transform.interface";
+import { BadRequestException } from "../filters/http-exception";
 
 @Injectable()
 export class ClassValidationPipe implements PipeTransform {

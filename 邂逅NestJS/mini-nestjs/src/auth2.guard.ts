@@ -1,6 +1,4 @@
-import { CanActivate } from "./@nestjs/common/can-activate.interface";
-import { ExecutionContext } from "./@nestjs/common/execution-context.interface";
-import { Injectable } from "./@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable } from "./@nestjs/common";
 import { Reflector } from "./@nestjs/core/reflector";
 import { Roles2 } from "./roles2.decorator";
 

@@ -19,6 +19,7 @@ import {
   CanActivate,
   ExecutionContext,
   ForbiddenException,
+  NestInterceptor,
 } from "../common";
 import {
   APP_FILTER,
@@ -28,6 +29,9 @@ import {
 } from "./constants";
 import { Reflector } from "./reflector";
 import { AuthGuard } from "src/auth.guard";
+import { from, mergeMap, Observable, of, throwError } from "rxjs";
+import { APP_INTERCEPTOR } from "@nestjs/core";
+import { Logging5Interceptor } from "src/@nestjs/common/interceptors/logging5.interceptor";
 
 export class NestApplication {
   //在内部创建一个express应用
@@ -50,7 +54,7 @@ export class NestApplication {
   private readonly globalPipes: PipeTransform[] = [];
 
   private readonly globalGuards: CanActivate[] = [];
-
+  private readonly globalInterceptors: NestInterceptor[] = [];
   constructor(protected readonly module: any) {
     this.app.use(express.json()); //用来把JSON格式的请求体对象放在req.body上
     this.app.use(express.urlencoded({ extended: true })); //把form表单格式的请求体对象放在req.body
@@ -300,6 +304,9 @@ export class NestApplication {
         Reflect.getMetadata("filters", Controller) ?? [];
       const controllerPipes = Reflect.getMetadata("pipes", Controller) ?? [];
       const controllerGuards = Reflect.getMetadata("guards", Controller) ?? [];
+      const controllerInterceptors =
+        Reflect.getMetadata("interceptors", Controller) ?? [];
+
       //从每个controller类获取前缀prefix,如果没有前缀则默认"/"
       const prefixPath = Reflect.getMetadata("prefix", Controller) || "/";
       //开始解析路由
@@ -314,6 +321,8 @@ export class NestApplication {
         const methodFilters = Reflect.getMetadata("filters", method) ?? [];
         const methodPipes = Reflect.getMetadata("pipes", method) ?? [];
         const methodGuards = Reflect.getMetadata("guards", method) ?? [];
+        const methodInterceptors =
+          Reflect.getMetadata("interceptors", method) ?? [];
         //合并pipe
         const pipes = [...controllerPipes, ...methodPipes];
         //合并guard
@@ -322,7 +331,12 @@ export class NestApplication {
           ...controllerGuards,
           ...methodGuards,
         ];
-
+        //合并拦截器
+        const interceptors = [
+          ...this.globalInterceptors,
+          ...controllerInterceptors,
+          ...methodInterceptors,
+        ];
         const pathMetadata = Reflect.getMetadata("path", method); //../getAllUser
 
         const httpMethod: string = Reflect.getMetadata("method", method); //"GET" | "POST" | ....
@@ -360,46 +374,63 @@ export class NestApplication {
               //获取方法参数
               const args = await this.getMethodParams(
                 controller,
-                methodName,
+                method,
                 request,
                 response,
                 next,
                 host,
                 pipes
               );
-              //显示调用controller的特定方法并传入参数
-              const result = await method.call(controller, ...args);
-
-              //判断如果需要重定向，则直接重定向到指定的redirectUrl并指定重定向状态码
-              if (redirectUrl) {
-                return response.redirect(
-                  redirectStatusCode || 302,
-                  redirectUrl
-                );
-              }
-
-              if (statusCode) {
-                response.statusCode = statusCode;
-              } else if (httpMethod === "POST") {
-                response.statusCode = 201;
-              }
-
-              const responseMetadata = this.getResponseMetadata(
+              this.callInterceptors(
                 controller,
-                methodName
-              );
+                method,
+                args,
+                interceptors,
+                context
+              ).subscribe({
+                next: (result) => {
+                  //判断如果需要重定向，则直接重定向到指定的redirectUrl并指定重定向状态码
+                  if (redirectUrl) {
+                    return response.redirect(
+                      redirectStatusCode || 302,
+                      redirectUrl
+                    );
+                  }
 
-              const isPassThrough = responseMetadata?.some((param) => {
-                return param?.data?.passthrough === true;
+                  if (statusCode) {
+                    response.statusCode = statusCode;
+                  } else if (httpMethod === "POST") {
+                    response.statusCode = 201;
+                  }
+
+                  const responseMetadata = this.getResponseMetadata(
+                    controller,
+                    methodName
+                  );
+
+                  const isPassThrough = responseMetadata?.some((param) => {
+                    return param?.data?.passthrough === true;
+                  });
+
+                  if (!responseMetadata || !isPassThrough) {
+                    headers.forEach(({ key, value }) => {
+                      response.setHeader(key, value);
+                    });
+                    //将方法返回的结果传给express返回响应,比如 getUser(){return "allUsers"}
+                    response.send(result);
+                  }
+                },
+                error: (error) => {
+                  this.callExceptionFilters(
+                    error,
+                    host,
+                    controllerFilters,
+                    methodFilters
+                  );
+                },
               });
-
-              if (!responseMetadata || !isPassThrough) {
-                headers.forEach(({ key, value }) => {
-                  response.setHeader(key, value);
-                });
-                //将方法返回的结果传给express返回响应,比如 getUser(){return "allUsers"}
-                response.send(result);
-              }
+              //显示调用controller的特定方法并传入参数
+              // const result = await method.call(controller, ...args);
             } catch (error) {
               this.callExceptionFilters(
                 error,
@@ -417,6 +448,41 @@ export class NestApplication {
       }
     }
     Logger.log(`Nest application successfully started`, "NestApplication");
+  }
+  private callInterceptors(
+    controller,
+    method,
+    args,
+    interceptors: NestInterceptor[],
+    context
+  ) {
+    const nextFn = (i = 0): Observable<any> => {
+      if (i >= interceptors.length) {
+        try {
+          //拿到路由处理函数返回的结果
+          const result = method.call(controller, ...args);
+          return result instanceof Promise ? from(result) : of(result);
+        } catch (error) {
+          return throwError(() => error);
+        }
+      }
+      const interceptorInstance = this.getInterceptorsInstance(interceptors[i]);
+      const result = interceptorInstance.intercept(context, {
+        handle: () => nextFn(i + 1),
+      });
+      return from(result).pipe(
+        mergeMap((res) => (res instanceof Observable ? res : of(res)))
+      );
+    };
+    return nextFn();
+  }
+
+  getInterceptorsInstance(interceptor: NestInterceptor<any, any>) {
+    if (interceptor instanceof Function) {
+      const instance = this.resolveDependencies(interceptor);
+      return instance;
+    }
+    return interceptor;
   }
 
   private async callGuards(guards: CanActivate[], context: ExecutionContext) {
@@ -683,6 +749,18 @@ export class NestApplication {
       }
     }
   }
+  private async initInterceptor() {
+    const providers = Reflect.getMetadata("providers", this.module) || [];
+    for (const provider of providers) {
+      if (provider.provide === APP_INTERCEPTOR) {
+        const instance = this.resolveDependencies(provider.useClass);
+        this.useGlobalInterceptors(instance);
+      }
+    }
+  }
+  useGlobalInterceptors(...interceptor: NestInterceptor[]) {
+    this.globalInterceptors.push(...interceptor);
+  }
   /**
    * 用于初始化并启动一个express服务
    * @param port 端口号
@@ -692,6 +770,7 @@ export class NestApplication {
     await this.initGlobalExceptionFilters();
     await this.initMiddleware();
     await this.initGlobalGuards();
+    await this.initInterceptor();
     await this.initGlobalPipes();
     //调用init
     await this.init();

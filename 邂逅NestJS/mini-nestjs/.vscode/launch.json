@@ -4,8 +4,19 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "运行 JS 文件",
-      "program": "${workspaceFolder}/test.js"
+      "name": "Debug Single TS File",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "ts-node",
+        "--transpile-only" // 如果用到了 Nest 的装饰器，建议加这个
+      ],
+      "args": [
+        "${file}" // 这里是当前打开的 ts 文件
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }
