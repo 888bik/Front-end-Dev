@@ -26,3 +26,4 @@ export * from "./types/execution-context.interface";
 export * from "./types/nest-interceptor.interface";
 export * from "./decorators/use-interceptors.decorator";
 export * from "./types/call-handler.interface";
+export * from "./types/file-validator.interface";

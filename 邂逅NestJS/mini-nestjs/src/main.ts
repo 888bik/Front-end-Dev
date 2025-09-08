@@ -19,8 +19,8 @@ async function bootstrap() {
     })
   );
   // app.use(loggerFunction);
-  app.useGlobalGuards(AuthGuard);
-  app.useGlobalInterceptors(new Logging5Interceptor());
+  // app.useGlobalGuards(AuthGuard);
+  // app.useGlobalInterceptors(new Logging5Interceptor());
   // app.useGlobalPipes(new ValidationPipe());
   // app.useGlobalFilters(CustomExceptionFilter);
   app.listen(3000);

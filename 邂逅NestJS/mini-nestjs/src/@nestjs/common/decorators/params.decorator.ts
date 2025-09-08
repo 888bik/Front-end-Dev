@@ -8,6 +8,10 @@ export function createParamsDecorator(keyOrFactory: string | Function) {
    */
   return (data?: any, ...pipes) =>
     (target: any, methodName: string, paramIndex: number) => {
+      if (data && typeof data !== "string") {
+        pipes = [data, ...pipes];
+        data = null;
+      }
       const existingParameters =
         Reflect.getMetadata("params", target, methodName) || [];
       const metatype = Reflect.getMetadata(
@@ -50,3 +54,5 @@ export const Body = createParamsDecorator("Body");
 export const Response = createParamsDecorator("Response");
 export const Res = createParamsDecorator("Res");
 export const Next = createParamsDecorator("Next");
+export const UploadedFile = createParamsDecorator("File");
+export const UploadedFiles = createParamsDecorator("Files");

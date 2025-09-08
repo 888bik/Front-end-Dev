@@ -21,12 +21,18 @@ import { ValidationPipe } from "./@nestjs/common/pipes";
 import { AuthGuard } from "./auth.guard";
 import { Logging1Interceptor } from "./@nestjs/common/interceptors/logging1.interceptor";
 import { Logging4Interceptor } from "./@nestjs/common/interceptors/logging4.interceptor";
+import { MulterModule } from "./@nestjs/platform-express";
+// import { UserController } from "./user/user.controller";
 
 /**
  *AppModule组织和集中引入整个项目中用到的所有功能模块（feature modules），形成完整的依赖树，是整个应用的入口模块。
  */
 @Module({
-  imports: [],
+  imports: [
+    MulterModule.register({
+      dest: "./files",
+    }),
+  ],
   controllers: [AppController],
   providers: [
     {

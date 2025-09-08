@@ -29,7 +29,7 @@ import {
 } from "./constants";
 import { Reflector } from "./reflector";
 import { AuthGuard } from "src/auth.guard";
-import { from, mergeMap, Observable, of, throwError } from "rxjs";
+import { from, generate, mergeMap, Observable, of, throwError } from "rxjs";
 import { APP_INTERCEPTOR } from "@nestjs/core";
 import { Logging5Interceptor } from "src/@nestjs/common/interceptors/logging5.interceptor";
 
@@ -207,12 +207,10 @@ export class NestApplication {
 
     //为了避免循环依赖，每次添加前可以做一个判断，如果Map中已经存在，则直接返回
     const injectedProviderToken = provider.provide ?? provider;
+    Reflect.defineMetadata("module", injectedProviderToken, module);
     //如果实例池里已经有此token对应的实例了
     if (this.providerInstancePool.has(injectedProviderToken)) {
-      //则直接把此token放入到providers这个集合直接返回
-      if (!providersSet.has(injectedProviderToken)) {
-        providersSet.add(injectedProviderToken);
-      }
+      providersSet.add(injectedProviderToken);
       return;
     }
 
@@ -236,6 +234,7 @@ export class NestApplication {
         providersSet.add(provider.provide);
       }
     } else {
+      Reflect.defineMetadata("module", provider, module);
       const instance = this.resolveDependencies(provider);
       this.providerInstancePool.set(provider, instance);
       providersSet.add(provider);
@@ -244,11 +243,16 @@ export class NestApplication {
 
   private registerProviderFromModule(module, ...parentsModule) {
     const global = Reflect.getMetadata("global", module);
-    //获取模块的所有providers
+    //当前模块自的的providers
     const providers = Reflect.getMetadata("providers", module) || [];
 
-    //获取模块的export的provider
-    const exportsProviders = Reflect.getMetadata("exports", module) || [];
+    for (const provider of providers) {
+      this.addProvider(provider, module, global);
+    }
+
+    //处理exports
+    const exportsProviders = Reflect.getMetadata("exports", module) ?? [];
+
     for (const exportTokens of exportsProviders) {
       //export有可能是其他模块,所以先判断这个导出的是否是模块(模块的重新导出)
       if (this.isModule(exportTokens)) {
@@ -256,10 +260,9 @@ export class NestApplication {
         this.registerProviderFromModule(exportTokens, module, ...parentsModule);
       } else {
         //判断导入的当前模块是否有exports对应的服务
-        const provider = providers.find(
-          (provider) =>
-            provider.provide === exportTokens || provider === exportTokens
-        );
+        const provider = providers.find((provider) => {
+          return provider.provide === exportTokens || provider === exportTokens;
+        });
         if (provider) {
           [module, ...parentsModule].forEach((module) => {
             this.addProvider(provider, module, global);
@@ -267,6 +270,35 @@ export class NestApplication {
         }
       }
     }
+  }
+  /**
+   *
+   * @param clazz 类
+   * @returns
+   */
+  private resolveDependencies(Clazz) {
+    //获取通过@Inject注入的依赖的token元数据
+    const metadataToken = Reflect.getMetadata(INJECTABLE_TOKENS, Clazz) ?? {
+      params: [],
+      properties: {},
+    };
+    //判断Clazz属于哪个模块
+    const metadataModule = Reflect.getMetadata("module", Clazz);
+    // 获取构造函数的参数类型（LoggerService / UseValueService 等）
+    const constructorParams =
+      Reflect.getMetadata(DESIGN_PARAMTYPES, Clazz) ?? [];
+    // 构造函数依赖解析,比如loggerService通过StringToken获取对应的提供者
+    const constructorDeps = constructorParams.map((param, index) => {
+      const token = metadataToken.params[index] ?? param;
+      return this.getProvider(token, metadataModule);
+    });
+    const instance = new Clazz(...constructorDeps);
+
+    // 属性注入（如果有）
+    for (const [key, token] of Object.entries(metadataToken.properties ?? {})) {
+      instance[key] = this.getProvider(token, metadataModule);
+    }
+    return instance;
   }
   /**
    * 判断是否为模块
@@ -372,19 +404,17 @@ export class NestApplication {
               await this.callGuards(guards, context);
 
               //获取方法参数
-              const args = await this.getMethodParams(
-                controller,
-                method,
-                request,
-                response,
-                next,
-                host,
-                pipes
-              );
+              // const args = await this.getMethodParams(
+              //   controller,
+              //   method,
+              //   host,
+              //   pipes
+              // );
               this.callInterceptors(
                 controller,
                 method,
-                args,
+                host,
+                pipes,
                 interceptors,
                 context
               ).subscribe({
@@ -452,7 +482,8 @@ export class NestApplication {
   private callInterceptors(
     controller,
     method,
-    args,
+    host,
+    pipes,
     interceptors: NestInterceptor[],
     context
   ) {
@@ -460,8 +491,16 @@ export class NestApplication {
       if (i >= interceptors.length) {
         try {
           //拿到路由处理函数返回的结果
-          const result = method.call(controller, ...args);
-          return result instanceof Promise ? from(result) : of(result);
+          // const result = method.call(controller, ...args);
+          // return result instanceof Promise ? from(result) : of(result);
+          return from(
+            this.getMethodParams(controller, method, host, pipes)
+          ).pipe(
+            mergeMap((args) => {
+              const result = method.call(controller, ...args);
+              return result instanceof Promise ? from(result) : of(result);
+            })
+          );
         } catch (error) {
           return throwError(() => error);
         }
@@ -477,7 +516,7 @@ export class NestApplication {
     return nextFn();
   }
 
-  getInterceptorsInstance(interceptor: NestInterceptor<any, any>) {
+  private getInterceptorsInstance(interceptor: NestInterceptor<any, any>) {
     if (interceptor instanceof Function) {
       const instance = this.resolveDependencies(interceptor);
       return instance;
@@ -566,41 +605,9 @@ export class NestApplication {
       if (provider.provide === APP_GUARD) {
         const instance = this.resolveDependencies(provider.useClass);
         // const instance = this.getProvider(APP_GUARD, this.module);
-        console.log(instance);
         this.useGlobalGuards(instance);
       }
     }
-  }
-
-  /**
-   *
-   * @param clazz 类
-   * @returns
-   */
-  private resolveDependencies(Clazz) {
-    //获取通过@Inject注入的依赖的token元数据
-    const metadataToken = Reflect.getMetadata(INJECTABLE_TOKENS, Clazz) ?? {
-      params: [],
-      properties: {},
-    };
-    //判断Clazz属于哪个模块
-    const metadataModule = Reflect.getMetadata("module", Clazz);
-    // 获取构造函数的参数类型（LoggerService / UseValueService 等）
-    const constructorParams =
-      Reflect.getMetadata(DESIGN_PARAMTYPES, Clazz) ?? [];
-
-    // 构造函数依赖解析,比如loggerService通过StringToken获取对应的提供者
-    const constructorDeps = constructorParams.map((param, index) => {
-      const token = metadataToken.params[index] ?? param;
-      return this.getProvider(token, metadataModule);
-    });
-    const instance = new Clazz(...constructorDeps);
-
-    // 属性注入（如果有）
-    for (const [key, token] of Object.entries(metadataToken.properties ?? {})) {
-      instance[key] = this.getProvider(token, metadataModule);
-    }
-    return instance;
   }
 
   private getProvider(injectedToken, module = this.module) {
@@ -649,17 +656,18 @@ export class NestApplication {
    */
   private async getMethodParams(
     instance: any,
-    methodName: string,
-    request: Request,
-    response: Response,
-    next: NextFunction,
+    method: Function,
     host: ArgumentsHost,
     pipes: PipeTransform[]
   ) {
+    const { getRequest, getResponse, getNext } = host.switchToHttp();
+    const request = getRequest();
+    const response = getResponse();
+    const next = getNext();
     const paramsMetadata: any[] = Reflect.getMetadata(
       "params",
       instance,
-      methodName
+      method.name
     );
     if (!paramsMetadata || paramsMetadata.length === 0) return [];
     // [ { paramIndex: 1, key: 'Request' }, { paramIndex: 0, key: 'Req' } ]
@@ -711,6 +719,12 @@ export class NestApplication {
             case "DecoratorFactory":
               //执行函数得到结果并返回
               value = factory(data, host);
+              break;
+            case "File":
+              value = request.file;
+              break;
+            case "Files":
+              value = request.files;
               break;
             default:
               value = null;

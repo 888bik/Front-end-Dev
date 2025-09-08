@@ -16,7 +16,6 @@ export class ValidationPipe implements PipeTransform<any> {
     if (!metatype || !this.needToValidate(metatype)) {
       return value;
     }
-    console.log("prefix", this.prefix);
     // 将普通对象转换为类实例
     const object = plainToInstance(metatype, value);
     // 验证对象

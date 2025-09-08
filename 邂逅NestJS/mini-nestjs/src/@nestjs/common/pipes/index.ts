@@ -7,3 +7,5 @@ export * from "./parse-enum.pipe";
 export * from "./default-value.pipe";
 export * from "./zod-validation.pipe";
 export * from "./validation-pipe";
+export * from "./file-size-validation.pipe";
+export * from "./file-type.validator";
